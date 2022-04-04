@@ -17,6 +17,7 @@ namespace Application.Functions.Worksites.Queries.GetWorksitesList
         public async Task<List<Worksite>> Handle(GetWorksitesListQuery request, CancellationToken cancellationToken)
         {
             var worksites = await _context.Worksites.ToListAsync();
+
             return worksites;
         }
     }
