@@ -7,10 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\" />
+    <Folder Include="Functions\Worksites\Commands\CreateWorksite\" />
+    <Folder Include="Functions\Worksites\Commands\DeleteWorksite\" />
+    <Folder Include="Functions\Worksites\Commands\UpdateWorksite\" />
+    <Folder Include="Functions\Worksites\Queries\GetWorksitesList\" />
+    <Folder Include="Functions\Worksites\Queries\GetWorksite\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
