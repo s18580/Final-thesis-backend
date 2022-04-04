@@ -36,5 +36,7 @@ namespace Application.Services
         DbSet<Role> Roles { get; set; }
         DbSet<RoleAssignment> RoleAssignments { get; set; }
         Task<int> SaveChangesAsync();
+
+        Task<bool> IsWorksiteNameUnique(string name);
     }
 }

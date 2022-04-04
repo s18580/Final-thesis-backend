@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.Functions.Worksites.Commands.CreateWorksite;
+using AutoMapper;
+using Domain.Models.DictionaryModels;
 
 namespace Application.Mapper
 {
@@ -6,7 +8,7 @@ namespace Application.Mapper
     {
         public MappingProfile()
         {
-
+            CreateMap<Worksite, CreateWorksiteCommand>().ReverseMap();
         }
     }
 }
