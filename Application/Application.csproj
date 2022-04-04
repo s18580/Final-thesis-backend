@@ -10,7 +10,6 @@
     <Folder Include="Functions\Worksites\Commands\CreateWorksite\" />
     <Folder Include="Functions\Worksites\Commands\DeleteWorksite\" />
     <Folder Include="Functions\Worksites\Commands\UpdateWorksite\" />
-    <Folder Include="Functions\Worksites\Queries\GetWorksitesList\" />
     <Folder Include="Functions\Worksites\Queries\GetWorksite\" />
   </ItemGroup>
 
