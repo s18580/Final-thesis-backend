@@ -38,5 +38,6 @@ namespace Application.Services
         Task<int> SaveChangesAsync();
 
         Task<bool> IsWorksiteNameUnique(string name);
+        Task<bool> IsWorksiteNameUnique(string name, int id);
     }
 }
