@@ -8,8 +8,8 @@ namespace Application.Functions.Worksites.Commands.CreateWorksite
         public CreateWorksiteResponse() : base()
         { }
 
-        public CreateWorksiteResponse(ValidationResult validationResult)
-            : base(validationResult)
+        public CreateWorksiteResponse(ValidationResult validationResult, ResponseStatus status)
+            : base(validationResult, status)
         { }
 
         public CreateWorksiteResponse(string message, bool success, ResponseStatus status)

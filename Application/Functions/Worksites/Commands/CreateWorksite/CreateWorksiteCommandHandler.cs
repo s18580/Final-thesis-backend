@@ -21,7 +21,7 @@ namespace Application.Functions.Worksites.Commands.CreateWorksite
             var validator = new CreateWorksiteValidator(_context);
             var validatorResult = await validator.ValidateAsync(request);
 
-            if (!validatorResult.IsValid) return new CreateWorksiteResponse(validatorResult);
+            if (!validatorResult.IsValid) return new CreateWorksiteResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var newWorksite = _mapper.Map<Worksite>(request);
 

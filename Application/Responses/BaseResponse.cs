@@ -25,11 +25,12 @@ namespace Application.Responses
             Status = status;
         }
 
-        public BaseResponse(ValidationResult validationResult)
+        public BaseResponse(ValidationResult validationResult, ResponseStatus status)
         {
             ValidationErrors = new List<String>();
             Success = validationResult.Errors.Count < 0;
             Message = string.Empty;
+            Status = status;
             foreach (var item in validationResult.Errors)
             {
                 ValidationErrors.Add(item.ErrorMessage);
