@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Worksites\Commands\DeleteWorksite\" />
     <Folder Include="Functions\Worksites\Commands\UpdateWorksite\" />
   </ItemGroup>
 
