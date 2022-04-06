@@ -26,8 +26,9 @@ namespace Application.Functions.Worksites.Commands.CreateWorksite
 
         private async Task<bool> IsWorksiteNameUnique(CreateWorksiteCommand command, CancellationToken cancellationToken)
         {
-            var result = await _context.IsWorksiteNameUnique(command.Name);
-            return result;
+            //ToDo
+            //var result = await _context.IsWorksiteNameUnique(command.Name);
+            return true;
         }
     }
 }
