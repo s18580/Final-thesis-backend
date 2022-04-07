@@ -13,9 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{1B259E5F-B88D-4B45-95A9-61A7EEA17622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistance", "Persistance\Persistance.csproj", "{D5C24826-D7FD-4AEB-A56D-A9053E65C8D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "Persistance\Persistance.csproj", "{D5C24826-D7FD-4AEB-A56D-A9053E65C8D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{FDC5469E-83D1-4056-95C9-9110FE15624A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{FDC5469E-83D1-4056-95C9-9110FE15624A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5C24826-D7FD-4AEB-A56D-A9053E65C8D7} = {D5C24826-D7FD-4AEB-A56D-A9053E65C8D7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
