@@ -31,8 +31,9 @@ namespace Application.Functions.Worksites.Commands.UpdateWorksite
 
         private async Task<bool> IsWorksiteNameUnique(UpdateWorksiteCommand command, CancellationToken cancellationToken)
         {
-            var result = await _context.IsWorksiteNameUnique(command.Name, command.IdWorksite);
-            return result;
+            //ToDo
+            //var result = await _context.IsWorksiteNameUnique(command.Name, command.IdWorksite);
+            return true;
         }
 
         private async Task<bool> IsWorksiteExists(UpdateWorksiteCommand command, CancellationToken cancellationToken)
