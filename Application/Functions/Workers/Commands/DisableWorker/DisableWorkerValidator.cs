@@ -19,11 +19,11 @@ namespace Application.Functions.Workers.Commands.DisableWorker
 
         private async Task<bool> IsWorkerExists(DisableWorkerCommand command, CancellationToken cancellationToken)
         {
-            var role = await _context.Workers
-                                     .Where(p => p.IdWorker == command.Id)
-                                     .SingleOrDefaultAsync();
+            var worker = await _context.Workers
+                                       .Where(p => p.IdWorker == command.Id)
+                                       .SingleOrDefaultAsync();
 
-            return role != null;
+            return worker != null;
         }
     }
 }

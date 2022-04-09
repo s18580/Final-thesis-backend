@@ -47,11 +47,11 @@ namespace Application.Functions.Workers.Commands.CreateWorker
 
         private async Task<bool> IsWorkerEmailUnique(CreateWorkerCommand command, CancellationToken cancellationToken)
         {
-            var worksite = await _context.Workers
+            var worker = await _context.Workers
                                          .Where(x => x.EmailAddres == command.EmailAddress)
                                          .SingleOrDefaultAsync();
 
-            return worksite == null;
+            return worker == null;
         }
     }
 }

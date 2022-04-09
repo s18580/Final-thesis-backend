@@ -21,8 +21,8 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
             if (!validatorResult.IsValid) return new DeleteWorkerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var selectedWorker = await _context.Workers.Where(p => p.IdWorker == request.Id).SingleAsync();
-            selectedWorker.PhoneNumber = null;
-            selectedWorker.PassHash = null;
+            selectedWorker.PhoneNumber = "";
+            selectedWorker.PassHash = "";
             selectedWorker.IdWorksite = null;
 
             await _context.SaveChangesAsync();
