@@ -31,25 +31,20 @@ namespace Application.Functions.Worksites.Commands.UpdateWorksite
 
         private async Task<bool> IsWorksiteNameUnique(UpdateWorksiteCommand command, CancellationToken cancellationToken)
         {
-            //ToDo
-            //var result = await _context.IsWorksiteNameUnique(command.Name, command.IdWorksite);
-            return true;
+            var worksite = await _context.Worksites
+                                         .Where(x => x.Name == command.Name)
+                                         .SingleOrDefaultAsync();
+
+            return worksite == null;
         }
 
         private async Task<bool> IsWorksiteExists(UpdateWorksiteCommand command, CancellationToken cancellationToken)
         {
             var worksite = await _context.Worksites
-                                       .Where(p => p.IdWorksite == command.IdWorksite)
-                                       .SingleOrDefaultAsync();
+                                         .Where(p => p.IdWorksite == command.IdWorksite)
+                                         .SingleOrDefaultAsync();
 
-            if (worksite == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return worksite != null;
         }
     }
 }

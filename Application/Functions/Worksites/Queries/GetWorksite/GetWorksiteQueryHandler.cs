@@ -18,7 +18,7 @@ namespace Application.Functions.Worksites.Queries.GetWorksite
         {
             var worksite = await _context.Worksites
                                    .Where(p => p.IdWorksite == request.Id)
-                                   .SingleAsync();
+                                   .SingleOrDefaultAsync();
 
             return worksite;
         }
