@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Workers\Commands\DisableWorker\" />
     <Folder Include="Functions\Workers\Commands\UpdateWorker\" />
   </ItemGroup>
 
