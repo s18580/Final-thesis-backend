@@ -21,7 +21,7 @@ namespace Application.Functions.Workers.Commands.DisableWorker
             if (!validatorResult.IsValid) return new DisableWorkerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var worker = await _context.Workers.Where(p => p.IdWorker == request.Id).SingleAsync();
-            worker.IsDisabled = true;
+            worker.IsDisabled = request.IsDisabled;
 
             return new DisableWorkerResponse();
         }
