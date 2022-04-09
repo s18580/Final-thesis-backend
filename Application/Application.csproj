@@ -25,9 +25,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\Roles\Commands\CreateRole\" />
-    <Folder Include="Functions\Roles\Commands\UpdateRole\" />
-  </ItemGroup>
-
 </Project>
