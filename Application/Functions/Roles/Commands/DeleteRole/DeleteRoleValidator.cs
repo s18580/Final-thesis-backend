@@ -20,8 +20,8 @@ namespace Application.Functions.Roles.Commands.DeleteRole
         private async Task<bool> IsRoleExists(DeleteRoleCommand command, CancellationToken cancellationToken)
         {
             var role = await _context.Roles
-                                       .Where(p => p.IdRole == command.Id)
-                                       .SingleOrDefaultAsync();
+                                     .Where(p => p.IdRole == command.Id)
+                                     .SingleOrDefaultAsync();
 
             return role != null;
         }
