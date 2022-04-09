@@ -1,26 +1,30 @@
 ﻿using Application.Services;
-using Domain.Models;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.Workers.Queries.GetWorker
 {
-    public class GetWorkerQueryHandler : IRequestHandler<GetWorkerQuery, Worker>
+    public class GetWorkerQueryHandler : IRequestHandler<GetWorkerQuery, WorkerDTO>
     {
         private readonly IApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public GetWorkerQueryHandler(IApplicationContext context)
+        public GetWorkerQueryHandler(IApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<Worker> Handle(GetWorkerQuery request, CancellationToken cancellationToken)
+        public async Task<WorkerDTO> Handle(GetWorkerQuery request, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
                                        .Where(p => p.IdWorker == request.Id)
                                        .SingleOrDefaultAsync();
 
-            return worker;
+            var workerDTO = _mapper.Map<WorkerDTO>(worker);
+
+            return workerDTO;
         }
     }
 }

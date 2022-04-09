@@ -1,4 +1,5 @@
 ﻿using Application.Functions.Roles.Commands.CreateRole;
+using Application.Functions.Workers;
 using Application.Functions.Workers.Commands.CreateWorker;
 using Application.Functions.Worksites.Commands.CreateWorksite;
 using AutoMapper;
@@ -14,6 +15,7 @@ namespace Application.Mapper
             CreateMap<Worksite, CreateWorksiteCommand>().ReverseMap();
             CreateMap<Role, CreateRoleCommand>().ReverseMap();
             CreateMap<Worker, CreateWorkerCommand>().ReverseMap();
+            CreateMap<Worker, WorkerDTO>().ReverseMap();
         }
     }
 }

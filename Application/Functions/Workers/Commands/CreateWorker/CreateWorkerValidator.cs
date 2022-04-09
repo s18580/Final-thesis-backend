@@ -43,6 +43,10 @@ namespace Application.Functions.Workers.Commands.CreateWorker
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)
                 .WithMessage("Worker with the same email address already exist");
+
+            RuleFor(p => p).
+                MustAsync(DoesWorksiteExists)
+                .WithMessage("Worksite with the given id does not exist");
         }
 
         private async Task<bool> IsWorkerEmailUnique(CreateWorkerCommand command, CancellationToken cancellationToken)
@@ -52,6 +56,15 @@ namespace Application.Functions.Workers.Commands.CreateWorker
                                          .SingleOrDefaultAsync();
 
             return worker == null;
+        }
+
+        private async Task<bool> DoesWorksiteExists(CreateWorkerCommand command, CancellationToken cancellationToken)
+        {
+            var worksite = await _context.Worksites
+                                         .Where(x => x.IdWorksite == command.IdWorksite)
+                                         .SingleOrDefaultAsync();
+
+            return worksite == null;
         }
     }
 }

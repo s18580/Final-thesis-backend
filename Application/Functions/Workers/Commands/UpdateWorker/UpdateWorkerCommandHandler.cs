@@ -26,6 +26,7 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
             if (selectedWorker.LastName != request.LastName) { selectedWorker.LastName = request.LastName; }
             if (selectedWorker.PhoneNumber != request.PhoneNumber) { selectedWorker.PhoneNumber = request.PhoneNumber; }
             if (selectedWorker.EmailAddres != request.EmailAddres) { selectedWorker.EmailAddres = request.EmailAddres; }
+            if (selectedWorker.IdWorksite != request.IdWorksite) { selectedWorker.IdWorksite = request.IdWorksite; }
 
             await _context.SaveChangesAsync();
 
