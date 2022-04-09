@@ -26,7 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Roles\Commands\" />
+    <Folder Include="Functions\Roles\Commands\CreateRole\" />
+    <Folder Include="Functions\Roles\Commands\UpdateRole\" />
   </ItemGroup>
 
 </Project>
