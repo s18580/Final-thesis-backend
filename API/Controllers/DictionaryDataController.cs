@@ -1,4 +1,6 @@
-﻿using Application.Functions.Worksites.Commands.CreateWorksite;
+﻿using Application.Functions.Roles.Queries.GetRole;
+using Application.Functions.Roles.Queries.GetRolesList;
+using Application.Functions.Worksites.Commands.CreateWorksite;
 using Application.Functions.Worksites.Commands.DeleteWorksite;
 using Application.Functions.Worksites.Commands.UpdateWorksite;
 using Application.Functions.Worksites.Queries.GetWorksite;
@@ -107,6 +109,29 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
+        }
+        #endregion
+
+        #region Role
+        [HttpGet]
+        [Route("getRoles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var roles = await _mediator.Send(new GetRolesListQuery());
+            return Ok(roles);
+        }
+
+        [HttpGet]
+        [Route("getRole")]
+        public async Task<IActionResult> GetRole([FromQuery] int id)
+        {
+            var role = await _mediator.Send(new GetRoleQuery { Id = id });
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(role);
         }
         #endregion
     }
