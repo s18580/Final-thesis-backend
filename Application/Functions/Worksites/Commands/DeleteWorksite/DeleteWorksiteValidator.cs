@@ -23,14 +23,7 @@ namespace Application.Functions.Worksites.Commands.DeleteWorksite
                                        .Where(p => p.IdWorksite == command.Id)
                                        .SingleOrDefaultAsync();
 
-            if (worksite == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return worksite != null;
         }
     }
 }

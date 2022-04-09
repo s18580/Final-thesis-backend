@@ -9,9 +9,18 @@ builder.Services.AddControllers();
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistanceLayer(builder.Configuration);
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseSwaggerUI();
+app.UseSwagger(x => x.SerializeAsV2 = true);
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

@@ -1,5 +1,6 @@
 ﻿using Application.Services;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.Worksites.Commands.CreateWorksite
 {
@@ -26,9 +27,9 @@ namespace Application.Functions.Worksites.Commands.CreateWorksite
 
         private async Task<bool> IsWorksiteNameUnique(CreateWorksiteCommand command, CancellationToken cancellationToken)
         {
-            //ToDo
-            //var result = await _context.IsWorksiteNameUnique(command.Name);
-            return true;
+            var worksite = await _context.Worksites.Where(x => x.Name == command.Name).SingleOrDefaultAsync();
+           
+            return worksite == null;
         }
     }
 }
