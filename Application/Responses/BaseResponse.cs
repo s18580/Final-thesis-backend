@@ -34,6 +34,7 @@ namespace Application.Responses
             foreach (var item in validationResult.Errors)
             {
                 ValidationErrors.Add(item.ErrorMessage);
+                Message += (item.ErrorMessage + " ");
             }
         }
     }
