@@ -31,9 +31,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("getWorksite")]
-        public async Task<IActionResult> GetWorksite([FromBody] GetWorksiteQuery query)
+        public async Task<IActionResult> GetWorksite([FromQuery] int id)
         {
-            var worksite = await _mediator.Send(query);
+            var worksite = await _mediator.Send(new GetWorksiteQuery { Id = id  });
             return Ok(worksite);
         }
 
