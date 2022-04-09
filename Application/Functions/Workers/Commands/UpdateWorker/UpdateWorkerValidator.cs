@@ -32,7 +32,7 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
                    .MaximumLength(32)
                    .WithMessage("Worker phone number length can't be longer then 32 characters.");
 
-            RuleFor(p => p.EmailAddress)
+            RuleFor(p => p.EmailAddres)
                    .NotNull()
                    .WithMessage("Worker email address is required.")
                    .NotEmpty()
@@ -45,20 +45,20 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
                 .WithMessage("Worker with the same email address already exist");
 
             RuleFor(p => p).
-                MustAsync(IsWorkerExists)
+                MustAsync(DoesWorkerExists)
                 .WithMessage("Worker with the given id does not exist");
         }
 
         private async Task<bool> IsWorkerEmailUnique(UpdateWorkerCommand command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
-                                         .Where(x => x.EmailAddres == command.EmailAddress)
+                                         .Where(x => x.EmailAddres == command.EmailAddres)
                                          .SingleOrDefaultAsync();
 
             return worker == null;
         }
 
-        private async Task<bool> IsWorkerExists(UpdateWorkerCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesWorkerExists(UpdateWorkerCommand command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
                                          .Where(p => p.IdWorker == command.Id)

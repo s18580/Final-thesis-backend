@@ -13,11 +13,11 @@ namespace Application.Functions.Worksites.Commands.DeleteWorksite
             _context = context;
 
             RuleFor(p => p).
-                MustAsync(IsWorksiteExists)
+                MustAsync(DoesWorksiteExists)
                 .WithMessage("Worksite with given id does not exist");
         }
 
-        private async Task<bool> IsWorksiteExists(DeleteWorksiteCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesWorksiteExists(DeleteWorksiteCommand command, CancellationToken cancellationToken)
         {
             var worksite = await _context.Worksites
                                        .Where(p => p.IdWorksite == command.Id)

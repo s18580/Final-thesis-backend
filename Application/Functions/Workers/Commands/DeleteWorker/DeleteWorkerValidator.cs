@@ -13,7 +13,7 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
             _context = context;
 
             RuleFor(p => p).
-                MustAsync(IsWorkerExists)
+                MustAsync(DoesWorkerExists)
                 .WithMessage("Worker with given id does not exist");
 
             RuleFor(p => p).
@@ -21,7 +21,7 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
                 .WithMessage("The worker must be disabled before deleting");
         }
 
-        private async Task<bool> IsWorkerExists(DeleteWorkerCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesWorkerExists(DeleteWorkerCommand command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
                                      .Where(p => p.IdWorker == command.Id)

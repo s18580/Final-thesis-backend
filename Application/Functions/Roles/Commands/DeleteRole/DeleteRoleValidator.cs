@@ -13,11 +13,11 @@ namespace Application.Functions.Roles.Commands.DeleteRole
             _context = context;
 
             RuleFor(p => p).
-                MustAsync(IsRoleExists)
+                MustAsync(DoesRoleExists)
                 .WithMessage("Role with given id does not exist");
         }
 
-        private async Task<bool> IsRoleExists(DeleteRoleCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesRoleExists(DeleteRoleCommand command, CancellationToken cancellationToken)
         {
             var role = await _context.Roles
                                      .Where(p => p.IdRole == command.Id)

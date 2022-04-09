@@ -13,11 +13,11 @@ namespace Application.Functions.Workers.Commands.DisableWorker
             _context = context;
 
             RuleFor(p => p).
-                MustAsync(IsWorkerExists)
+                MustAsync(DoesWorkerExists)
                 .WithMessage("Worker with given id does not exist");
         }
 
-        private async Task<bool> IsWorkerExists(DisableWorkerCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesWorkerExists(DisableWorkerCommand command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
                                        .Where(p => p.IdWorker == command.Id)

@@ -25,7 +25,7 @@ namespace Application.Functions.Roles.Commands.UpdateRole
                 .WithMessage("Role with the same name already exist");
 
             RuleFor(p => p).
-                MustAsync(IsRoleExists)
+                MustAsync(DoesRoleExists)
                 .WithMessage("Role with given id does not exist");
         }
 
@@ -38,7 +38,7 @@ namespace Application.Functions.Roles.Commands.UpdateRole
             return worksite == null;
         }
 
-        private async Task<bool> IsRoleExists(UpdateRoleCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesRoleExists(UpdateRoleCommand command, CancellationToken cancellationToken)
         {
             var worksite = await _context.Roles
                                          .Where(p => p.IdRole == command.Id)
