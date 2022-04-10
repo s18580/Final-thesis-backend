@@ -1,15 +1,15 @@
-﻿using Domain.Models.DictionaryModels;
+﻿using Domain.Models;
+using Domain.Models.DictionaryModels;
 
-namespace Domain.Models
+namespace Application.Functions.Workers
 {
-    public class Worker
+    public class WorkerDTO
     {
         public int IdWorker { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddres { get; set; }
-        public string PassHash { get; set; }
         public bool IsDisabled { get; set; }
         public int? IdWorksite { get; set; }
 
