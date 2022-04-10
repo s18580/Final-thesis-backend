@@ -14,7 +14,7 @@ namespace Application.Functions.Workers.Commands.DisableWorker
 
             RuleFor(p => p).
                 MustAsync(DoesWorkerExists)
-                .WithMessage("Worker with given id does not exist");
+                .WithMessage("Worker with given id does not exist.");
         }
 
         private async Task<bool> DoesWorkerExists(DisableWorkerCommand command, CancellationToken cancellationToken)

@@ -42,15 +42,15 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
 
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)
-                .WithMessage("Worker with the same email address already exist");
+                .WithMessage("Worker with the same email address already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesWorkerExists)
-                .WithMessage("Worker with the given id does not exist");
+                .WithMessage("Worker with the given id does not exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesWorksiteExists)
-                .WithMessage("Worksite with the given id does not exist");
+                .WithMessage("Worksite with the given id does not exist.");
         }
 
         private async Task<bool> IsWorkerEmailUnique(UpdateWorkerCommand command, CancellationToken cancellationToken)

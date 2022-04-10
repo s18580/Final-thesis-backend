@@ -23,6 +23,8 @@ namespace Application.Functions.Workers.Commands.DisableWorker
             var worker = await _context.Workers.Where(p => p.IdWorker == request.Id).SingleAsync();
             worker.IsDisabled = request.IsDisabled;
 
+            await _context.SaveChangesAsync();
+
             return new DisableWorkerResponse();
         }
     }

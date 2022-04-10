@@ -24,6 +24,7 @@ namespace Application.Functions.Workers.Commands.CreateWorker
             if (!validatorResult.IsValid) return new CreateWorkerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var newWorker = _mapper.Map<Worker>(request);
+            newWorker.PassHash = "";
             newWorker.IsDisabled = false;
 
             await _context.Workers.AddAsync(newWorker);

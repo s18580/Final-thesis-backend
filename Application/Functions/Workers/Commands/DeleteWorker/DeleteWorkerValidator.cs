@@ -14,11 +14,11 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
 
             RuleFor(p => p).
                 MustAsync(DoesWorkerExists)
-                .WithMessage("Worker with given id does not exist");
+                .WithMessage("Worker with given id does not exist.");
 
             RuleFor(p => p).
                 MustAsync(IsWorkerDisabled)
-                .WithMessage("The worker must be disabled before deleting");
+                .WithMessage("The worker must be disabled before deleting.");
         }
 
         private async Task<bool> DoesWorkerExists(DeleteWorkerCommand command, CancellationToken cancellationToken)

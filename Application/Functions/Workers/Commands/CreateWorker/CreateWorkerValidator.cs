@@ -32,7 +32,7 @@ namespace Application.Functions.Workers.Commands.CreateWorker
                    .MaximumLength(32)
                    .WithMessage("Worker phone number length can't be longer then 32 characters.");
 
-            RuleFor(p => p.EmailAddress)
+            RuleFor(p => p.EmailAddres)
                    .NotNull()
                    .WithMessage("Worker email address is required.")
                    .NotEmpty()
@@ -42,17 +42,17 @@ namespace Application.Functions.Workers.Commands.CreateWorker
 
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)
-                .WithMessage("Worker with the same email address already exist");
+                .WithMessage("Worker with the same email address already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesWorksiteExists)
-                .WithMessage("Worksite with the given id does not exist");
+                .WithMessage("Worksite with the given id does not exist.");
         }
 
         private async Task<bool> IsWorkerEmailUnique(CreateWorkerCommand command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
-                                         .Where(x => x.EmailAddres == command.EmailAddress)
+                                         .Where(x => x.EmailAddres == command.EmailAddres)
                                          .SingleOrDefaultAsync();
 
             return worker == null;
@@ -64,7 +64,7 @@ namespace Application.Functions.Workers.Commands.CreateWorker
                                          .Where(x => x.IdWorksite == command.IdWorksite)
                                          .SingleOrDefaultAsync();
 
-            return worksite == null;
+            return worksite != null;
         }
     }
 }

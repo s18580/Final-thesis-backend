@@ -19,6 +19,7 @@ namespace Application.Functions.Workers.Queries.GetWorker
         public async Task<WorkerDTO> Handle(GetWorkerQuery request, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
+                                       .Include(m => m.Worksite)
                                        .Where(p => p.IdWorker == request.Id)
                                        .SingleOrDefaultAsync();
 
