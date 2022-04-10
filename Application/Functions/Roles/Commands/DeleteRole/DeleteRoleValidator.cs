@@ -14,7 +14,7 @@ namespace Application.Functions.Roles.Commands.DeleteRole
 
             RuleFor(p => p).
                 MustAsync(DoesRoleExists)
-                .WithMessage("Role with given id does not exist");
+                .WithMessage("Role with given id does not exist.");
         }
 
         private async Task<bool> DoesRoleExists(DeleteRoleCommand command, CancellationToken cancellationToken)
