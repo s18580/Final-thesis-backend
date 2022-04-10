@@ -26,9 +26,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\RoleAssignment\Queries\GetRoleAssignmentQuery\" />
-    <Folder Include="Functions\RoleAssignment\Queries\GetRoleAssignmentsListQuery\" />
-  </ItemGroup>
-
 </Project>
