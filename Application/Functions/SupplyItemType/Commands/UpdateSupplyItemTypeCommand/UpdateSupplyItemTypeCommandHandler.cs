@@ -20,7 +20,9 @@ namespace Application.Functions.SupplyItemType.Commands.UpdateSupplyItemTypeComm
 
             if (!validatorResult.IsValid) return new UpdateSupplyItemTypeResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var selectedSupplyItemType = await _context.SupplyItemTypes.Where(p => p.IdSupplyItemType == request.IdSupplyItemType).SingleAsync();
+            var selectedSupplyItemType = await _context.SupplyItemTypes
+                                                       .Where(p => p.IdSupplyItemType == request.IdSupplyItemType)
+                                                       .SingleAsync();
 
             if (selectedSupplyItemType.Name != request.Name) { selectedSupplyItemType.Name = request.Name; }
 

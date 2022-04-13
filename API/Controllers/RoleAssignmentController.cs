@@ -69,7 +69,7 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("getRoleAssignment")]
-        public async Task<IActionResult> GetWorker([FromQuery] int roleId, int workerId)
+        public async Task<IActionResult> GetRoleAssignment([FromQuery] int roleId, int workerId)
         {
             var roleAssignment = await _mediator.Send(new GetRoleAssignmentQuery { IdRole = roleId, IdWorker = workerId });
             if (roleAssignment == null)
@@ -82,7 +82,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("createRoleAssignment")]
-        public async Task<IActionResult> CreateWorker([FromBody] CreateRoleAssignmentCommand command)
+        public async Task<IActionResult> CreateRoleAssignment([FromBody] CreateRoleAssignmentCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -102,7 +102,7 @@ namespace API.Controllers
 
         [HttpDelete]
         [Route("deleteRoleAssignment")]
-        public async Task<IActionResult> DeleteWorker([FromBody] DeleteRoleAssignmentCommand command)
+        public async Task<IActionResult> DeleteRoleAssignment([FromBody] DeleteRoleAssignmentCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
