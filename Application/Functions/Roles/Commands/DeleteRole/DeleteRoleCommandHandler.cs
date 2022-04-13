@@ -20,7 +20,9 @@ namespace Application.Functions.Roles.Commands.DeleteRole
 
             if (!validatorResult.IsValid) return new DeleteRoleResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var roleToDelete = await _context.Roles.Where(p => p.IdRole == request.Id).SingleAsync();
+            var roleToDelete = await _context.Roles
+                                             .Where(p => p.IdRole == request.Id)
+                                             .SingleAsync();
 
             _context.Roles.Remove(roleToDelete);
             await _context.SaveChangesAsync();
