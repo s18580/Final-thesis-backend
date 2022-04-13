@@ -1,8 +1,8 @@
-﻿using Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeCommand;
-using Application.Functions.SupplyItemType.Commands.DeleteSupplyItemTypeCommand;
-using Application.Functions.SupplyItemType.Commands.UpdateSupplyItemTypeCommand;
-using Application.Functions.SupplyItemType.Queries.GetSupplyItemTypeListQuery;
-using Application.Functions.SupplyItemType.Queries.GetSupplyItemTypeQuery;
+﻿using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
+using Application.Functions.OrderItemType.Commands.DeleteOrderItemTypeCommand;
+using Application.Functions.OrderItemType.Commands.UpdateOrderItemTypeCommand;
+using Application.Functions.OrderItemType.Queries.GetOrderItemTypeListQuery;
+using Application.Functions.OrderItemType.Queries.GetOrderItemTypeQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -12,39 +12,39 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SupplyItemTypeController : ControllerBase
+    public class OrderItemTypeController : ControllerBase
     {
         private IMediator _mediator;
 
-        public SupplyItemTypeController(IMediator mediator)
+        public OrderItemTypeController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        [Route("getSupplyItemsTypes")]
-        public async Task<IActionResult> GetSupplyItemsTypes()
+        [Route("getOrderItemsTypes")]
+        public async Task<IActionResult> GetOrderItemsTypes()
         {
-            var supplyItemsType = await _mediator.Send(new GetSupplyItemTypeListQuery());
-            return Ok(supplyItemsType);
+            var orderItemsType = await _mediator.Send(new GetOrderItemTypeListQuery());
+            return Ok(orderItemsType);
         }
 
         [HttpGet]
-        [Route("getSupplyItemsType")]
-        public async Task<IActionResult> GetSupplyItemsType([FromQuery] int id)
+        [Route("getOrderItemsType")]
+        public async Task<IActionResult> GetOrderItemsType([FromQuery] int id)
         {
-            var supplyItemType = await _mediator.Send(new GetSupplyItemTypeQuery { IdSupplyItemType = id });
-            if (supplyItemType == null)
+            var orderItemType = await _mediator.Send(new GetOrderItemTypeQuery { IdOrderItemType = id });
+            if (orderItemType == null)
             {
                 return NotFound();
             }
 
-            return Ok(supplyItemType);
+            return Ok(orderItemType);
         }
 
         [HttpPost]
-        [Route("createSupplyItemsType")]
-        public async Task<IActionResult> CreateSupplyItemsType([FromBody] CreateSupplyItemTypeCommand command)
+        [Route("createOrderItemsType")]
+        public async Task<IActionResult> CreateOrderItemsType([FromBody] CreateOrderItemTypeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -63,8 +63,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("updateSupplyItemsType")]
-        public async Task<IActionResult> UpdateSupplyItemsType([FromBody] UpdateSupplyItemTypeCommand command)
+        [Route("updateOrderItemsType")]
+        public async Task<IActionResult> UpdateOrderItemsType([FromBody] UpdateOrderItemTypeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -86,8 +86,8 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        [Route("deleteSupplyItemsType")]
-        public async Task<IActionResult> DeleteSupplyItemsType([FromBody] DeleteSupplyItemTypeCommand command)
+        [Route("deleteOrderItemsType")]
+        public async Task<IActionResult> DeleteOrderItemsType([FromBody] DeleteOrderItemTypeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
