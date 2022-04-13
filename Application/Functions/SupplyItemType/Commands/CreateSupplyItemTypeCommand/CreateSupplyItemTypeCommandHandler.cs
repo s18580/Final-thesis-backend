@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeCommand
 {
-    internal class CreateSupplyItemTypeCommandHandler : IRequestHandler<CreateSupplyItemTypeCommand, CreateSupplyItemTypeResponse>
+    public class CreateSupplyItemTypeCommandHandler : IRequestHandler<CreateSupplyItemTypeCommand, CreateSupplyItemTypeResponse>
     {
         private readonly IApplicationContext _context;
         private readonly IMapper _mapper;
