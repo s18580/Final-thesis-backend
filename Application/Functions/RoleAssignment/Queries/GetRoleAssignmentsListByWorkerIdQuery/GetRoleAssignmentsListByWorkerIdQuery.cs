@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Application.Functions.RoleAssignment.Queries.GetRoleAssignmentsListQuery
 {
-    internal class GetRoleAssignmentsListByWorkerIdQuery
+    public class GetRoleAssignmentsListByWorkerIdQuery : IRequest<List<Domain.Models.RoleAssignment>>
     {
+        public int IdWorker { get; set; }
     }
 }
