@@ -27,7 +27,9 @@ namespace Application.Functions.Roles.Commands.CreateRole
 
         private async Task<bool> IsRoleNameUnique(CreateRoleCommand command, CancellationToken cancellationToken)
         {
-            var role = await _context.Roles.Where(x => x.Name == command.Name).SingleOrDefaultAsync();
+            var role = await _context.Roles
+                                     .Where(x => x.Name == command.Name)
+                                     .SingleOrDefaultAsync();
 
             return role == null;
         }
