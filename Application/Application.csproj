@@ -26,4 +26,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Functions\OrderItemType\Commands\CreateOrderItemTypeCommand\" />
+    <Folder Include="Functions\OrderItemType\Commands\DeleteOrderItemTypeCommand\" />
+    <Folder Include="Functions\OrderItemType\Commands\UpdateOrderItemTypeCommand\" />
+  </ItemGroup>
+
 </Project>
