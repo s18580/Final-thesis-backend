@@ -31,20 +31,20 @@ namespace Application.Functions.Roles.Commands.UpdateRole
 
         private async Task<bool> IsRoleNameUnique(UpdateRoleCommand command, CancellationToken cancellationToken)
         {
-            var worksite = await _context.Roles
+            var role = await _context.Roles
                                          .Where(x => x.Name == command.Name)
                                          .SingleOrDefaultAsync();
 
-            return worksite == null;
+            return role == null;
         }
 
         private async Task<bool> DoesRoleExists(UpdateRoleCommand command, CancellationToken cancellationToken)
         {
-            var worksite = await _context.Roles
+            var role = await _context.Roles
                                          .Where(p => p.IdRole == command.Id)
                                          .SingleOrDefaultAsync();
 
-            return worksite != null;
+            return role != null;
         }
     }
 }
