@@ -2,7 +2,7 @@
 
 namespace Application.Functions.RoleAssignment.Queries.GetRoleAssignmentListByRoleIdQuery
 {
-    public class GetRoleAssignmentListByRoleIdQuery : IRequest<List<Domain.Models.RoleAssignment>>
+    public class GetRoleAssignmentListByRoleIdQuery : IRequest<GetRoleAssignmentListByRoleIdResponse>
     {
         public int IdRole { get; set; }
     }

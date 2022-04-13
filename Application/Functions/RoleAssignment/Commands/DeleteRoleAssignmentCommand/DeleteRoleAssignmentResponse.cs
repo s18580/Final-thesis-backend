@@ -3,7 +3,7 @@ using FluentValidation.Results;
 
 namespace Application.Functions.RoleAssignment.Commands.DeleteRoleAssignmentCommand
 {
-    public class DeleteRoleAssignmentResponse :BaseResponse
+    public class DeleteRoleAssignmentResponse : BaseResponse
     {
         public DeleteRoleAssignmentResponse() : base()
         { }

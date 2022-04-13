@@ -19,12 +19,12 @@ namespace Application.Functions.RoleAssignment.Commands.DeleteRoleAssignmentComm
 
         private async Task<bool> DoesRoleAssignmentExists(DeleteRoleAssignmentCommand command, CancellationToken cancellationToken)
         {
-            var role = await _context.RoleAssignments
+            var roleAssignment = await _context.RoleAssignments
                                      .Where(p => p.IdRole == command.IdRole)
                                      .Where(p => p.IdWorker == command.IdWorker)
                                      .SingleOrDefaultAsync();
 
-            return role != null;
+            return roleAssignment != null;
         }
     }
 }
