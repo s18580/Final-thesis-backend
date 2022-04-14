@@ -26,4 +26,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Functions\FileType\Commands\CreateFileTypeCommand\" />
+    <Folder Include="Functions\FileType\Commands\DeleteFileTypeCommand\" />
+    <Folder Include="Functions\FileType\Commands\UpdateFileTypeCommand\" />
+  </ItemGroup>
+
 </Project>
