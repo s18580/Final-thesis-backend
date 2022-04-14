@@ -14,15 +14,15 @@ namespace Application.Functions.DeliveryType.Commands.UpdateDeliveryTypeCommand
 
             RuleFor(p => p.Name)
                   .NotNull()
-                  .WithMessage("Delivery type item type name is required.")
+                  .WithMessage("Delivery type name is required.")
                   .NotEmpty()
-                  .WithMessage("Delivery type item type name is required.")
+                  .WithMessage("Delivery type name is required.")
                   .MaximumLength(30)
-                  .WithMessage("Delivery type item type name length can't be longer then 30 characters.");
+                  .WithMessage("Delivery type name length can't be longer then 30 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsDeliveryTypeNameUnique)
-                .WithMessage("Delivery type item type with the same name already exist.");
+                .WithMessage("Delivery type with the same name already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesDeliveryTypeExists)

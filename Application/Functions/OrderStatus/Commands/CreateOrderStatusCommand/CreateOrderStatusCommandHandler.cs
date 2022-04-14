@@ -17,7 +17,7 @@ namespace Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand
 
         public async Task<CreateOrderStatusResponse> Handle(CreateOrderStatusCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreateOrderStatusCommandValidator(_context);
+            var validator = new CreateOrderStatusValidator(_context);
             var validatorResult = await validator.ValidateAsync(request);
 
             if (!validatorResult.IsValid) return new CreateOrderStatusResponse(validatorResult, Responses.ResponseStatus.ValidationError);

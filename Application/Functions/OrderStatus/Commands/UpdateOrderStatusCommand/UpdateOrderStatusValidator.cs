@@ -14,15 +14,15 @@ namespace Application.Functions.OrderStatus.Commands.UpdateOrderStatusCommand
 
             RuleFor(p => p.Name)
                   .NotNull()
-                  .WithMessage("Order status item type name is required.")
+                  .WithMessage("Order status name is required.")
                   .NotEmpty()
-                  .WithMessage("Order status item type name is required.")
+                  .WithMessage("Order status name is required.")
                   .MaximumLength(30)
-                  .WithMessage("Order status item type name length can't be longer then 30 characters.");
+                  .WithMessage("Order status name length can't be longer then 30 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsOrderStatusNameUnique)
-                .WithMessage("Order status item type with the same name already exist.");
+                .WithMessage("Order status with the same name already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesOrderStatusExists)

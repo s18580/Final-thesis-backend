@@ -14,15 +14,15 @@ namespace Application.Functions.OrderItemType.Commands.UpdateOrderItemTypeComman
 
             RuleFor(p => p.Name)
                   .NotNull()
-                  .WithMessage("Order item type item type name is required.")
+                  .WithMessage("Order item type name is required.")
                   .NotEmpty()
-                  .WithMessage("Order item type item type name is required.")
+                  .WithMessage("Order item type name is required.")
                   .MaximumLength(30)
-                  .WithMessage("Order item type item type name length can't be longer then 30 characters.");
+                  .WithMessage("Order item type name length can't be longer then 30 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsOrderItemTypeNameUnique)
-                .WithMessage("Order item type item type with the same name already exist.");
+                .WithMessage("Order item type with the same name already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesOrderItemTypeExists)
