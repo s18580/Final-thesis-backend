@@ -15,15 +15,15 @@ namespace Application.Functions.FileType.Commands.UpdateFileTypeCommand
 
             RuleFor(p => p.Name)
                   .NotNull()
-                  .WithMessage("File type item type name is required.")
+                  .WithMessage("File type name is required.")
                   .NotEmpty()
-                  .WithMessage("File type item type name is required.")
+                  .WithMessage("File type name is required.")
                   .MaximumLength(30)
-                  .WithMessage("File type item type name length can't be longer then 30 characters.");
+                  .WithMessage("File type name length can't be longer then 30 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsFileTypeNameUnique)
-                .WithMessage("File type item type with the same name already exist.");
+                .WithMessage("File type with the same name already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesFileTypeExists)

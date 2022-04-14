@@ -1,4 +1,5 @@
 ﻿using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
+using Application.Functions.FileStatus.Commands.CreateFileStatusCommand;
 using Application.Functions.FileType.Commands.CreateFileTypeCommand;
 using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
@@ -28,6 +29,7 @@ namespace Application.Mapper
             CreateMap<DeliveryType, CreateDeliveryTypeCommand>().ReverseMap();
             CreateMap<OrderStatus, CreateOrderStatusCommand>().ReverseMap();
             CreateMap<FileType, CreateFileTypeCommand>().ReverseMap();
+            CreateMap<FileStatus, CreateFileStatusCommand>().ReverseMap();
         }
     }
 }
