@@ -1,4 +1,5 @@
-﻿using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
+﻿using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
+using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
 using Application.Functions.Roles.Commands.CreateRole;
 using Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeCommand;
@@ -22,6 +23,7 @@ namespace Application.Mapper
             CreateMap<RoleAssignment, CreateRoleAssignmentCommand>().ReverseMap();
             CreateMap<SupplyItemType, CreateSupplyItemTypeCommand>().ReverseMap();
             CreateMap<OrderItemType, CreateOrderItemTypeCommand>().ReverseMap();
+            CreateMap<DeliveryType, CreateDeliveryTypeCommand>().ReverseMap();
         }
     }
 }
