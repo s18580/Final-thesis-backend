@@ -13,11 +13,11 @@ namespace Application.Functions.OrderItemType.Commands.DeleteOrderItemTypeComman
             _context = context;
 
             RuleFor(p => p).
-                MustAsync(DoesSupplyItemTypeExists)
+                MustAsync(DoesOrderItemTypeExists)
                 .WithMessage("Order item type with given id does not exist.");
         }
 
-        private async Task<bool> DoesSupplyItemTypeExists(DeleteOrderItemTypeCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesOrderItemTypeExists(DeleteOrderItemTypeCommand command, CancellationToken cancellationToken)
         {
             var orderItemType = await _context.OrderItemTypes
                                      .Where(p => p.IdOrderItemType == command.IdOrderItemType)

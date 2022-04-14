@@ -22,11 +22,11 @@ namespace Application.Functions.OrderItemType.Commands.UpdateOrderItemTypeComman
 
             RuleFor(p => p).
                 MustAsync(IsOrderItemTypeNameUnique)
-                .WithMessage("Order item type item type with the same name already exist");
+                .WithMessage("Order item type item type with the same name already exist.");
 
             RuleFor(p => p).
                 MustAsync(DoesOrderItemTypeExists)
-                .WithMessage("Order item type with given id does not exist");
+                .WithMessage("Order item type with given id does not exist.");
         }
 
         private async Task<bool> IsOrderItemTypeNameUnique(UpdateOrderItemTypeCommand command, CancellationToken cancellationToken)

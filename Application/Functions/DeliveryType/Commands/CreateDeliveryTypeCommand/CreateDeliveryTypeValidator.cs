@@ -22,7 +22,7 @@ namespace Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand
 
             RuleFor(p => p).
                 MustAsync(IsDeliveryTypeNameUnique)
-                .WithMessage("Delivery type item type with the same name already exist");
+                .WithMessage("Delivery type item type with the same name already exist.");
         }
 
         private async Task<bool> IsDeliveryTypeNameUnique(CreateDeliveryTypeCommand command, CancellationToken cancellationToken)
