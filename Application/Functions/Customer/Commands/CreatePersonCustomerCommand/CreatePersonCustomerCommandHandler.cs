@@ -2,7 +2,7 @@
 using AutoMapper;
 using MediatR;
 
-namespace Application.Functions.Customer.PersonCustomer.Commands.CreatePersonCustomerCommand
+namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
 {
     public class CreatePersonCustomerCommandHandler : IRequestHandler<CreatePersonCustomerCommand, CreatePersonCustomerResponse>
     {

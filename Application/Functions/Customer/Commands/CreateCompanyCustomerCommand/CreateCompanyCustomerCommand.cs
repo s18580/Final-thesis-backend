@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Functions.Customer.CompanyCustomer.Commands.CreateCompanyCustomerCommand
+namespace Application.Functions.Customer.Commands.CreateCompanyCustomerCommand
 {
     public class CreateCompanyCustomerCommand : IRequest<CreateCompanyCustomerResponse>
     {

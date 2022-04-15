@@ -27,12 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Customer\CompanyCustomer\Commands\DeleteCompanyCustomerCommand\" />
-    <Folder Include="Functions\Customer\CompanyCustomer\Commands\UpdateCompanyCustomerCommand\" />
-    <Folder Include="Functions\Customer\CompanyCustomer\Queries\" />
-    <Folder Include="Functions\Customer\PersonCustomer\Commands\DeletePersonCustomerCommand\" />
-    <Folder Include="Functions\Customer\PersonCustomer\Commands\UpdatePersonCustomerCommand\" />
-    <Folder Include="Functions\Customer\PersonCustomer\Queries\" />
+    <Folder Include="Functions\Customer\Queries\GetCompanyCustomerListQuery\" />
+    <Folder Include="Functions\Customer\Queries\GetPersonCustomerListQuery\" />
+    <Folder Include="Functions\Customer\Queries\GetCompanyCustomerQuery\" />
+    <Folder Include="Functions\Customer\Queries\GetPersonCustomerQuery\" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Functions.Customer.PersonCustomer.Commands.CreatePersonCustomerCommand
+namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
 {
     public class CreatePersonCustomerValidator : AbstractValidator<CreatePersonCustomerCommand>
     {

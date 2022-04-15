@@ -1,5 +1,6 @@
-﻿using Application.Functions.Customer.CompanyCustomer;
-using Application.Functions.Customer.PersonCustomer;
+﻿using Application.Functions.Customer;
+using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
+using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
 using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
 using Application.Functions.FileStatus.Commands.CreateFileStatusCommand;
 using Application.Functions.FileType.Commands.CreateFileTypeCommand;
@@ -32,8 +33,10 @@ namespace Application.Mapper
             CreateMap<OrderStatus, CreateOrderStatusCommand>().ReverseMap();
             CreateMap<FileType, CreateFileTypeCommand>().ReverseMap();
             CreateMap<FileStatus, CreateFileStatusCommand>().ReverseMap();
-            CreateMap<CompanyCustomerDTO, Customer>().ReverseMap();
-            CreateMap<PersonCustomerDTO, Customer>().ReverseMap();
+            CreateMap<CreateCompanyCustomerCommand, Customer>().ReverseMap();
+            CreateMap<CreatePersonCustomerCommand, Customer>().ReverseMap();
+            CreateMap<Customer, CompanyCustomerDTO>().ReverseMap();
+            CreateMap<Customer, PersonCustomerDTO>().ReverseMap();
         }
     }
 }

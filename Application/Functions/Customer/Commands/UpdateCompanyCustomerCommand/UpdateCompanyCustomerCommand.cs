@@ -1,8 +1,8 @@
-﻿using Domain.Models;
+﻿using MediatR;
 
-namespace Application.Functions.Customer.CompanyCustomer
+namespace Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand
 {
-    public class CompanyCustomerDTO
+    public class UpdateCompanyCustomerCommand : IRequest<UpdateCompanyCustomerResponse>
     {
         public int IdCustomer { get; set; }
         public string CompanyName { get; set; }
@@ -11,9 +11,5 @@ namespace Application.Functions.Customer.CompanyCustomer
         public string CompanyPhoneNumber { get; set; }
         public string CompanyEmailAddress { get; set; }
         public int? IdWorker { get; set; }
-
-        public Worker Worker { get; set; }
-        public ICollection<Address> Addresses { get; set; }
-        public ICollection<Representative> Representatives { get; set; }
     }
 }

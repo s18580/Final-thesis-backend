@@ -1,7 +1,7 @@
 ﻿using Application.Responses;
 using FluentValidation.Results;
 
-namespace Application.Functions.Customer.PersonCustomer.Commands.CreatePersonCustomerCommand
+namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
 {
     public class CreatePersonCustomerResponse : BaseResponse
     {

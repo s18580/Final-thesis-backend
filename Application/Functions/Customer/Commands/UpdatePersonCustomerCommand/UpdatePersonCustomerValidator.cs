@@ -2,13 +2,13 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Functions.Customer.CompanyCustomer.Commands.CreateCompanyCustomerCommand
+namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
 {
-    public class CreateCompanyCustomerValidator : AbstractValidator<CreateCompanyCustomerCommand>
+    public class UpdatePersonCustomerValidator : AbstractValidator<UpdatePersonCustomerCommand>
     {
         private readonly IApplicationContext _context;
 
-        public CreateCompanyCustomerValidator(IApplicationContext context)
+        public UpdatePersonCustomerValidator(IApplicationContext context)
         {
             _context = context;
 
@@ -19,14 +19,6 @@ namespace Application.Functions.Customer.CompanyCustomer.Commands.CreateCompanyC
                    .WithMessage("Company name is required.")
                    .MaximumLength(255)
                    .WithMessage("Company name length can't be longer then 255 characters.");
-
-            RuleFor(p => p.NIP)
-                   .NotNull()
-                   .WithMessage("NIP is required.");
-
-            RuleFor(p => p.Regon)
-                   .NotNull()
-                   .WithMessage("Regon is required.");
 
             RuleFor(p => p.CompanyEmailAddress)
                    .NotNull()
@@ -45,15 +37,19 @@ namespace Application.Functions.Customer.CompanyCustomer.Commands.CreateCompanyC
                    .WithMessage("Company phone number length can't be longer then 32 characters.");
 
             RuleFor(p => p).
+                MustAsync(DoesCustomerExists)
+                .WithMessage("Customer with given id does not exists.");
+
+            RuleFor(p => p).
                 MustAsync(IsCompanyEmailAddressUnique)
                 .WithMessage("Customer with same company email address already exist.");
 
             RuleFor(p => p).
-                MustAsync(CheckIfWorkerExists)
+                MustAsync(DoesWorkerExists)
                 .WithMessage("Worker with given id does not exists.");
         }
 
-        private async Task<bool> IsCompanyEmailAddressUnique(CreateCompanyCustomerCommand command, CancellationToken cancellationToken)
+        private async Task<bool> IsCompanyEmailAddressUnique(UpdatePersonCustomerCommand command, CancellationToken cancellationToken)
         {
             var email = await _context.Customers
                                       .Where(x => x.CompanyEmailAddress == command.CompanyEmailAddress)
@@ -62,7 +58,7 @@ namespace Application.Functions.Customer.CompanyCustomer.Commands.CreateCompanyC
             return email == null;
         }
 
-        private async Task<bool> CheckIfWorkerExists(CreateCompanyCustomerCommand command, CancellationToken cancellationToken)
+        private async Task<bool> DoesWorkerExists(UpdatePersonCustomerCommand command, CancellationToken cancellationToken)
         {
             if (command.IdWorker == null)
             {
@@ -76,6 +72,15 @@ namespace Application.Functions.Customer.CompanyCustomer.Commands.CreateCompanyC
 
                 return worker != null;
             }
+        }
+
+        private async Task<bool> DoesCustomerExists(UpdatePersonCustomerCommand command, CancellationToken cancellationToken)
+        {
+            var customer = await _context.Customers
+                                           .Where(p => p.IdCustomer == command.IdCustomer)
+                                           .SingleOrDefaultAsync();
+
+            return customer != null;
         }
     }
 }
