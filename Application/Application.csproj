@@ -26,4 +26,13 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Functions\Customer\CompanyCustomer\Commands\DeleteCompanyCustomerCommand\" />
+    <Folder Include="Functions\Customer\CompanyCustomer\Commands\UpdateCompanyCustomerCommand\" />
+    <Folder Include="Functions\Customer\CompanyCustomer\Queries\" />
+    <Folder Include="Functions\Customer\PersonCustomer\Commands\DeletePersonCustomerCommand\" />
+    <Folder Include="Functions\Customer\PersonCustomer\Commands\UpdatePersonCustomerCommand\" />
+    <Folder Include="Functions\Customer\PersonCustomer\Queries\" />
+  </ItemGroup>
+
 </Project>
