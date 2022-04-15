@@ -26,11 +26,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\Customer\Queries\GetCompanyCustomerListQuery\" />
-    <Folder Include="Functions\Customer\Queries\GetPersonCustomerListQuery\" />
-    <Folder Include="Functions\Customer\Queries\GetCompanyCustomerQuery\" />
-    <Folder Include="Functions\Customer\Queries\GetPersonCustomerQuery\" />
-  </ItemGroup>
-
 </Project>
