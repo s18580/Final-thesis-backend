@@ -5,6 +5,7 @@ using Application.Functions.FileStatus.Commands.CreateFileStatusCommand;
 using Application.Functions.FileType.Commands.CreateFileTypeCommand;
 using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
+using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
 using Application.Functions.Roles.Commands.CreateRole;
 using Application.Functions.Supplier.Commands.CreateSupplierCommand;
@@ -36,6 +37,7 @@ namespace Application.Mapper
             CreateMap<CreateCompanyCustomerCommand, Customer>().ReverseMap();
             CreateMap<CreatePersonCustomerCommand, Customer>().ReverseMap();
             CreateMap<CreateSupplierCommand, Supplier>().ReverseMap();
+            CreateMap<CreateRepresentativeCommand, Representative>().ReverseMap();
         }
     }
 }

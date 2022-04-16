@@ -198,7 +198,7 @@ namespace Persistance.Context
                    .HasMaxLength(64)
                    .IsRequired();
 
-                opt.Property(p => p.PhonerNumber)
+                opt.Property(p => p.PhoneNumber)
                    .HasMaxLength(32);
 
                 opt.Property(p => p.EmailAddress)
