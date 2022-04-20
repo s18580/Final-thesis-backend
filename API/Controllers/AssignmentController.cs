@@ -1,8 +1,9 @@
-﻿using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
-using Application.Functions.RoleAssignment.Commands.DeleteRoleAssignmentCommand;
-using Application.Functions.RoleAssignment.Queries.GetRoleAssignmentListByRoleIdQuery;
-using Application.Functions.RoleAssignment.Queries.GetRoleAssignmentQuery;
-using Application.Functions.RoleAssignment.Queries.GetRoleAssignmentsListQuery;
+﻿using Application.Functions.Assignment.Commands.CreateAssignmentCommand;
+using Application.Functions.Assignment.Commands.DeleteAssignmentCommand;
+using Application.Functions.Assignment.Commands.UpdateAssignmentCommand;
+using Application.Functions.Assignment.Queries.GetAssignmentListByOrderQuery;
+using Application.Functions.Assignment.Queries.GetAssignmentListByWorkerQuery;
+using Application.Functions.Assignment.Queries.GetAssignmentQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -12,20 +13,20 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleAssignmentController : ControllerBase
+    public class AssignmentController : ControllerBase
     {
         private IMediator _mediator;
 
-        public RoleAssignmentController(IMediator mediator)
+        public AssignmentController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        [Route("getRoleAssignmentsWorker")]
-        public async Task<IActionResult> GetRoleAssignmentsByWorker([FromQuery] int workerId)
+        [Route("getAssignmentsWorker")]
+        public async Task<IActionResult> GetAssignmentsByWorker([FromQuery] int workerId)
         {
-            var response = await _mediator.Send(new GetRoleAssignmentListByWorkerIdQuery { IdWorker = workerId });
+            var response = await _mediator.Send(new GetAssignmentListByWorkerQuery { IdWorker = workerId });
             if (response.Success)
             {
                 return Ok();
@@ -45,10 +46,10 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("getRoleAssignmentsRole")]
-        public async Task<IActionResult> GetRoleAssignmentsByRole([FromQuery] int roleId)
+        [Route("getAssignmentsOrder")]
+        public async Task<IActionResult> GetAssignmentsByOrder([FromQuery] int orderId)
         {
-            var response = await _mediator.Send(new GetRoleAssignmentListByRoleIdQuery { IdRole = roleId });
+            var response = await _mediator.Send(new GetAssignmentListByOrderQuery { IdOrder = orderId });
             if (response.Success)
             {
                 return Ok();
@@ -68,21 +69,41 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("getRoleAssignment")]
-        public async Task<IActionResult> GetRoleAssignment([FromQuery] int roleId, int workerId)
+        [Route("getAssignment")]
+        public async Task<IActionResult> GetAssignment([FromQuery] int orderId, int workerId)
         {
-            var roleAssignment = await _mediator.Send(new GetRoleAssignmentQuery { IdRole = roleId, IdWorker = workerId });
-            if (roleAssignment == null)
+            var assignment = await _mediator.Send(new GetAssignmentQuery { IdOrder = orderId, IdWorker = workerId });
+            if (assignment == null)
             {
                 return NotFound();
             }
 
-            return Ok(roleAssignment);
+            return Ok(assignment);
         }
 
         [HttpPost]
-        [Route("createRoleAssignment")]
-        public async Task<IActionResult> CreateRoleAssignment([FromBody] CreateRoleAssignmentCommand command)
+        [Route("createAssignment")]
+        public async Task<IActionResult> CreateAssignment([FromBody] CreateAssignmentCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Success)
+            {
+                return Ok();
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+        
+        [HttpPost]
+        [Route("updateAssignment")]
+        public async Task<IActionResult> UpdateAssignment([FromBody] UpdateAssignmentCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -101,8 +122,8 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        [Route("deleteRoleAssignment")]
-        public async Task<IActionResult> DeleteRoleAssignment([FromBody] DeleteRoleAssignmentCommand command)
+        [Route("deleteAssignment")]
+        public async Task<IActionResult> DeleteAssignment([FromBody] DeleteAssignmentCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
