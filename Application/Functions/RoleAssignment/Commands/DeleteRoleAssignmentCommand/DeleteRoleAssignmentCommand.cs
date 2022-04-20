@@ -1,5 +1,4 @@
-﻿
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Functions.RoleAssignment.Commands.DeleteRoleAssignmentCommand
 {
