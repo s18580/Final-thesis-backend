@@ -1,8 +1,8 @@
-﻿using Application.Functions.FileType.Commands.CreateFileTypeCommand;
-using Application.Functions.FileType.Commands.DeleteFileTypeCommand;
-using Application.Functions.FileType.Commands.UpdateFileTypeCommand;
-using Application.Functions.FileType.Queries.GetFileTypeListQuery;
-using Application.Functions.FileType.Queries.GetFileTypeQuery;
+﻿using Application.Functions.BindingType.Commands.CreateBindingTypeCommand;
+using Application.Functions.BindingType.Commands.DeleteBindingTypeCommand;
+using Application.Functions.BindingType.Commands.UpdateBindingTypeCommand;
+using Application.Functions.BindingType.Queries.GetBindingTypeListQuery;
+using Application.Functions.BindingType.Queries.GetBindingTypeQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -12,39 +12,39 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileTypeController : ControllerBase
+    public class BindingTypeController : ControllerBase
     {
         private IMediator _mediator;
 
-        public FileTypeController(IMediator mediator)
+        public BindingTypeController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpGet]
-        [Route("getFileTypes")]
-        public async Task<IActionResult> GetFileTypes()
+        [Route("getBindingTypes")]
+        public async Task<IActionResult> GetBindingTypes()
         {
-            var fileTypes = await _mediator.Send(new GetFileTypeListQuery());
-            return Ok(fileTypes);
+            var bindingTypes = await _mediator.Send(new GetBindingTypeListQuery());
+            return Ok(bindingTypes);
         }
 
         [HttpGet]
-        [Route("getFileType")]
-        public async Task<IActionResult> GetFileType([FromQuery] int id)
+        [Route("getBindingType")]
+        public async Task<IActionResult> GetBindingType([FromQuery] int id)
         {
-            var fileType = await _mediator.Send(new GetFileTypeQuery { IdFileType = id });
-            if (fileType == null)
+            var bindingType = await _mediator.Send(new GetBindingTypeQuery { IdBindingType = id });
+            if (bindingType == null)
             {
                 return NotFound();
             }
 
-            return Ok(fileType);
+            return Ok(bindingType);
         }
 
         [HttpPost]
-        [Route("createFileType")]
-        public async Task<IActionResult> CreateFileType([FromBody] CreateFileTypeCommand command)
+        [Route("createBindingType")]
+        public async Task<IActionResult> CreateBindingType([FromBody] CreateBindingTypeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -63,8 +63,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("updateFileType")]
-        public async Task<IActionResult> UpdateFileType([FromBody] UpdateFileTypeCommand command)
+        [Route("updateBindingType")]
+        public async Task<IActionResult> UpdateBindingType([FromBody] UpdateBindingTypeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -86,8 +86,8 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        [Route("deleteFileType")]
-        public async Task<IActionResult> DeleteFileType([FromBody] DeleteFileTypeCommand command)
+        [Route("deleteBindingType")]
+        public async Task<IActionResult> DeleteBindingType([FromBody] DeleteBindingTypeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
