@@ -6,6 +6,7 @@ using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
 using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
 using Application.Functions.FileStatus.Commands.CreateFileStatusCommand;
 using Application.Functions.FileType.Commands.CreateFileTypeCommand;
+using Application.Functions.OrderItem.Commands.CreateOrderItemCommand;
 using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
 using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
@@ -44,6 +45,7 @@ namespace Application.Mapper
             CreateMap<CreateAssignmentCommand, Assignment>().ReverseMap();
             CreateMap<CreateAddressCommand, Address>().ReverseMap();
             CreateMap<CreateBindingTypeCommand, BindingType>().ReverseMap();
+            CreateMap<CreateOrderItemCommand, OrderItem>().ReverseMap();
         }
     }
 }
