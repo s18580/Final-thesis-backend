@@ -1,5 +1,6 @@
 ﻿using Application.Functions.Address.Commands.CreateAddressCommand;
 using Application.Functions.Assignment.Commands.CreateAssignmentCommand;
+using Application.Functions.BindingType.Commands.CreateBindingTypeCommand;
 using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
 using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
@@ -42,6 +43,7 @@ namespace Application.Mapper
             CreateMap<CreateRepresentativeCommand, Representative>().ReverseMap();
             CreateMap<CreateAssignmentCommand, Assignment>().ReverseMap();
             CreateMap<CreateAddressCommand, Address>().ReverseMap();
+            CreateMap<CreateBindingTypeCommand, BindingType>().ReverseMap();
         }
     }
 }
