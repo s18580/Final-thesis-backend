@@ -11,7 +11,7 @@ namespace Application.Functions.Customer
         public int? IdWorker { get; set; }
 
         public Worker Worker { get; set; }
-        public ICollection<Address> Addresses { get; set; }
+        public ICollection<Domain.Models.Address> Addresses { get; set; }
         public ICollection<Domain.Models.Representative> Representatives { get; set; }
     }
 }

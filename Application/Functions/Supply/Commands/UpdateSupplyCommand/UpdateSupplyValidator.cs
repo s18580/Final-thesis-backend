@@ -31,10 +31,6 @@ namespace Application.Functions.Supply.Commands.UpdateSupplyCommand
             RuleFor(p => p).
                 MustAsync(DoesRepresentativeExists)
                 .WithMessage("Representative with given id does not exist.");
-
-            RuleFor(p => p).
-                MustAsync(DoesOrderItemExists)
-                .WithMessage("Order item with given id does not exist.");
         }
 
         private async Task<bool> DoesSupplyItemTypeExists(UpdateSupplyCommand command, CancellationToken cancellationToken)
@@ -62,15 +58,6 @@ namespace Application.Functions.Supply.Commands.UpdateSupplyCommand
                                        .SingleOrDefaultAsync();
 
             return representative != null;
-        }
-
-        private async Task<bool> DoesOrderItemExists(UpdateSupplyCommand command, CancellationToken cancellationToken)
-        {
-            var orderItem = await _context.OrderItems
-                                       .Where(p => p.IdOrderItem == command.IdOrderItem)
-                                       .SingleOrDefaultAsync();
-
-            return orderItem != null;
         }
     }
 }
