@@ -5,9 +5,9 @@
         public int IdServiceName { get; set; }
         public string Name { get; set; }
         public double? DefaultPrice { get; set; }
-        public int? IdMinimumRate { get; set; }
+        public double? MinimumPrice { get; set; }
+        public int? MinimumCirculation { get; set; }
 
-        public MinimumRate MinimumRate { get; set; }
         public ICollection<Service> Services { get; set; }
     }
 }
