@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.Roles.Queries.GetRolesList
 {
-    internal class GetRolesListQueryHandler : IRequestHandler<GetRolesListQuery, List<Role>>
+    public class GetRolesListQueryHandler : IRequestHandler<GetRolesListQuery, List<Role>>
     {
         private readonly IApplicationContext _context;
 

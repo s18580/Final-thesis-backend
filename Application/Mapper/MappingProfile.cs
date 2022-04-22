@@ -13,6 +13,7 @@ using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
 using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
 using Application.Functions.Roles.Commands.CreateRole;
+using Application.Functions.Service.Commands.CreateServiceCommand;
 using Application.Functions.ServiceName.Commands.CreateServiceNameCommand;
 using Application.Functions.Supplier.Commands.CreateSupplierCommand;
 using Application.Functions.Supply.Commands.CreateSupplyCommand;
@@ -52,6 +53,7 @@ namespace Application.Mapper
             CreateMap<CreateSupplyCommand, Supply>().ReverseMap();
             CreateMap<CreateDeliveriesAddressesCommand, DeliveriesAddresses>().ReverseMap();
             CreateMap<CreateServiceNameCommand, ServiceName>().ReverseMap();
+            CreateMap<CreateServiceCommand, Service>().ReverseMap();
         }
     }
 }
