@@ -17,6 +17,6 @@ namespace Application.Functions.Workers
         public ICollection<Domain.Models.RoleAssignment> RoleAssignments { get; set; }
         public ICollection<Domain.Models.Customer> Customers { get; set; }
         public ICollection<Valuation> Valuations { get; set; }
-        public ICollection<Assignment> Assignments { get; set; }
+        public ICollection<Domain.Models.Assignment> Assignments { get; set; }
     }
 }

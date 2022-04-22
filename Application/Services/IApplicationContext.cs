@@ -27,7 +27,6 @@ namespace Application.Services
         DbSet<BindingType> BindingTypes { get; set; }
         DbSet<DeliveryType> DeliveryTypes { get; set; }
         DbSet<OrderItemType> OrderItemTypes { get; set; }
-        DbSet<MinimumRate> MinimumRates { get; set; }
         DbSet<Paper> Papers { get; set; }
         DbSet<Service> Services { get; set; }
         DbSet<ServiceName> ServiceNames { get; set; }

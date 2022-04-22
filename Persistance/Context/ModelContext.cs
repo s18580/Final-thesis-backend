@@ -28,7 +28,6 @@ namespace Persistance.Context
         public DbSet<BindingType> BindingTypes { get; set; }
         public DbSet<DeliveryType> DeliveryTypes { get; set; }
         public DbSet<OrderItemType> OrderItemTypes { get; set; }
-        public DbSet<MinimumRate> MinimumRates { get; set; }
         public DbSet<Paper> Papers { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<ServiceName> ServiceNames { get; set; }
@@ -425,12 +424,6 @@ namespace Persistance.Context
                    .IsRequired();
             });
 
-            modelBuilder.Entity<MinimumRate>(opt =>
-            {
-                opt.HasKey(p => p.IdMinimumRate);
-                opt.Property(p => p.IdMinimumRate).ValueGeneratedOnAdd();
-            });
-
             modelBuilder.Entity<ServiceName>(opt =>
             {
                 opt.HasKey(p => p.IdServiceName);
@@ -439,10 +432,6 @@ namespace Persistance.Context
                 opt.Property(p => p.Name)
                    .HasMaxLength(30)
                    .IsRequired();
-
-                opt.HasOne(p => p.MinimumRate)
-                   .WithMany(p => p.ServicesNames)
-                   .HasForeignKey(p => p.IdMinimumRate);
             });
 
             modelBuilder.Entity<Valuation>(opt =>

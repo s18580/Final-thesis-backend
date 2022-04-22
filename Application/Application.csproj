@@ -26,4 +26,12 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Functions\ServiceName\Commands\CreateServiceNameCommand\" />
+    <Folder Include="Functions\ServiceName\Commands\DeleteServiceNameCommand\" />
+    <Folder Include="Functions\ServiceName\Commands\UpdateServiceNameCommand\" />
+    <Folder Include="Functions\ServiceName\Queries\GetServiceNameListQuery\" />
+    <Folder Include="Functions\ServiceName\Queries\GetServiceNameQuery\" />
+  </ItemGroup>
+
 </Project>
