@@ -13,6 +13,7 @@ using Application.Functions.OrderItem.Commands.CreateOrderItemCommand;
 using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
 using Application.Functions.Paper.Commands.CreatePaperCommand;
+using Application.Functions.PriceList.Commands.CreatePriceListCommand;
 using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
 using Application.Functions.Roles.Commands.CreateRole;
@@ -60,6 +61,7 @@ namespace Application.Mapper
             CreateMap<CreateColorCommand, Color>().ReverseMap();
             CreateMap<CreatePaperCommand, Paper>().ReverseMap();
             CreateMap<CreateFileCommand, Domain.Models.File>().ReverseMap();
+            CreateMap<CreatePriceListCommand, PriceList>().ReverseMap();
         }
     }
 }
