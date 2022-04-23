@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Address.Commands.CreateAddressCommand;
 using Application.Functions.Assignment.Commands.CreateAssignmentCommand;
 using Application.Functions.BindingType.Commands.CreateBindingTypeCommand;
+using Application.Functions.Color.Commands.CreateColorCommand;
 using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
 using Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAddressesCommand;
@@ -10,6 +11,7 @@ using Application.Functions.FileType.Commands.CreateFileTypeCommand;
 using Application.Functions.OrderItem.Commands.CreateOrderItemCommand;
 using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
+using Application.Functions.Paper.Commands.CreatePaperCommand;
 using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
 using Application.Functions.Roles.Commands.CreateRole;
@@ -54,6 +56,8 @@ namespace Application.Mapper
             CreateMap<CreateDeliveriesAddressesCommand, DeliveriesAddresses>().ReverseMap();
             CreateMap<CreateServiceNameCommand, ServiceName>().ReverseMap();
             CreateMap<CreateServiceCommand, Service>().ReverseMap();
+            CreateMap<CreateColorCommand, Color>().ReverseMap();
+            CreateMap<CreatePaperCommand, Paper>().ReverseMap();
         }
     }
 }
