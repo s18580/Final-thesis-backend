@@ -6,6 +6,7 @@ using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
 using Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAddressesCommand;
 using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
+using Application.Functions.File.Commands.CreateFileCommand;
 using Application.Functions.FileStatus.Commands.CreateFileStatusCommand;
 using Application.Functions.FileType.Commands.CreateFileTypeCommand;
 using Application.Functions.OrderItem.Commands.CreateOrderItemCommand;
@@ -58,6 +59,7 @@ namespace Application.Mapper
             CreateMap<CreateServiceCommand, Service>().ReverseMap();
             CreateMap<CreateColorCommand, Color>().ReverseMap();
             CreateMap<CreatePaperCommand, Paper>().ReverseMap();
+            CreateMap<CreateFileCommand, Domain.Models.File>().ReverseMap();
         }
     }
 }
