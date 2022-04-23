@@ -1,4 +1,4 @@
-﻿namespace Final_thesis_api.Enumerators
+﻿namespace Domain.Enumerators
 {
     public enum FiberDirection
     {
