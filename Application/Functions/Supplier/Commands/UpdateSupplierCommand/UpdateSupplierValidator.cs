@@ -22,7 +22,9 @@ namespace Application.Functions.Supplier.Commands.UpdateSupplierCommand
 
             RuleFor(p => p.EmailAddress)
                    .MaximumLength(255)
-                   .WithMessage("Email address length can't be longer then 255 characters.");
+                   .WithMessage("Email address length can't be longer then 255 characters.")
+                   .EmailAddress()
+                   .WithMessage("Email format is not correct.");
 
             RuleFor(p => p.Description)
                    .MaximumLength(255)
