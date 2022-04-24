@@ -5,8 +5,12 @@ namespace Application.Functions.FileType.Commands.CreateFileTypeCommand
 {
     public class CreateFileTypeResponse : BaseResponse
     {
-        public CreateFileTypeResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateFileTypeResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateFileTypeResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
