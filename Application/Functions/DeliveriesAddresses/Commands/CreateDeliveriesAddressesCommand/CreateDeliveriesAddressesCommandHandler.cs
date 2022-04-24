@@ -27,7 +27,7 @@ namespace Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAdd
             await _context.DeliveriesAddresses.AddAsync(newDeliveriesAddresses);
             await _context.SaveChangesAsync();
 
-            return new CreateDeliveriesAddressesResponse();
+            return new CreateDeliveriesAddressesResponse(newDeliveriesAddresses.IdAddress, newDeliveriesAddresses.IdLink);
         }
     }
 }

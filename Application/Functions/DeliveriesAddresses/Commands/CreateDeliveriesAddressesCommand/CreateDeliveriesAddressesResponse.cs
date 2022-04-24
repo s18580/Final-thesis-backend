@@ -5,8 +5,14 @@ namespace Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAdd
 {
     public class CreateDeliveriesAddressesResponse : BaseResponse
     {
-        public CreateDeliveriesAddressesResponse() : base()
-        { }
+        public int IdAddress { get; }
+        public int IdLink { get; }
+
+        public CreateDeliveriesAddressesResponse(int idAddress, int idLink) : base()
+        {
+            IdAddress = idAddress;
+            IdLink = idLink;
+        }
 
         public CreateDeliveriesAddressesResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

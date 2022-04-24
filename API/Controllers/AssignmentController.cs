@@ -90,8 +90,8 @@ namespace API.Controllers
             {
                 return Ok( new 
                 { 
-                    response.IdWorker,
-                    response.IdOrder
+                    IdWorker = response.IdWorker,
+                    IdOrder = response.IdOrder
                 });
             }
             else if (response.Status == ResponseStatus.ValidationError)

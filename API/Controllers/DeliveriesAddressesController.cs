@@ -29,7 +29,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetDeliveriesAddressesListByOrderQuery { IdOrder = id });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.deliveriesAddresses);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -52,7 +52,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetDeliveriesAddressesListBySupplyQuery { IdSupply = id });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.deliveriesAddresses);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -75,7 +75,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetDeliveriesAddressesListByAddressQuery { IdAddress = id });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.deliveriesAddresses);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -111,7 +111,11 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(new
+                {
+                    IdAddress = response.IdAddress,
+                    IdLink = response.IdLink
+                });
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
