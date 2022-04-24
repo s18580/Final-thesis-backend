@@ -5,8 +5,12 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerCommand
 {
     public class CreateCompanyCustomerResponse : BaseResponse
     {
-        public CreateCompanyCustomerResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateCompanyCustomerResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateCompanyCustomerResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
