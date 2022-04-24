@@ -22,6 +22,7 @@ using Application.Functions.ServiceName.Commands.CreateServiceNameCommand;
 using Application.Functions.Supplier.Commands.CreateSupplierCommand;
 using Application.Functions.Supply.Commands.CreateSupplyCommand;
 using Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeCommand;
+using Application.Functions.Valuation.Commands.CreateValuationCommand;
 using Application.Functions.Workers;
 using Application.Functions.Workers.Commands.CreateWorker;
 using Application.Functions.Worksites.Commands.CreateWorksite;
@@ -62,6 +63,7 @@ namespace Application.Mapper
             CreateMap<CreatePaperCommand, Paper>().ReverseMap();
             CreateMap<CreateFileCommand, Domain.Models.File>().ReverseMap();
             CreateMap<CreatePriceListCommand, PriceList>().ReverseMap();
+            CreateMap<CreateValuationCommand, Valuation>().ReverseMap();
         }
     }
 }
