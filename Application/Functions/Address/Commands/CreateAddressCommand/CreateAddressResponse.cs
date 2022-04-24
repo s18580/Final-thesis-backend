@@ -6,6 +6,7 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
     public class CreateAddressResponse : BaseResponse
     {
         public int Id { get; }
+
         public CreateAddressResponse(int id) : base()
         { 
             Id = id;
