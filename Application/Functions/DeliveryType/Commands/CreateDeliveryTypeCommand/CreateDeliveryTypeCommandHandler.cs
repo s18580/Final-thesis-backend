@@ -27,7 +27,7 @@ namespace Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand
             await _context.DeliveryTypes.AddAsync(newDeliveryType);
             await _context.SaveChangesAsync();
 
-            return new CreateDeliveryTypeResponse();
+            return new CreateDeliveryTypeResponse(newDeliveryType.IdDeliveryType);
         }
     }
 }
