@@ -30,7 +30,7 @@ namespace Application.Functions.Workers.Commands.CreateWorker
             await _context.Workers.AddAsync(newWorker);
             await _context.SaveChangesAsync();
 
-            return new CreateWorkerResponse();
+            return new CreateWorkerResponse(newWorker.IdWorker);
         }
     }
 }

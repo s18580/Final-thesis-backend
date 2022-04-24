@@ -5,8 +5,12 @@ namespace Application.Functions.Workers.Commands.CreateWorker
 {
     public  class CreateWorkerResponse : BaseResponse
     {
-        public CreateWorkerResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateWorkerResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateWorkerResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
