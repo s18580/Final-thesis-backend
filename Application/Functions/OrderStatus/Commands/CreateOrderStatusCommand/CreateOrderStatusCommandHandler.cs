@@ -27,7 +27,7 @@ namespace Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand
             await _context.OrderStatuses.AddAsync(newOrderStatus);
             await _context.SaveChangesAsync();
 
-            return new CreateOrderStatusResponse();
+            return new CreateOrderStatusResponse(newOrderStatus.IdStatus);
         }
     }
 }
