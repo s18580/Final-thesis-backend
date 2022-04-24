@@ -5,8 +5,12 @@ namespace Application.Functions.File.Commands.CreateFileCommand
 {
     public class CreateFileResponse : BaseResponse
     {
-        public CreateFileResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateFileResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateFileResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

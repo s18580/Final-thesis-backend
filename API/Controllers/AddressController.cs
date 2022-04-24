@@ -34,8 +34,23 @@ namespace API.Controllers
         [Route("getAddressesByOwner")]
         public async Task<IActionResult> GetAddressesByOwner([FromQuery] int id)
         {
-            var addresses = await _mediator.Send(new GetAddressListByOwnerIdQuery { IdOwner = id });
-            return Ok(addresses.address);
+            var response = await _mediator.Send(new GetAddressListByOwnerIdQuery { IdOwner = id });
+            if (response.Success)
+            {
+                return Ok(response.address);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]

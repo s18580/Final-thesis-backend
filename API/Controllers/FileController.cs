@@ -27,16 +27,46 @@ namespace API.Controllers
         [Route("getFilesByValuation")]
         public async Task<IActionResult> GetFilesByValuation([FromQuery] int id)
         {
-            var files = await _mediator.Send(new GetFileListByValuationQuery { IdValuation = id });
-            return Ok(files);
+            var response = await _mediator.Send(new GetFileListByValuationQuery { IdValuation = id });
+            if (response.Success)
+            {
+                return Ok(response.files);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
         [Route("getFilesByOrderItem")]
         public async Task<IActionResult> GetFilesByOrderItem([FromQuery] int id)
         {
-            var files = await _mediator.Send(new GetFileListByOrderItemQuery { IdOrderItem = id });
-            return Ok(files);
+            var response = await _mediator.Send(new GetFileListByOrderItemQuery { IdOrderItem = id });
+            if (response.Success)
+            {
+                return Ok(response.files);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -45,6 +75,24 @@ namespace API.Controllers
         {
             var files = await _mediator.Send(new GetFileListByOrderQuery { IdOrder = id });
             return Ok(files);
+
+            var response = await _mediator.Send(new GetFileListByOrderQuery { IdOrder = id });
+            if (response.Success)
+            {
+                return Ok(response.files);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -67,7 +115,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
