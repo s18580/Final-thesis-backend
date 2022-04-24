@@ -28,7 +28,7 @@ namespace Application.Functions.Worksites.Commands.CreateWorksite
             await _context.Worksites.AddAsync(newWorksite);
             await _context.SaveChangesAsync();
 
-            return new CreateWorksiteResponse();
+            return new CreateWorksiteResponse(newWorksite.IdWorksite);
         }
     }
 }
