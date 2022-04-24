@@ -27,7 +27,7 @@ namespace Application.Functions.Service.Commands.CreateServiceCommand
             await _context.Services.AddAsync(newService);
             await _context.SaveChangesAsync();
 
-            return new CreateServiceResponse();
+            return new CreateServiceResponse(newService.IdService);
         }
     }
 }

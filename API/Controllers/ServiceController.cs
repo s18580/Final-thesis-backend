@@ -26,16 +26,46 @@ namespace API.Controllers
         [Route("getServicesByOrderItem")]
         public async Task<IActionResult> GetServicesByOrderItem([FromQuery] int id)
         {
-            var services = await _mediator.Send(new GetServiceListByOrderItemQuery { IdOrderItem = id });
-            return Ok(services);
+            var response = await _mediator.Send(new GetServiceListByOrderItemQuery { IdOrderItem = id });
+            if (response.Success)
+            {
+                return Ok(response.services);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
         [Route("getServicesByValuation")]
         public async Task<IActionResult> GetServicesByValuation([FromQuery] int id)
         {
-            var services = await _mediator.Send(new GetServiceListByValuationQuery { IdValuation = id });
-            return Ok(services);
+            var response = await _mediator.Send(new GetServiceListByValuationQuery { IdValuation = id });
+            if (response.Success)
+            {
+                return Ok(response.services);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -58,7 +88,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
