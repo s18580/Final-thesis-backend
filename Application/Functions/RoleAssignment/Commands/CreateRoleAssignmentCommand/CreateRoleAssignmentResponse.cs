@@ -5,8 +5,14 @@ namespace Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentComm
 {
     public class CreateRoleAssignmentResponse : BaseResponse
     {
-        public CreateRoleAssignmentResponse() : base()
-        { }
+        public int IdWorker { get; }
+        public int IdRole { get; }
+
+        public CreateRoleAssignmentResponse(int idWorker, int idRole) : base()
+        {
+            IdWorker = idWorker;
+            IdRole = idRole;
+        }
 
         public CreateRoleAssignmentResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

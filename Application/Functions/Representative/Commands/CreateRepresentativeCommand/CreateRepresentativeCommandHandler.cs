@@ -27,7 +27,7 @@ namespace Application.Functions.Representative.Commands.CreateRepresentativeComm
             await _context.Representatives.AddAsync(newRepresentative);
             await _context.SaveChangesAsync();
 
-            return new CreateRepresentativeResponse();
+            return new CreateRepresentativeResponse(newRepresentative.IdRepresentative);
         }
     }
 }

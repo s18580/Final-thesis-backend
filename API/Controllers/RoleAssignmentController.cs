@@ -28,7 +28,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetRoleAssignmentListByWorkerIdQuery { IdWorker = workerId });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.roleAssignments);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -51,7 +51,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetRoleAssignmentListByRoleIdQuery { IdRole = roleId });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.roleAssignments);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -87,7 +87,11 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(new
+                {
+                    IdRole = response.IdRole,
+                    IdWorker = response.IdWorker
+                });
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

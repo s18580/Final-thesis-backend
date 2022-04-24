@@ -27,7 +27,7 @@ namespace Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentComm
             await _context.RoleAssignments.AddAsync(newRoleAssignment);
             await _context.SaveChangesAsync();
 
-            return new CreateRoleAssignmentResponse();
+            return new CreateRoleAssignmentResponse(newRoleAssignment.IdWorker, newRoleAssignment.IdRole);
         }
     }
 }
