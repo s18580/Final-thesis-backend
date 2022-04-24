@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.PriceList.Commands.CreatePriceListCommand
 {
-    public class CreatePriceListValuationValidator : AbstractValidator<CreatePriceListCommand>
+    public class CreatePriceListValidator : AbstractValidator<CreatePriceListCommand>
     {
         private readonly IApplicationContext _context;
 
-        public CreatePriceListValuationValidator(IApplicationContext context)
+        public CreatePriceListValidator(IApplicationContext context)
         {
             _context = context;
 

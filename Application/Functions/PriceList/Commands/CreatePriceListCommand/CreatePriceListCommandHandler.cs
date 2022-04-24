@@ -17,7 +17,7 @@ namespace Application.Functions.PriceList.Commands.CreatePriceListCommand
 
         public async Task<CreatePriceListResponse> Handle(CreatePriceListCommand request, CancellationToken cancellationToken)
         {
-            var validator = new CreatePriceListValuationValidator(_context);
+            var validator = new CreatePriceListValidator(_context);
             var validatorResult = await validator.ValidateAsync(request);
 
             if (!validatorResult.IsValid) return new CreatePriceListResponse(validatorResult, Responses.ResponseStatus.ValidationError);
@@ -27,7 +27,7 @@ namespace Application.Functions.PriceList.Commands.CreatePriceListCommand
             await _context.PriceLists.AddAsync(newPriceList);
             await _context.SaveChangesAsync();
 
-            return new CreatePriceListResponse();
+            return new CreatePriceListResponse(newPriceList.IdPriceList);
         }
     }
 }
