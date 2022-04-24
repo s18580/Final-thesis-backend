@@ -5,8 +5,12 @@ namespace Application.Functions.Color.Commands.CreateColorCommand
 {
     public class CreateColorResponse : BaseResponse
     {
-        public CreateColorResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateColorResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateColorResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

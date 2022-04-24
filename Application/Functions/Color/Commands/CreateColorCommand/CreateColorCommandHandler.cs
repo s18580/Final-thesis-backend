@@ -27,7 +27,7 @@ namespace Application.Functions.Color.Commands.CreateColorCommand
             await _context.Colors.AddAsync(newColor);
             await _context.SaveChangesAsync();
 
-            return new CreateColorResponse();
+            return new CreateColorResponse(newColor.IdColor);
         }
     }
 }

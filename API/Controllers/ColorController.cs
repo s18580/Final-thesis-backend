@@ -27,7 +27,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetColorsByOrderItem([FromQuery] int id)
         {
             var colors = await _mediator.Send(new GetColorListByOrderItemQuery { IdOrderItem = id });
-            return Ok(colors);
+            return Ok(colors.colors);
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetColorsByValuation([FromQuery] int id)
         {
             var colors = await _mediator.Send(new GetColorListByValuationQuery { IdValuation = id });
-            return Ok(colors);
+            return Ok(colors.colors);
         }
 
         [HttpGet]
@@ -58,7 +58,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
