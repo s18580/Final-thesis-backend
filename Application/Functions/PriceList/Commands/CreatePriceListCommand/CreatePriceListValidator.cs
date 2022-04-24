@@ -12,6 +12,9 @@ namespace Application.Functions.PriceList.Commands.CreatePriceListCommand
         {
             _context = context;
 
+            RuleFor(p => p.Price)
+                .GreaterThan(0);
+
             RuleFor(p => p.Name)
                    .NotNull()
                    .WithMessage("Price list name is required.")

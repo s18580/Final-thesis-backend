@@ -37,6 +37,15 @@ namespace Application.Functions.Paper.Commands.CreatePaperCommand
                    .MaximumLength(100)
                    .WithMessage("Sheet format length can't be longer then 100 characters.");
 
+            RuleFor(p => p.Opacity)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(p => p.Quantity)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(p => p.PricePerKilogram)
+                .GreaterThan(0);
+
             RuleFor(p => p).
                 MustAsync(DoesFiberDirectionExists)
                 .WithMessage("Fiber direction with given id does not exist.");

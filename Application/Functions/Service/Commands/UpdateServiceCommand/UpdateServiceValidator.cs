@@ -12,6 +12,9 @@ namespace Application.Functions.Service.Commands.UpdateServiceCommand
         {
             _context = context;
 
+            RuleFor(p => p.Price)
+                .GreaterThan(0);
+
             RuleFor(p => p).
                 MustAsync(DoesServiceExists)
                 .WithMessage("Service with given id does not exist.");

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.PriceList.Commands.UpdatePriceListCommand
 {
-    public class UpdatePriceListValuationValidator : AbstractValidator<UpdatePriceListCommand>
+    public class UpdatePriceListValidator : AbstractValidator<UpdatePriceListCommand>
     {
         private readonly IApplicationContext _context;
 
-        public UpdatePriceListValuationValidator(IApplicationContext context)
+        public UpdatePriceListValidator(IApplicationContext context)
         {
             _context = context;
 
@@ -19,6 +19,9 @@ namespace Application.Functions.PriceList.Commands.UpdatePriceListCommand
                    .WithMessage("Price list name is required.")
                    .MaximumLength(30)
                    .WithMessage("Price list name length can't be longer then 30 characters.");
+
+            RuleFor(p => p.Price)
+                .GreaterThan(0);
 
             RuleFor(p => p).
                 MustAsync(DoesPriceListExists)

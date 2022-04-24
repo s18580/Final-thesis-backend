@@ -26,7 +26,9 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
                    .NotEmpty()
                    .WithMessage("Company email address is required.")
                    .MaximumLength(255)
-                   .WithMessage("Company email address length can't be longer then 255 characters.");
+                   .WithMessage("Company email address length can't be longer then 255 characters.")
+                   .EmailAddress()
+                   .WithMessage("Email format is not correct.");
 
             RuleFor(p => p.CompanyPhoneNumber)
                    .NotNull()

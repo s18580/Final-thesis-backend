@@ -23,6 +23,7 @@ namespace Application.Functions.File.Commands.CreateFileCommand
             if (!validatorResult.IsValid) return new CreateFileResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var newFile = _mapper.Map<Domain.Models.File>(request);
+            newFile.AddedDate = DateTime.Now;
 
             await _context.Files.AddAsync(newFile);
             await _context.SaveChangesAsync();
