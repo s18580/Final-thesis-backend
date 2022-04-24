@@ -27,7 +27,7 @@ namespace Application.Functions.ServiceName.Commands.CreateServiceNameCommand
             await _context.ServiceNames.AddAsync(newServiceName);
             await _context.SaveChangesAsync();
 
-            return new CreateServiceNameResponse();
+            return new CreateServiceNameResponse(newServiceName.IdServiceName);
         }
     }
 }

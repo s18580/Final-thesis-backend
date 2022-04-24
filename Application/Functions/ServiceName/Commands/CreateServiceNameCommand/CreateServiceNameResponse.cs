@@ -5,8 +5,12 @@ namespace Application.Functions.ServiceName.Commands.CreateServiceNameCommand
 {
     public class CreateServiceNameResponse : BaseResponse
     {
-        public CreateServiceNameResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateServiceNameResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateServiceNameResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
