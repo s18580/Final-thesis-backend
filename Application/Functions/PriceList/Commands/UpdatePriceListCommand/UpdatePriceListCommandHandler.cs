@@ -15,7 +15,7 @@ namespace Application.Functions.PriceList.Commands.UpdatePriceListCommand
 
         public async Task<UpdatePriceListResponse> Handle(UpdatePriceListCommand request, CancellationToken cancellationToken)
         {
-            var validator = new UpdatePriceListValuationValidator(_context);
+            var validator = new UpdatePriceListValidator(_context);
             var validatorResult = await validator.ValidateAsync(request);
 
             if (!validatorResult.IsValid) return new UpdatePriceListResponse(validatorResult, Responses.ResponseStatus.ValidationError);

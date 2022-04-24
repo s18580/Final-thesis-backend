@@ -36,6 +36,12 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
                    .MaximumLength(100)
                    .WithMessage("Delivery type name length can't be longer then 100 characters.");
 
+            RuleFor(p => p.Circulation)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(p => p.Capacity)
+                .GreaterThanOrEqualTo(0);
+
             RuleFor(p => p).
                 MustAsync(DoesOrderExists)
                 .WithMessage("Order with given id does not exist.");

@@ -12,6 +12,9 @@ namespace Application.Functions.Service.Commands.CreateServiceCommand
         {
             _context = context;
 
+            RuleFor(p => p.Price)
+                .GreaterThan(0);
+
             RuleFor(p => p).
                 MustAsync(DoesServiceNameExists)
                 .WithMessage("Service name with given id does not exist.");

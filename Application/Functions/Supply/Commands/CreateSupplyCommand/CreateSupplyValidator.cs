@@ -20,6 +20,12 @@ namespace Application.Functions.Supply.Commands.CreateSupplyCommand
                   .MaximumLength(255)
                   .WithMessage("Item description length can't be longer then 255 characters.");
 
+            RuleFor(p => p.Quantity)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(p => p.Price)
+                .GreaterThan(0);
+
             RuleFor(p => p).
                 MustAsync(DoesSupplyItemTypeExists)
                 .WithMessage("Supply item type with given id does not exist.");

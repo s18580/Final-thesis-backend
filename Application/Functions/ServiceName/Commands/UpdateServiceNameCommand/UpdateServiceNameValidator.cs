@@ -20,6 +20,15 @@ namespace Application.Functions.ServiceName.Commands.UpdateServiceNameCommand
                    .MaximumLength(30)
                    .WithMessage("Role name length can't be longer then 30 characters.");
 
+            RuleFor(p => p.MinimumCirculation)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(p => p.MinimumPrice)
+                .GreaterThan(0);
+
+            RuleFor(p => p.DefaultPrice)
+                .GreaterThan(0);
+
             RuleFor(p => p).
                 MustAsync(DoesServiceNameExists)
                 .WithMessage("Service name with given id does not exist.");
