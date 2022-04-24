@@ -26,8 +26,23 @@ namespace API.Controllers
         [Route("getOrderItemsByOrder")]
         public async Task<IActionResult> GetOrderItemsByOrder([FromQuery] int id)
         {
-            var orderItems = await _mediator.Send(new GetOrderItemListByOrderIdQuery { IdOrder = id});
-            return Ok(orderItems);
+            var response = await _mediator.Send(new GetOrderItemListByOrderIdQuery { IdOrder = id });
+            if (response.Success)
+            {
+                return Ok(response.orderItems);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -58,7 +73,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

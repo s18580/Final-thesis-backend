@@ -27,7 +27,7 @@ namespace Application.Functions.Assignment.Commands.CreateAssignmentCommand
             await _context.Assignments.AddAsync(newAssignment);
             await _context.SaveChangesAsync();
 
-            return new CreateAssignmentResponse();
+            return new CreateAssignmentResponse(newAssignment.IdWorker, newAssignment.IdOrder);
         }
     }
 }

@@ -5,8 +5,12 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
 {
     public class CreateOrderItemResponse : BaseResponse
     {
-        public CreateOrderItemResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateOrderItemResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateOrderItemResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

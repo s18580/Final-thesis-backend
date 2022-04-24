@@ -27,7 +27,7 @@ namespace Application.Functions.ValuationPriceList.Commands.CreateValuationPrice
             await _context.ValuationPriceLists.AddAsync(newValuationsPriceList);
             await _context.SaveChangesAsync();
 
-            return new CreateValuationPriceListResponse();
+            return new CreateValuationPriceListResponse(newValuationsPriceList.IdValuation, newValuationsPriceList.IdPriceList);
         }
     }
 }

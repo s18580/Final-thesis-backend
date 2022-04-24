@@ -27,7 +27,7 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
             await _context.OrderItems.AddAsync(newOrderItem);
             await _context.SaveChangesAsync();
 
-            return new CreateOrderItemResponse();
+            return new CreateOrderItemResponse(newOrderItem.IdOrderItem);
         }
     }
 }

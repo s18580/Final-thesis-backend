@@ -27,7 +27,7 @@ namespace Application.Functions.FileType.Commands.CreateFileTypeCommand
             await _context.FileTypes.AddAsync(newFileType);
             await _context.SaveChangesAsync();
 
-            return new CreateFileTypeResponse();
+            return new CreateFileTypeResponse(newFileType.IdFileType);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Application.Functions.BindingType.Commands.CreateBindingTypeCommand
             await _context.BindingTypes.AddAsync(newBindingType);
             await _context.SaveChangesAsync();
 
-            return new CreateBindingTypeResponse();
+            return new CreateBindingTypeResponse(newBindingType.IdBindingType);
         }
     }
 }

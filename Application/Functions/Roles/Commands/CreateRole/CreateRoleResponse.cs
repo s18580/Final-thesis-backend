@@ -5,8 +5,12 @@ namespace Application.Functions.Roles.Commands.CreateRole
 {
     public class CreateRoleResponse : BaseResponse
     {
-        public CreateRoleResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateRoleResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateRoleResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

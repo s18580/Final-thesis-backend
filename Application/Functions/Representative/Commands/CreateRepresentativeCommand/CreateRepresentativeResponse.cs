@@ -5,8 +5,12 @@ namespace Application.Functions.Representative.Commands.CreateRepresentativeComm
 {
     public class CreateRepresentativeResponse : BaseResponse
     {
-        public CreateRepresentativeResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateRepresentativeResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateRepresentativeResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

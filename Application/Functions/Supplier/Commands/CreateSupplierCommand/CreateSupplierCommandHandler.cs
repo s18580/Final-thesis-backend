@@ -27,7 +27,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierCommand
             await _context.Suppliers.AddAsync(newSupplier);
             await _context.SaveChangesAsync();
 
-            return new CreateSupplierResponse();
+            return new CreateSupplierResponse(newSupplier.IdSupplier);
         }
     }
 }

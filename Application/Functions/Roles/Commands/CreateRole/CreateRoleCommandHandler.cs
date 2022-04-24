@@ -28,7 +28,7 @@ namespace Application.Functions.Roles.Commands.CreateRole
             await _context.Roles.AddAsync(newRole);
             await _context.SaveChangesAsync();
 
-            return new CreateRoleResponse();
+            return new CreateRoleResponse(newRole.IdRole);
         }
     }
 }

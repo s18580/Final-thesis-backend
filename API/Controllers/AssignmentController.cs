@@ -23,13 +23,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("getAssignmentsWorker")]
+        [Route("getAssignmentsByWorker")]
         public async Task<IActionResult> GetAssignmentsByWorker([FromQuery] int workerId)
         {
             var response = await _mediator.Send(new GetAssignmentListByWorkerQuery { IdWorker = workerId });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.assignments);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -46,13 +46,13 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("getAssignmentsOrder")]
+        [Route("getAssignmentsByOrder")]
         public async Task<IActionResult> GetAssignmentsByOrder([FromQuery] int orderId)
         {
             var response = await _mediator.Send(new GetAssignmentListByOrderQuery { IdOrder = orderId });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.assignments);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -88,7 +88,11 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok( new 
+                { 
+                    IdWorker = response.IdWorker,
+                    IdOrder = response.IdOrder
+                });
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

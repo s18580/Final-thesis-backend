@@ -27,7 +27,7 @@ namespace Application.Functions.FileStatus.Commands.CreateFileStatusCommand
             await _context.FileStatuses.AddAsync(newFileStatus);
             await _context.SaveChangesAsync();
 
-            return new CreateFileStatusResponse();
+            return new CreateFileStatusResponse(newFileStatus.IdFileStatus);
         }
     }
 }

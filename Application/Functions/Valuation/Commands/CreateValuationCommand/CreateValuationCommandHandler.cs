@@ -27,7 +27,7 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
             await _context.Valuations.AddAsync(newValuation);
             await _context.SaveChangesAsync();
 
-            return new CreateValuationResponse();
+            return new CreateValuationResponse(newValuation.IdValuation);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Application.Functions.File.Commands.CreateFileCommand
             await _context.Files.AddAsync(newFile);
             await _context.SaveChangesAsync();
 
-            return new CreateFileResponse();
+            return new CreateFileResponse(newFile.IdFile);
         }
     }
 }

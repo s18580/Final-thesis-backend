@@ -5,8 +5,12 @@ namespace Application.Functions.PriceList.Commands.CreatePriceListCommand
 {
     public class CreatePriceListResponse : BaseResponse
     {
-        public CreatePriceListResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreatePriceListResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreatePriceListResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

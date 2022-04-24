@@ -28,7 +28,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
             await _context.Customers.AddAsync(newCustomer);
             await _context.SaveChangesAsync();
 
-            return new CreatePersonCustomerResponse();
+            return new CreatePersonCustomerResponse(newCustomer.IdCustomer);
         }
     }
 }
