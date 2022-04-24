@@ -23,6 +23,8 @@ namespace Application.Functions.Order.Commands.CreateOrderCommand
             if (!validatorResult.IsValid) return new CreateOrderResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var newOrder = _mapper.Map<Domain.Models.Order>(request);
+            newOrder.CreationDate = DateTime.Now;
+            newOrder.Identifier = "SomeBuissnesIdentifierToAdd";
 
             await _context.Orders.AddAsync(newOrder);
             await _context.SaveChangesAsync();

@@ -23,6 +23,7 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
             if (!validatorResult.IsValid) return new CreateValuationResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var newValuation = _mapper.Map<Domain.Models.Valuation>(request);
+            newValuation.CreationDate = DateTime.Now;
 
             await _context.Valuations.AddAsync(newValuation);
             await _context.SaveChangesAsync();
