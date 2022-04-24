@@ -27,7 +27,7 @@ namespace Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeComm
             await _context.SupplyItemTypes.AddAsync(newSupplyItemType);
             await _context.SaveChangesAsync();
 
-            return new CreateSupplyItemTypeResponse();
+            return new CreateSupplyItemTypeResponse(newSupplyItemType.IdSupplyItemType);
         }
     }
 }

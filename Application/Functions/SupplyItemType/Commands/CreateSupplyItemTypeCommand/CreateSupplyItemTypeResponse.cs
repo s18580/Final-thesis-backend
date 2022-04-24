@@ -5,8 +5,12 @@ namespace Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeComm
 {
     public class CreateSupplyItemTypeResponse : BaseResponse
     {
-        public CreateSupplyItemTypeResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateSupplyItemTypeResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateSupplyItemTypeResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
