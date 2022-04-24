@@ -27,7 +27,7 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
             await _context.Addresses.AddAsync(newAddress);
             await _context.SaveChangesAsync();
 
-            return new CreateAddressResponse();
+            return new CreateAddressResponse(newAddress.IdAddress);
         }
     }
 }

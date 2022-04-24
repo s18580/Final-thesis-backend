@@ -5,8 +5,11 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
 {
     public class CreateAddressResponse : BaseResponse
     {
-        public CreateAddressResponse() : base()
-        { }
+        public int Id { get; }
+        public CreateAddressResponse(int id) : base()
+        { 
+            Id = id;
+        }
 
         public CreateAddressResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
