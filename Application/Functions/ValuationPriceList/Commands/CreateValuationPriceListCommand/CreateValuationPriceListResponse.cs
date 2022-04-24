@@ -5,8 +5,14 @@ namespace Application.Functions.ValuationPriceList.Commands.CreateValuationPrice
 {
     public class CreateValuationPriceListResponse : BaseResponse
     {
-        public CreateValuationPriceListResponse() : base()
-        { }
+        public int IdValuation { get; }
+        public int IdPriceList { get; }
+
+        public CreateValuationPriceListResponse(int idValuation, int idPriceList) : base()
+        {
+            IdValuation = idValuation;
+            IdPriceList = idPriceList;
+        }
 
         public CreateValuationPriceListResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

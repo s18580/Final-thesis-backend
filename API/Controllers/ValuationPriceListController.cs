@@ -28,7 +28,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetValuationPriceListListByValuationQuery { IdValuation = id });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.valuationPriceLists);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -51,7 +51,7 @@ namespace API.Controllers
             var response = await _mediator.Send(new GetValuationPriceListListByPriceListQuery { IdPriceList = id });
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.valuationPriceLists);
             }
             else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
             {
@@ -87,7 +87,11 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(new
+                {
+                    IdValuation = response.IdValuation,
+                    IdPriceList = response.IdPriceList
+                });
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
