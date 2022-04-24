@@ -27,7 +27,7 @@ namespace Application.Functions.Paper.Commands.CreatePaperCommand
             await _context.Papers.AddAsync(newPaper);
             await _context.SaveChangesAsync();
 
-            return new CreatePaperResponse();
+            return new CreatePaperResponse(newPaper.IdPaper);
         }
     }
 }

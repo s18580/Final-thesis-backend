@@ -5,8 +5,12 @@ namespace Application.Functions.Paper.Commands.CreatePaperCommand
 {
     public class CreatePaperResponse : BaseResponse
     {
-        public CreatePaperResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreatePaperResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreatePaperResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
