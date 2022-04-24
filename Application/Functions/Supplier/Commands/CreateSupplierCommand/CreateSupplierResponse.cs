@@ -5,8 +5,12 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierCommand
 {
     public class CreateSupplierResponse : BaseResponse
     {
-        public CreateSupplierResponse() : base()
-        { }
+        public int Id { get; }
+
+        public CreateSupplierResponse(int id) : base()
+        {
+            Id = id;
+        }
 
         public CreateSupplierResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
