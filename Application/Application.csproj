@@ -26,11 +26,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Functions\ValuationPriceList\Commands\" />
-    <Folder Include="Functions\ValuationPriceList\Queries\" />
-    <Folder Include="Functions\Valuation\Commands\" />
-    <Folder Include="Functions\Valuation\Queries\" />
-  </ItemGroup>
-
 </Project>
