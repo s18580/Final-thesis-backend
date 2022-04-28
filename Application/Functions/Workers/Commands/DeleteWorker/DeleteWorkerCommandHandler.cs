@@ -22,7 +22,8 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
 
             var selectedWorker = await _context.Workers.Where(p => p.IdWorker == request.Id).SingleAsync();
             selectedWorker.PhoneNumber = "";
-            selectedWorker.PassHash = "";
+            selectedWorker.PassHash = null;
+            selectedWorker.Salt = null;
             selectedWorker.IdWorksite = null;
 
             await _context.SaveChangesAsync();
