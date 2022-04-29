@@ -29,7 +29,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
         {
             var worker = await _context.Workers
                                        .Where(p => p.EmailAddres == command.anonymousUserData.Email)
-                                       .Where(p => p.PassHash != null)
+                                       .Where(p => p.Password != null)
                                        .SingleOrDefaultAsync();
 
             return worker != null;

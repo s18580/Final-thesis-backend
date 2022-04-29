@@ -33,7 +33,7 @@ namespace Application.Functions.User.Commands.RegisterUserCommand
             byte[] salt, passHash;
             _authentication.CreatePasswordHash(request.anonymousUserData.Password, out passHash, out salt);
 
-            worker.PassHash = passHash;
+            worker.Password = passHash;
             worker.Salt = salt;
 
             await _context.SaveChangesAsync();

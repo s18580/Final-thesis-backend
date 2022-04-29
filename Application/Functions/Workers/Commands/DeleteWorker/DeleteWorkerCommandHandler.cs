@@ -22,7 +22,7 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
 
             var selectedWorker = await _context.Workers.Where(p => p.IdWorker == request.Id).SingleAsync();
             selectedWorker.PhoneNumber = "";
-            selectedWorker.PassHash = null;
+            selectedWorker.Password = null;
             selectedWorker.Salt = null;
             selectedWorker.IdWorksite = null;
 

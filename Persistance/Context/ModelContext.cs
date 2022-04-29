@@ -66,9 +66,6 @@ namespace Persistance.Context
                    .HasMaxLength(255)
                    .IsRequired();
 
-                opt.Property(p => p.PassHash)
-                   .HasMaxLength(200);
-
                 opt.HasOne(p => p.Worksite)
                    .WithMany(p => p.Workers)
                    .HasForeignKey(p => p.IdWorksite);
