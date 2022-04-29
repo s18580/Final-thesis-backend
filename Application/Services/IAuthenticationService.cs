@@ -3,6 +3,6 @@
     public interface IAuthenticationService
     {
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] salt);
-        public bool VerifyPassword(string email, string password, byte[] properPassHash, byte[] properSalt);
+        public bool VerifyPassword(string password, byte[] properPassHash, byte[] properSalt);
     }
 }

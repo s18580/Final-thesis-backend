@@ -36,7 +36,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
                 return new LoginUserResponse("Worker is disabled.", false, Responses.ResponseStatus.ValidationError);
             }
 
-            var isValidUser = _authentication.VerifyPassword(request.anonymousUserData.Email, request.anonymousUserData.Password, worker.Password, worker.Salt);
+            var isValidUser = _authentication.VerifyPassword(request.anonymousUserData.Password, worker.Password, worker.Salt);
 
             if (!isValidUser)
             {
