@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddCors();
+
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddApplicationLayer();
@@ -28,6 +30,13 @@ builder.Services.AddSwaggerGen( options =>
 });
 
 var app = builder.Build();
+
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
 
 app.UseSwaggerUI();
 app.UseSwagger(x => x.SerializeAsV2 = true);
