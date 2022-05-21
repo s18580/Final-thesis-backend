@@ -21,7 +21,7 @@ namespace Application.Functions.Paper.Queries.GetPaperListByOrderItemQuery
             if (!validatorResult.IsValid) return new GetPaperListByOrderItemResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var papers = await _context.Papers
-                                       .Where(p => p.IdLink == request.IdOrderItem)
+                                       .Where(p => p.IdOrderItem == request.IdOrderItem)
                                        .ToListAsync();
 
             return new GetPaperListByOrderItemResponse(papers);

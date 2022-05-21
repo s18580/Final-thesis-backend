@@ -16,6 +16,10 @@ namespace Application.Functions.Service.Commands.CreateServiceCommand
                 .GreaterThan(0);
 
             RuleFor(p => p).
+                MustAsync(DoesLinkIsGiven)
+                .WithMessage("Specyfic link was not given.");
+
+            RuleFor(p => p).
                 MustAsync(DoesServiceNameExists)
                 .WithMessage("Service name with given id does not exist.");
 
@@ -36,14 +40,19 @@ namespace Application.Functions.Service.Commands.CreateServiceCommand
         private async Task<bool> DoesLinkExists(CreateServiceCommand command, CancellationToken cancellationToken)
         {
             var orderItem = await _context.OrderItems
-                                          .Where(p => p.IdOrderItem == command.IdLink)
+                                          .Where(p => p.IdOrderItem == command.IdOrderItem)
                                           .SingleOrDefaultAsync();
 
             var valuation = await _context.Valuations
-                                          .Where(p => p.IdValuation == command.IdLink)
+                                          .Where(p => p.IdValuation == command.IdValuation)
                                           .SingleOrDefaultAsync();
 
             return (valuation != null || orderItem != null);
+        }
+
+        private async Task<bool> DoesLinkIsGiven(CreateServiceCommand command, CancellationToken cancellationToken)
+        {
+            return !(command.IdValuation != null && command.IdOrderItem != null) || !(command.IdValuation == null && command.IdOrderItem == null);
         }
     }
 }

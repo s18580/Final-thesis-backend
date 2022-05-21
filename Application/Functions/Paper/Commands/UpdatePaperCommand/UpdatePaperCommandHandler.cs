@@ -32,7 +32,6 @@ namespace Application.Functions.Paper.Commands.UpdatePaperCommand
             if (selectedPaper.Opacity != request.Opacity) { selectedPaper.Opacity = request.Opacity; }
             if (selectedPaper.PricePerKilogram != request.PricePerKilogram) { selectedPaper.PricePerKilogram = request.PricePerKilogram; }
             if (selectedPaper.Quantity != request.Quantity) { selectedPaper.Quantity = request.Quantity; }
-            if (selectedPaper.IsForCover != request.IsForCover) { selectedPaper.IsForCover = request.IsForCover; }
 
             await _context.SaveChangesAsync();
 

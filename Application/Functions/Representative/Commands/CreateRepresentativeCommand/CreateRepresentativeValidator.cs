@@ -12,6 +12,10 @@ namespace Application.Functions.Representative.Commands.CreateRepresentativeComm
         {
             _context = context;
 
+            RuleFor(p => p).
+                MustAsync(DoesLinkIsGiven)
+                .WithMessage("Specyfic link was not given.");
+
             RuleFor(p => p.Name)
                   .NotNull()
                   .WithMessage("Order status name is required.")
@@ -46,14 +50,19 @@ namespace Application.Functions.Representative.Commands.CreateRepresentativeComm
         private async Task<bool> DoesOwnerExists(CreateRepresentativeCommand command, CancellationToken cancellationToken)
         {
             var customer = await _context.Customers
-                                               .Where(p => p.IdCustomer == command.IdOwner)
+                                               .Where(p => p.IdCustomer == command.IdCustomer)
                                                .SingleOrDefaultAsync();
 
             var supplier = await _context.Suppliers
-                                               .Where(p => p.IdSupplier == command.IdOwner)
+                                               .Where(p => p.IdSupplier == command.IdSupplier)
                                                .SingleOrDefaultAsync();
 
             return (customer != null || supplier != null);
+        }
+
+        private async Task<bool> DoesLinkIsGiven(CreateRepresentativeCommand command, CancellationToken cancellationToken)
+        {
+            return !(command.IdCustomer != null && command.IdSupplier != null) || !(command.IdCustomer == null && command.IdSupplier == null);
         }
     }
 }

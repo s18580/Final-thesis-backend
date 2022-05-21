@@ -21,7 +21,7 @@ namespace Application.Functions.DeliveriesAddresses.Queries.GetDeliveriesAddress
             if (!validatorResult.IsValid) return new GetDeliveriesAddressesListByOrderResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var deliveriesAddresses = await _context.DeliveriesAddresses
-                                                    .Where(p => p.IdLink == request.IdOrder)
+                                                    .Where(p => p.IdOrder == request.IdOrder)
                                                     .ToListAsync();
 
             return new GetDeliveriesAddressesListByOrderResponse(deliveriesAddresses);

@@ -28,7 +28,6 @@ namespace Application.Functions.Representative.Commands.UpdateRepresentativeComm
             if (selectedRepresentative.LastName != request.LastName) { selectedRepresentative.LastName = request.LastName; }
             if (selectedRepresentative.PhoneNumber != request.PhoneNumber) { selectedRepresentative.PhoneNumber = request.PhoneNumber; }
             if (selectedRepresentative.EmailAddress != request.EmailAddress) { selectedRepresentative.EmailAddress = request.EmailAddress; }
-            if (selectedRepresentative.IdOwner != request.IdOwner) { selectedRepresentative.IdOwner = request.IdOwner; }
 
             await _context.SaveChangesAsync();
 

@@ -21,7 +21,7 @@ namespace Application.Functions.Service.Queries.GetServiceListByValuationQuery
             if (!validatorResult.IsValid) return new GetServiceListByValuationResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var services = await _context.Services
-                                         .Where(p => p.IdLink == request.IdValuation)
+                                         .Where(p => p.IdValuation == request.IdValuation)
                                          .ToListAsync();
 
             return new GetServiceListByValuationResponse(services);

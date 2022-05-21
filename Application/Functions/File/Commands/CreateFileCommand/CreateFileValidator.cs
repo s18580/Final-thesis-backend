@@ -12,6 +12,10 @@ namespace Application.Functions.File.Commands.CreateFileCommand
         {
             _context = context;
 
+            RuleFor(p => p).
+                MustAsync(DoesLinkIsGiven)
+                .WithMessage("Specyfic link was not given.");
+
             RuleFor(p => p.Name)
                    .NotNull()
                    .WithMessage("File name is required.")
@@ -27,6 +31,10 @@ namespace Application.Functions.File.Commands.CreateFileCommand
             RuleFor(p => p).
                 MustAsync(DoesFileTypeExists)
                 .WithMessage("File type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesLinkExists)
+                .WithMessage("Link with given id does not exist.");
         }
 
         private async Task<bool> DoesFileStatusExists(CreateFileCommand command, CancellationToken cancellationToken)
@@ -45,6 +53,35 @@ namespace Application.Functions.File.Commands.CreateFileCommand
                                          .SingleOrDefaultAsync();
 
             return fileType != null;
+        }
+
+        private async Task<bool> DoesLinkExists(CreateFileCommand command, CancellationToken cancellationToken)
+        {
+            var valutaion = await _context.Valuations
+                                               .Where(p => p.IdValuation == command.IdValuation)
+                                               .SingleOrDefaultAsync();
+
+            var orderItem = await _context.OrderItems
+                                          .Where(p => p.IdOrderItem == command.IdOrderItem)
+                                          .SingleOrDefaultAsync();
+
+            var order = await _context.Orders
+                                      .Where(p => p.IdOrder == command.IdOrder)
+                                      .SingleOrDefaultAsync();
+
+            return (valutaion != null || orderItem != null || order != null);
+        }
+
+        private async Task<bool> DoesLinkIsGiven(CreateFileCommand command, CancellationToken cancellationToken)
+        {
+            return !(command.IdOrder != null && command.IdOrderItem != null && command.IdValuation == null) ||
+                !(command.IdOrder != null && command.IdOrderItem == null && command.IdValuation == null) ||
+                !(command.IdOrder != null && command.IdOrderItem != null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdOrderItem != null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdOrderItem == null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdOrderItem != null && command.IdValuation == null) ||
+                !(command.IdOrder != null && command.IdOrderItem != null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdOrderItem == null && command.IdValuation == null );
         }
     }
 }

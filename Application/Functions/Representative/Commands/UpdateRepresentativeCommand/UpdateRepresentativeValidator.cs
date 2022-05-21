@@ -41,10 +41,6 @@ namespace Application.Functions.Representative.Commands.UpdateRepresentativeComm
             RuleFor(p => p).
                 MustAsync(DoesRepresentativeExists)
                 .WithMessage("Representative with given id does not exist.");
-
-            RuleFor(p => p).
-                MustAsync(DoesOwnerExists)
-                .WithMessage("Owner with given id does not exist.");
         }
 
         private async Task<bool> DoesRepresentativeExists(UpdateRepresentativeCommand command, CancellationToken cancellationToken)
@@ -54,19 +50,6 @@ namespace Application.Functions.Representative.Commands.UpdateRepresentativeComm
                                                .SingleOrDefaultAsync();
 
             return representative != null;
-        }
-
-        private async Task<bool> DoesOwnerExists(UpdateRepresentativeCommand command, CancellationToken cancellationToken)
-        {
-            var customer = await _context.Customers
-                                               .Where(p => p.IdCustomer == command.IdOwner)
-                                               .SingleOrDefaultAsync();
-
-            var supplier = await _context.Suppliers
-                                               .Where(p => p.IdSupplier == command.IdOwner)
-                                               .SingleOrDefaultAsync();
-
-            return (customer != null || supplier != null);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Application.Functions.Representative.Commands.CreateRepresentativeComm
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
-        public int IdOwner { get; set; }
+        public int? IdSupplier { get; set; }
+        public int? IdCustomer { get; set; }
     }
 }

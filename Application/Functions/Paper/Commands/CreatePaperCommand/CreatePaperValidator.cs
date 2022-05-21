@@ -13,6 +13,10 @@ namespace Application.Functions.Paper.Commands.CreatePaperCommand
         {
             _context = context;
 
+            RuleFor(p => p).
+                MustAsync(DoesLinkIsGiven)
+                .WithMessage("Specyfic link was not given.");
+
             RuleFor(p => p.Name)
                    .NotNull()
                    .WithMessage("Paper name is required.")
@@ -71,6 +75,11 @@ namespace Application.Functions.Paper.Commands.CreatePaperCommand
         private async Task<bool> DoesFiberDirectionExists(CreatePaperCommand command, CancellationToken cancellationToken)
         {
             return Enum.IsDefined(typeof(FiberDirection), command.FiberDirection);
+        }
+
+        private async Task<bool> DoesLinkIsGiven(CreatePaperCommand command, CancellationToken cancellationToken)
+        {
+            return !(command.IdValuation != null && command.IdOrderItem != null) || !(command.IdValuation == null && command.IdOrderItem == null);
         }
     }
 }

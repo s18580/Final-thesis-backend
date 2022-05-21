@@ -12,6 +12,5 @@ namespace Application.Functions.Address.Commands.UpdateAddressCommand
         public string StreetName { get; set; }
         public string StreetNumber { get; set; }
         public string ApartmentNumber { get; set; }
-        public int IdOwner { get; set; }
     }
 }

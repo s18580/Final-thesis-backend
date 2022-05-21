@@ -21,7 +21,7 @@ namespace Application.Functions.File.Queries.GetFileListByOrderQuery
             if (!validatorResult.IsValid) return new GetFileListByOrderResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var files = await _context.Files
-                                      .Where(p => p.IdLink == request.IdOrder)
+                                      .Where(p => p.IdOrder == request.IdOrder)
                                       .ToListAsync();
 
             return new GetFileListByOrderResponse(files);

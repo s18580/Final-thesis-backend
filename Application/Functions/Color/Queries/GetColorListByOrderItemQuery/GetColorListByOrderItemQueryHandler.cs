@@ -21,7 +21,7 @@ namespace Application.Functions.Color.Queries.GetColorListByOrderItemQuery
             if (!validatorResult.IsValid) return new GetColorListByOrderItemResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var colors = await _context.Colors
-                                       .Where(p => p.IdLink == request.IdOrderItem)
+                                       .Where(p => p.IdOrderItem == request.IdOrderItem)
                                        .ToListAsync();
 
             return new GetColorListByOrderItemResponse(colors);
