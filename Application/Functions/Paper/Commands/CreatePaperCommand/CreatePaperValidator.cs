@@ -62,11 +62,11 @@ namespace Application.Functions.Paper.Commands.CreatePaperCommand
         private async Task<bool> DoesLinkExists(CreatePaperCommand command, CancellationToken cancellationToken)
         {
             var orderItem = await _context.OrderItems
-                                          .Where(p => p.IdOrderItem == command.IdLink)
+                                          .Where(p => p.IdOrderItem == command.IdOrderItem)
                                           .SingleOrDefaultAsync();
 
             var valuation = await _context.Valuations
-                                          .Where(p => p.IdValuation == command.IdLink)
+                                          .Where(p => p.IdValuation == command.IdValuation)
                                           .SingleOrDefaultAsync();
 
             return (orderItem != null || valuation != null);

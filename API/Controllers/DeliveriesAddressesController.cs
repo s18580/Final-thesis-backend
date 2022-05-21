@@ -93,9 +93,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("getDeliveriesAddress")]
-        public async Task<IActionResult> GetDeliveriesAddress([FromQuery] int idAddress, int idLink)
+        public async Task<IActionResult> GetDeliveriesAddress([FromQuery] int id)
         {
-            var deliveriesAddress = await _mediator.Send(new GetDeliveriesAddressesQuery { IdAddress = idAddress, IdLink = idLink });
+            var deliveriesAddress = await _mediator.Send(new GetDeliveriesAddressesQuery { IdDeliveriesAddresses = id });
             if (deliveriesAddress == null)
             {
                 return NotFound();
@@ -111,11 +111,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok(new
-                {
-                    IdAddress = response.IdAddress,
-                    IdLink = response.IdLink
-                });
+                return Ok(response.IdDeliveriesAddresses);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
