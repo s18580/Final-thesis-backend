@@ -21,8 +21,7 @@ namespace Application.Functions.DeliveriesAddresses.Commands.DeleteDeliveriesAdd
             if (!validatorResult.IsValid) return new DeleteDeliveriesAddressesResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var deliveriesAddressesToDelete = await _context.DeliveriesAddresses
-                                                            .Where(p => p.IdAddress == request.IdAddress)
-                                                            .Where(p => p.IdLink == request.IdLink)
+                                                            .Where(p => p.IdDeliveriesAddresses == request.IdDeliveriesAddresses)
                                                             .SingleAsync();
 
             _context.DeliveriesAddresses.Remove(deliveriesAddressesToDelete);

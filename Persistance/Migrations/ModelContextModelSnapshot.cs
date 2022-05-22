@@ -17,7 +17,7 @@ namespace Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -45,7 +45,10 @@ namespace Persistance.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("IdOwner")
+                    b.Property<int?>("IdCustomer")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdSupplier")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -68,7 +71,9 @@ namespace Persistance.Migrations
 
                     b.HasKey("IdAddress");
 
-                    b.HasIndex("IdOwner");
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdSupplier");
 
                     b.ToTable("Addresses");
                 });
@@ -100,13 +105,11 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdColor"), 1L, 1);
-
-                    b.Property<int>("IdLink")
+                    b.Property<int?>("IdOrderItem")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsForCover")
-                        .HasColumnType("bit");
+                    b.Property<int?>("IdValuation")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -114,8 +117,6 @@ namespace Persistance.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("IdColor");
-
-                    b.HasIndex("IdLink");
 
                     b.ToTable("Colors");
                 });
@@ -161,15 +162,28 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Models.DeliveriesAddresses", b =>
                 {
+                    b.Property<int>("IdDeliveriesAddresses")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDeliveriesAddresses"), 1L, 1);
+
                     b.Property<int>("IdAddress")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdLink")
+                    b.Property<int?>("IdOrder")
                         .HasColumnType("int");
 
-                    b.HasKey("IdAddress", "IdLink");
+                    b.Property<int?>("IdSupply")
+                        .HasColumnType("int");
 
-                    b.HasIndex("IdLink");
+                    b.HasKey("IdDeliveriesAddresses");
+
+                    b.HasIndex("IdAddress");
+
+                    b.HasIndex("IdOrder");
+
+                    b.HasIndex("IdSupply");
 
                     b.ToTable("DeliveriesAddresses");
                 });
@@ -401,7 +415,13 @@ namespace Persistance.Migrations
                     b.Property<int>("IdFileType")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdLink")
+                    b.Property<int?>("IdOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdOrderItem")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdValuation")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -415,7 +435,11 @@ namespace Persistance.Migrations
 
                     b.HasIndex("IdFileType");
 
-                    b.HasIndex("IdLink");
+                    b.HasIndex("IdOrder");
+
+                    b.HasIndex("IdOrderItem");
+
+                    b.HasIndex("IdValuation");
 
                     b.ToTable("Files");
                 });
@@ -550,16 +574,14 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPaper"), 1L, 1);
-
                     b.Property<int>("FiberDirection")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdLink")
+                    b.Property<int?>("IdOrderItem")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsForCover")
-                        .HasColumnType("bit");
+                    b.Property<int?>("IdValuation")
+                        .HasColumnType("int");
 
                     b.Property<string>("Kind")
                         .IsRequired()
@@ -587,8 +609,6 @@ namespace Persistance.Migrations
 
                     b.HasKey("IdPaper");
 
-                    b.HasIndex("IdLink");
-
                     b.ToTable("Papers");
                 });
 
@@ -605,7 +625,10 @@ namespace Persistance.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("IdOwner")
+                    b.Property<int?>("IdCustomer")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdSupplier")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -625,7 +648,9 @@ namespace Persistance.Migrations
 
                     b.HasKey("IdRepresentative");
 
-                    b.HasIndex("IdOwner");
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdSupplier");
 
                     b.ToTable("Representatives");
                 });
@@ -651,23 +676,19 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdService"), 1L, 1);
-
-                    b.Property<int>("IdLink")
+                    b.Property<int?>("IdOrderItem")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdServiceName")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsForCover")
-                        .HasColumnType("bit");
+                    b.Property<int?>("IdValuation")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.HasKey("IdService");
-
-                    b.HasIndex("IdLink");
 
                     b.HasIndex("IdServiceName");
 
@@ -904,15 +925,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.Customer", "Customer")
                         .WithMany("Addresses")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdCustomer")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Supplier", "Supplier")
                         .WithMany("Addresses")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdSupplier")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Customer");
 
@@ -942,13 +961,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Colors")
-                        .HasForeignKey("IdLink")
+                        .HasForeignKey("IdColor")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Colors")
-                        .HasForeignKey("IdLink")
+                        .HasForeignKey("IdColor")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -977,15 +996,13 @@ namespace Persistance.Migrations
 
                     b.HasOne("Domain.Models.Order", "Order")
                         .WithMany("DeliveriesAddresses")
-                        .HasForeignKey("IdLink")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdOrder")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Supply", "Supply")
                         .WithMany("DeliveriesAddresses")
-                        .HasForeignKey("IdLink")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdSupply")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Address");
 
@@ -1009,21 +1026,18 @@ namespace Persistance.Migrations
 
                     b.HasOne("Domain.Models.Order", "Order")
                         .WithMany("Files")
-                        .HasForeignKey("IdLink")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdOrder")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Files")
-                        .HasForeignKey("IdLink")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdOrderItem")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Files")
-                        .HasForeignKey("IdLink")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdValuation")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("FileStatus");
 
@@ -1093,13 +1107,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Papers")
-                        .HasForeignKey("IdLink")
+                        .HasForeignKey("IdPaper")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Papers")
-                        .HasForeignKey("IdLink")
+                        .HasForeignKey("IdPaper")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1112,15 +1126,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.Customer", "Customer")
                         .WithMany("Representatives")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdCustomer")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Supplier", "Supplier")
                         .WithMany("Representatives")
-                        .HasForeignKey("IdOwner")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdSupplier")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Customer");
 
@@ -1150,13 +1162,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Services")
-                        .HasForeignKey("IdLink")
+                        .HasForeignKey("IdService")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Services")
-                        .HasForeignKey("IdLink")
+                        .HasForeignKey("IdService")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

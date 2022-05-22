@@ -14,14 +14,13 @@ namespace Application.Functions.DeliveriesAddresses.Commands.DeleteDeliveriesAdd
 
             RuleFor(p => p).
                 MustAsync(DoesDeliveriesAddressesExists)
-                .WithMessage("Deliveries addresses with given ids does already exist.");
+                .WithMessage("Deliveries addresses with given id does already exist.");
         }
 
         private async Task<bool> DoesDeliveriesAddressesExists(DeleteDeliveriesAddressesCommand command, CancellationToken cancellationToken)
         {
             var deliveriesAddress = await _context.DeliveriesAddresses
-                                                  .Where(p => p.IdAddress == command.IdAddress)
-                                                  .Where(p => p.IdLink == command.IdLink)
+                                                  .Where(p => p.IdDeliveriesAddresses == command.IdDeliveriesAddresses)
                                                   .SingleOrDefaultAsync();
 
             return deliveriesAddress == null;

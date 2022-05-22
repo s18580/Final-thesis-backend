@@ -12,6 +12,10 @@ namespace Application.Functions.Color.Commands.CreateColorCommand
         {
             _context = context;
 
+            RuleFor(p => p).
+                MustAsync(DoesLinkIsGiven)
+                .WithMessage("Specyfic link was not given.");
+
             RuleFor(p => p.Name)
                    .NotNull()
                    .WithMessage("Color name is required.")
@@ -28,14 +32,19 @@ namespace Application.Functions.Color.Commands.CreateColorCommand
         private async Task<bool> DoesLinkExists(CreateColorCommand command, CancellationToken cancellationToken)
         {
             var orderItem = await _context.OrderItems
-                                          .Where(p => p.IdOrderItem == command.IdLink)
+                                          .Where(p => p.IdOrderItem == command.IdOrderItem)
                                           .SingleOrDefaultAsync();
 
             var valuation = await _context.Valuations
-                                          .Where(p => p.IdValuation == command.IdLink)
+                                          .Where(p => p.IdValuation == command.IdValuation)
                                           .SingleOrDefaultAsync();
 
             return (orderItem != null || valuation != null);
+        }
+
+        private async Task<bool> DoesLinkIsGiven(CreateColorCommand command, CancellationToken cancellationToken)
+        {
+            return !(command.IdValuation != null && command.IdOrderItem != null) || !(command.IdValuation == null && command.IdOrderItem == null);
         }
     }
 }

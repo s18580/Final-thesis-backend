@@ -1,7 +1,8 @@
 ﻿using Application.Functions.Address.Commands.CreateAddressCommand;
 using Application.Functions.Address.Commands.DeleteAddressCommand;
 using Application.Functions.Address.Commands.UpdateAddressCommand;
-using Application.Functions.Address.Queries.GetAddressListByOwnerIdQuery;
+using Application.Functions.Address.Queries.GetAddressListByCustomerIdQuery;
+using Application.Functions.Address.Queries.GetAddressListBySupplierIdQuery;
 using Application.Functions.Address.Queries.GetAddressListQuery;
 using Application.Functions.Address.Queries.GetAddressQuery;
 using Application.Responses;
@@ -31,10 +32,33 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("getAddressesByOwner")]
-        public async Task<IActionResult> GetAddressesByOwner([FromQuery] int id)
+        [Route("getAddressesByCustomer")]
+        public async Task<IActionResult> GetAddressesByCustomer([FromQuery] int id)
         {
-            var response = await _mediator.Send(new GetAddressListByOwnerIdQuery { IdOwner = id });
+            var response = await _mediator.Send(new GetAddressListByCustomerIdQuery { IdCustomer = id });
+            if (response.Success)
+            {
+                return Ok(response.address);
+            }
+            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
+            {
+                return NotFound(response.Message);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("getAddressesBySupplier")]
+        public async Task<IActionResult> GetAddressesBySupplier([FromQuery] int id)
+        {
+            var response = await _mediator.Send(new GetAddressListBySupplierIdQuery { IdSupplier = id });
             if (response.Success)
             {
                 return Ok(response.address);

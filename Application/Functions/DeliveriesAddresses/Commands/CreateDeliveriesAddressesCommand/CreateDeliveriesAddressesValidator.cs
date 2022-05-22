@@ -27,12 +27,26 @@ namespace Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAdd
 
         private async Task<bool> DoesDeliveriesAddressesExists(CreateDeliveriesAddressesCommand command, CancellationToken cancellationToken)
         {
-            var deliveriesAddress = await _context.DeliveriesAddresses
-                                                  .Where(p => p.IdAddress == command.IdAddress)
-                                                  .Where(p => p.IdLink == command.IdLink)
-                                                  .SingleOrDefaultAsync();
+            if (command.IdOrder != null)
+            {
+                var deliveriesAddress = await _context.DeliveriesAddresses
+                                                      .Where(p => p.IdAddress == command.IdAddress)
+                                                      .Where(p => p.IdOrder == command.IdOrder)
+                                                      .SingleOrDefaultAsync();
+                return deliveriesAddress == null;
 
-            return deliveriesAddress == null;
+            } else if (command.IdSupply != null)
+            {
+                var deliveriesAddress = await _context.DeliveriesAddresses
+                                                      .Where(p => p.IdAddress == command.IdAddress)
+                                                      .Where(p => p.IdSupply == command.IdSupply)
+                                                      .SingleOrDefaultAsync();
+                return deliveriesAddress == null;
+
+            } else
+            {
+                return false;
+            }
         }
 
         private async Task<bool> DoesAddressExists(CreateDeliveriesAddressesCommand command, CancellationToken cancellationToken)
@@ -47,11 +61,11 @@ namespace Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAdd
         private async Task<bool> DoesLinkExists(CreateDeliveriesAddressesCommand command, CancellationToken cancellationToken)
         {
             var order = await _context.Orders
-                                      .Where(p => p.IdOrder == command.IdLink)
+                                      .Where(p => p.IdOrder == command.IdOrder)
                                       .SingleOrDefaultAsync();
 
             var supply = await _context.Supplies
-                                       .Where(p => p.IdSupply == command.IdLink)
+                                       .Where(p => p.IdSupply == command.IdSupply)
                                        .SingleOrDefaultAsync();
 
             return (order != null || supply != null);

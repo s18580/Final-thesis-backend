@@ -21,7 +21,7 @@ namespace Application.Functions.Service.Queries.GetServiceListByOrderItemQuery
             if (!validatorResult.IsValid) return new GetServiceListByOrderItemResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var services = await _context.Services
-                                         .Where(p => p.IdLink == request.IdOrderItem)
+                                         .Where(p => p.IdOrderItem == request.IdOrderItem)
                                          .ToListAsync();
 
             return new GetServiceListByOrderItemResponse(services);

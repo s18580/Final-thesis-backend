@@ -13,6 +13,5 @@ namespace Application.Functions.Paper.Commands.UpdatePaperCommand
         public int Opacity { get; set; }
         public double PricePerKilogram { get; set; }
         public int Quantity { get; set; }
-        public bool IsForCover { get; set; }
     }
 }

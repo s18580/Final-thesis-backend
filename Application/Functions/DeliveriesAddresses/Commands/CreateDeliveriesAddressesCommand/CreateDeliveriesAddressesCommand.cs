@@ -5,6 +5,7 @@ namespace Application.Functions.DeliveriesAddresses.Commands.CreateDeliveriesAdd
     public class CreateDeliveriesAddressesCommand : IRequest<CreateDeliveriesAddressesResponse>
     {
         public int IdAddress { get; set; }
-        public int IdLink { get; set; }
+        public int? IdOrder { get; set; }
+        public int? IdSupply { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Application.Functions.Paper.Queries.GetPaperListByValuationQuery
             if (!validatorResult.IsValid) return new GetPaperListByValuationResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var papers = await _context.Papers
-                                       .Where(p => p.IdLink == request.IdValuation)
+                                       .Where(p => p.IdValuation == request.IdValuation)
                                        .ToListAsync();
 
             return new GetPaperListByValuationResponse(papers);

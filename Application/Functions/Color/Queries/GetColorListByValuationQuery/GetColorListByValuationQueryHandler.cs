@@ -21,7 +21,7 @@ namespace Application.Functions.Color.Queries.GetColorListByValuationQuery
             if (!validatorResult.IsValid) return new GetColorListByValuationResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var colors = await _context.Colors
-                                       .Where(p => p.IdLink == request.IdValuation)
+                                       .Where(p => p.IdValuation == request.IdValuation)
                                        .ToListAsync();
 
             return new GetColorListByValuationResponse(colors);

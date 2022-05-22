@@ -9,7 +9,9 @@ namespace Domain.Models
         public DateTime AddedDate { get; set; }
         public int IdFileType { get; set; }
         public int? IdFileStatus { get; set; }
-        public int IdLink { get; set; }
+        public int? IdValuation { get; set; }
+        public int? IdOrderItem { get; set; }
+        public int? IdOrder { get; set; }
 
         public FileType FileType { get; set; }
         public FileStatus FileStatus { get; set; }

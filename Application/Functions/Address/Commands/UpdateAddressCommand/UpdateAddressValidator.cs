@@ -61,25 +61,8 @@ namespace Application.Functions.Address.Commands.UpdateAddressCommand
                    .WithMessage("Apartment number length can't be longer then 10 characters.");
 
             RuleFor(p => p).
-                MustAsync(DoesOwnerExists)
-                .WithMessage("Owner with given id does not exists.");
-
-            RuleFor(p => p).
                 MustAsync(DoesAddressExists)
                 .WithMessage("Address with given id does not exist.");
-        }
-
-        private async Task<bool> DoesOwnerExists(UpdateAddressCommand command, CancellationToken cancellationToken)
-        {
-            var customer = await _context.Customers
-                                               .Where(p => p.IdCustomer == command.IdOwner)
-                                               .SingleOrDefaultAsync();
-
-            var supplier = await _context.Suppliers
-                                               .Where(p => p.IdSupplier == command.IdOwner)
-                                               .SingleOrDefaultAsync();
-
-            return (customer != null || supplier != null);
         }
 
         private async Task<bool> DoesAddressExists(UpdateAddressCommand command, CancellationToken cancellationToken)

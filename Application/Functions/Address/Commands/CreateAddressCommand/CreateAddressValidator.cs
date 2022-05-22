@@ -12,6 +12,10 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
         {
             _context = context;
 
+            RuleFor(p => p).
+               MustAsync(DoesLinkIsGiven)
+               .WithMessage("Specyfic link was not given.");
+
             RuleFor(p => p.Name)
                    .NotNull()
                    .WithMessage("Address name is required.")
@@ -68,14 +72,19 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
         private async Task<bool> DoesOwnerExists(CreateAddressCommand command, CancellationToken cancellationToken)
         {
             var customer = await _context.Customers
-                                               .Where(p => p.IdCustomer == command.IdOwner)
+                                               .Where(p => p.IdCustomer == command.IdCustomer)
                                                .SingleOrDefaultAsync();
 
             var supplier = await _context.Suppliers
-                                               .Where(p => p.IdSupplier == command.IdOwner)
+                                               .Where(p => p.IdSupplier == command.IdSupplier)
                                                .SingleOrDefaultAsync();
 
             return (customer != null || supplier != null);
+        }
+
+        private async Task<bool> DoesLinkIsGiven(CreateAddressCommand command, CancellationToken cancellationToken)
+        {
+            return !(command.IdCustomer != null && command.IdSupplier != null) || !(command.IdCustomer == null && command.IdSupplier == null);
         }
     }
 }

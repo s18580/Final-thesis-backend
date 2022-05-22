@@ -4,7 +4,6 @@ namespace Application.Functions.DeliveriesAddresses.Commands.DeleteDeliveriesAdd
 {
     public class DeleteDeliveriesAddressesCommand : IRequest<DeleteDeliveriesAddressesResponse>
     {
-        public int IdAddress { get; set; }
-        public int IdLink { get; set; }
+        public int IdDeliveriesAddresses { get; set; }
     }
 }

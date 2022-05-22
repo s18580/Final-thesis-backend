@@ -21,7 +21,7 @@ namespace Application.Functions.File.Queries.GetFileListByValuationQuery
             if (!validatorResult.IsValid) return new GetFileListByValuationResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var files = await _context.Files
-                                      .Where(p => p.IdLink == request.IdValuation)
+                                      .Where(p => p.IdValuation == request.IdValuation)
                                       .ToListAsync();
 
             return new GetFileListByValuationResponse(files);

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class RebuildAfterMigrationsDelete : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,20 +62,6 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MinimumRates",
-                columns: table => new
-                {
-                    IdMinimumRate = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Circulation = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MinimumRates", x => x.IdMinimumRate);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderItemTypes",
                 columns: table => new
                 {
@@ -129,6 +115,22 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ServiceNames",
+                columns: table => new
+                {
+                    IdServiceName = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    DefaultPrice = table.Column<double>(type: "float", nullable: true),
+                    MinimumPrice = table.Column<double>(type: "float", nullable: true),
+                    MinimumCirculation = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceNames", x => x.IdServiceName);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Suppliers",
                 columns: table => new
                 {
@@ -171,27 +173,6 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ServiceNames",
-                columns: table => new
-                {
-                    IdServiceName = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    DefaultPrice = table.Column<double>(type: "float", nullable: true),
-                    IdMinimumRate = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServiceNames", x => x.IdServiceName);
-                    table.ForeignKey(
-                        name: "FK_ServiceNames_MinimumRates_IdMinimumRate",
-                        column: x => x.IdMinimumRate,
-                        principalTable: "MinimumRates",
-                        principalColumn: "IdMinimumRate",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Workers",
                 columns: table => new
                 {
@@ -201,9 +182,10 @@ namespace Persistance.Migrations
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     EmailAddres = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    PassHash = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Password = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
-                    IdWorksite = table.Column<int>(type: "int", nullable: false)
+                    IdWorksite = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,20 +259,21 @@ namespace Persistance.Migrations
                     StreetName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     StreetNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     ApartmentNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    IdOwner = table.Column<int>(type: "int", nullable: false)
+                    IdSupplier = table.Column<int>(type: "int", nullable: true),
+                    IdCustomer = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.IdAddress);
                     table.ForeignKey(
-                        name: "FK_Addresses_Customers_IdOwner",
-                        column: x => x.IdOwner,
+                        name: "FK_Addresses_Customers_IdCustomer",
+                        column: x => x.IdCustomer,
                         principalTable: "Customers",
                         principalColumn: "IdCustomer",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Addresses_Suppliers_IdOwner",
-                        column: x => x.IdOwner,
+                        name: "FK_Addresses_Suppliers_IdSupplier",
+                        column: x => x.IdSupplier,
                         principalTable: "Suppliers",
                         principalColumn: "IdSupplier",
                         onDelete: ReferentialAction.Restrict);
@@ -304,22 +287,23 @@ namespace Persistance.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
-                    PhonerNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    IdOwner = table.Column<int>(type: "int", nullable: false)
+                    IdSupplier = table.Column<int>(type: "int", nullable: true),
+                    IdCustomer = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Representatives", x => x.IdRepresentative);
                     table.ForeignKey(
-                        name: "FK_Representatives_Customers_IdOwner",
-                        column: x => x.IdOwner,
+                        name: "FK_Representatives_Customers_IdCustomer",
+                        column: x => x.IdCustomer,
                         principalTable: "Customers",
                         principalColumn: "IdCustomer",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Representatives_Suppliers_IdOwner",
-                        column: x => x.IdOwner,
+                        name: "FK_Representatives_Suppliers_IdSupplier",
+                        column: x => x.IdSupplier,
                         principalTable: "Suppliers",
                         principalColumn: "IdSupplier",
                         onDelete: ReferentialAction.Restrict);
@@ -526,12 +510,15 @@ namespace Persistance.Migrations
                 name: "DeliveriesAddresses",
                 columns: table => new
                 {
+                    IdDeliveriesAddresses = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     IdAddress = table.Column<int>(type: "int", nullable: false),
-                    IdLink = table.Column<int>(type: "int", nullable: false)
+                    IdOrder = table.Column<int>(type: "int", nullable: true),
+                    IdSupply = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeliveriesAddresses", x => new { x.IdAddress, x.IdLink });
+                    table.PrimaryKey("PK_DeliveriesAddresses", x => x.IdDeliveriesAddresses);
                     table.ForeignKey(
                         name: "FK_DeliveriesAddresses_Addresses_IdAddress",
                         column: x => x.IdAddress,
@@ -539,14 +526,14 @@ namespace Persistance.Migrations
                         principalColumn: "IdAddress",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DeliveriesAddresses_Orders_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_DeliveriesAddresses_Orders_IdOrder",
+                        column: x => x.IdOrder,
                         principalTable: "Orders",
                         principalColumn: "IdOrder",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DeliveriesAddresses_Supplies_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_DeliveriesAddresses_Supplies_IdSupply",
+                        column: x => x.IdSupply,
                         principalTable: "Supplies",
                         principalColumn: "IdSupply",
                         onDelete: ReferentialAction.Restrict);
@@ -556,24 +543,23 @@ namespace Persistance.Migrations
                 name: "Colors",
                 columns: table => new
                 {
-                    IdColor = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdColor = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    IdLink = table.Column<int>(type: "int", nullable: false),
-                    IsForCover = table.Column<bool>(type: "bit", nullable: false)
+                    IdValuation = table.Column<int>(type: "int", nullable: true),
+                    IdOrderItem = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Colors", x => x.IdColor);
                     table.ForeignKey(
-                        name: "FK_Colors_OrderItems_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Colors_OrderItems_IdColor",
+                        column: x => x.IdColor,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Colors_Valuations_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Colors_Valuations_IdColor",
+                        column: x => x.IdColor,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -589,7 +575,9 @@ namespace Persistance.Migrations
                     AddedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdFileType = table.Column<int>(type: "int", nullable: false),
                     IdFileStatus = table.Column<int>(type: "int", nullable: true),
-                    IdLink = table.Column<int>(type: "int", nullable: false)
+                    IdValuation = table.Column<int>(type: "int", nullable: true),
+                    IdOrderItem = table.Column<int>(type: "int", nullable: true),
+                    IdOrder = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -607,20 +595,20 @@ namespace Persistance.Migrations
                         principalColumn: "IdFileType",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Files_OrderItems_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Files_OrderItems_IdOrderItem",
+                        column: x => x.IdOrderItem,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Files_Orders_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Files_Orders_IdOrder",
+                        column: x => x.IdOrder,
                         principalTable: "Orders",
                         principalColumn: "IdOrder",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Files_Valuations_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Files_Valuations_IdValuation",
+                        column: x => x.IdValuation,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -630,8 +618,7 @@ namespace Persistance.Migrations
                 name: "Papers",
                 columns: table => new
                 {
-                    IdPaper = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPaper = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Kind = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SheetFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -639,21 +626,21 @@ namespace Persistance.Migrations
                     Opacity = table.Column<int>(type: "int", nullable: false),
                     PricePerKilogram = table.Column<double>(type: "float", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    IdLink = table.Column<int>(type: "int", nullable: false),
-                    IsForCover = table.Column<bool>(type: "bit", nullable: false)
+                    IdValuation = table.Column<int>(type: "int", nullable: true),
+                    IdOrderItem = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Papers", x => x.IdPaper);
                     table.ForeignKey(
-                        name: "FK_Papers_OrderItems_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Papers_OrderItems_IdPaper",
+                        column: x => x.IdPaper,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Papers_Valuations_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Papers_Valuations_IdPaper",
+                        column: x => x.IdPaper,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -663,19 +650,18 @@ namespace Persistance.Migrations
                 name: "Services",
                 columns: table => new
                 {
-                    IdService = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdService = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    IdLink = table.Column<int>(type: "int", nullable: false),
-                    IdServiceName = table.Column<int>(type: "int", nullable: true),
-                    IsForCover = table.Column<bool>(type: "bit", nullable: false)
+                    IdOrderItem = table.Column<int>(type: "int", nullable: true),
+                    IdValuation = table.Column<int>(type: "int", nullable: true),
+                    IdServiceName = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Services", x => x.IdService);
                     table.ForeignKey(
-                        name: "FK_Services_OrderItems_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Services_OrderItems_IdService",
+                        column: x => x.IdService,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
@@ -686,8 +672,8 @@ namespace Persistance.Migrations
                         principalColumn: "IdServiceName",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Services_Valuations_IdLink",
-                        column: x => x.IdLink,
+                        name: "FK_Services_Valuations_IdService",
+                        column: x => x.IdService,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -718,9 +704,14 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_IdOwner",
+                name: "IX_Addresses_IdCustomer",
                 table: "Addresses",
-                column: "IdOwner");
+                column: "IdCustomer");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_IdSupplier",
+                table: "Addresses",
+                column: "IdSupplier");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assignments_IdOrder",
@@ -728,19 +719,24 @@ namespace Persistance.Migrations
                 column: "IdOrder");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Colors_IdLink",
-                table: "Colors",
-                column: "IdLink");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdWorker",
                 table: "Customers",
                 column: "IdWorker");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeliveriesAddresses_IdLink",
+                name: "IX_DeliveriesAddresses_IdAddress",
                 table: "DeliveriesAddresses",
-                column: "IdLink");
+                column: "IdAddress");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeliveriesAddresses_IdOrder",
+                table: "DeliveriesAddresses",
+                column: "IdOrder");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeliveriesAddresses_IdSupply",
+                table: "DeliveriesAddresses",
+                column: "IdSupply");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Files_IdFileStatus",
@@ -753,9 +749,19 @@ namespace Persistance.Migrations
                 column: "IdFileType");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Files_IdLink",
+                name: "IX_Files_IdOrder",
                 table: "Files",
-                column: "IdLink");
+                column: "IdOrder");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_IdOrderItem",
+                table: "Files",
+                column: "IdOrderItem");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_IdValuation",
+                table: "Files",
+                column: "IdValuation");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_IdBindingType",
@@ -788,29 +794,19 @@ namespace Persistance.Migrations
                 column: "IdStatus");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Papers_IdLink",
-                table: "Papers",
-                column: "IdLink");
+                name: "IX_Representatives_IdCustomer",
+                table: "Representatives",
+                column: "IdCustomer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Representatives_IdOwner",
+                name: "IX_Representatives_IdSupplier",
                 table: "Representatives",
-                column: "IdOwner");
+                column: "IdSupplier");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleAssignments_IdRole",
                 table: "RoleAssignments",
                 column: "IdRole");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ServiceNames_IdMinimumRate",
-                table: "ServiceNames",
-                column: "IdMinimumRate");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Services_IdLink",
-                table: "Services",
-                column: "IdLink");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Services_IdServiceName",
@@ -910,9 +906,6 @@ namespace Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "SupplyItemTypes");
-
-            migrationBuilder.DropTable(
-                name: "MinimumRates");
 
             migrationBuilder.DropTable(
                 name: "OrderItems");

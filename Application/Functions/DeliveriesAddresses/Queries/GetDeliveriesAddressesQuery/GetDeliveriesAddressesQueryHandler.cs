@@ -16,8 +16,7 @@ namespace Application.Functions.DeliveriesAddresses.Queries.GetDeliveriesAddress
         public async Task<Domain.Models.DeliveriesAddresses> Handle(GetDeliveriesAddressesQuery request, CancellationToken cancellationToken)
         {
             var deliveriesAddresses = await _context.DeliveriesAddresses
-                                                    .Where(p => p.IdAddress == request.IdAddress)
-                                                    .Where(p => p.IdLink == request.IdLink)
+                                                    .Where(p => p.IdDeliveriesAddresses == request.IdDeliveriesAddresses)
                                                     .SingleOrDefaultAsync();
 
             return deliveriesAddresses;

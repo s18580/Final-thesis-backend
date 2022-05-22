@@ -25,7 +25,6 @@ namespace Application.Functions.Service.Commands.UpdateServiceCommand
                                                 .SingleAsync();
 
             if (selectedService.Price != request.Price) { selectedService.Price = request.Price; }
-            if (selectedService.IsForCover != request.IsForCover) { selectedService.IsForCover = request.IsForCover; }
 
             await _context.SaveChangesAsync();
 

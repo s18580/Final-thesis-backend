@@ -25,7 +25,6 @@ namespace Application.Functions.Color.Commands.UpdateColorCommand
                                               .SingleAsync();
 
             if (selectedColor.Name != request.Name) { selectedColor.Name = request.Name; }
-            if (selectedColor.IsForCover != request.IsForCover) { selectedColor.IsForCover = request.IsForCover; }
 
             await _context.SaveChangesAsync();
 

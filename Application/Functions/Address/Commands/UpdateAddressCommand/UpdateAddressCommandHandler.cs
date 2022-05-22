@@ -31,7 +31,6 @@ namespace Application.Functions.Address.Commands.UpdateAddressCommand
             if (selectedAddress.StreetNumber != request.StreetNumber) { selectedAddress.StreetNumber = request.StreetNumber; }
             if (selectedAddress.ApartmentNumber != request.ApartmentNumber) { selectedAddress.ApartmentNumber = request.ApartmentNumber; }
             if (selectedAddress.PostCode != request.PostCode) { selectedAddress.PostCode = request.PostCode; }
-            if (selectedAddress.IdOwner != request.IdOwner) { selectedAddress.IdOwner = request.IdOwner; }
 
             await _context.SaveChangesAsync();
 
