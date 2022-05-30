@@ -40,6 +40,10 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
                    .MaximumLength(50)
                    .WithMessage("City length can't be longer then 50 characters.");
 
+            RuleFor(p => p.PostCode)
+                   .MaximumLength(10)
+                   .WithMessage("Post code length can't be longer then 10 characters.");
+
             RuleFor(p => p.StreetName)
                    .NotNull()
                    .WithMessage("Street name is required.")
