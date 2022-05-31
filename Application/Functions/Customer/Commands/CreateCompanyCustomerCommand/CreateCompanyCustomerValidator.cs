@@ -22,11 +22,19 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerCommand
 
             RuleFor(p => p.NIP)
                    .NotNull()
-                   .WithMessage("NIP is required.");
+                   .WithMessage("NIP is required.")
+                   .NotEmpty()
+                   .WithMessage("NIP is required.")
+                   .MaximumLength(10)
+                   .WithMessage("NIP length can't be longer then 10 characters.");
 
             RuleFor(p => p.Regon)
                    .NotNull()
-                   .WithMessage("Regon is required.");
+                   .WithMessage("Regon is required.")
+                   .NotEmpty()
+                   .WithMessage("Regon is required.")
+                   .MaximumLength(14)
+                   .WithMessage("Regon length can't be longer then 14 characters.");
 
             RuleFor(p => p.CompanyEmailAddress)
                    .NotNull()
