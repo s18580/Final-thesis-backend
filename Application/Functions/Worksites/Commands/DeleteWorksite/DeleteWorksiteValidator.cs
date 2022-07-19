@@ -20,7 +20,7 @@ namespace Application.Functions.Worksites.Commands.DeleteWorksite
         private async Task<bool> DoesWorksiteExists(DeleteWorksiteCommand command, CancellationToken cancellationToken)
         {
             var worksite = await _context.Worksites
-                                       .Where(p => p.IdWorksite == command.Id)
+                                       .Where(p => p.IdWorksite == command.IdWorksite)
                                        .SingleOrDefaultAsync();
 
             return worksite != null;

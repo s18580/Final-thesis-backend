@@ -41,7 +41,7 @@ namespace Application.Functions.Worksites.Commands.UpdateWorksite
         private async Task<bool> DoesWorksiteExists(UpdateWorksiteCommand command, CancellationToken cancellationToken)
         {
             var worksite = await _context.Worksites
-                                         .Where(p => p.IdWorksite == command.Id)
+                                         .Where(p => p.IdWorksite == command.IdWorksite)
                                          .SingleOrDefaultAsync();
 
             return worksite != null;
