@@ -41,6 +41,7 @@ namespace Application.Functions.ServiceName.Commands.UpdateServiceNameCommand
         private async Task<bool> IsServiceNameUnique(UpdateServiceNameCommand command, CancellationToken cancellationToken)
         {
             var servicename = await _context.ServiceNames
+                                            .Where(p => p.IdServiceName != command.IdServiceName)
                                             .Where(x => x.Name == command.Name)
                                             .SingleOrDefaultAsync();
 

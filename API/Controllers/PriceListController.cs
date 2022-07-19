@@ -1,6 +1,7 @@
 ﻿using Application.Functions.PriceList.Commands.CreatePriceListCommand;
 using Application.Functions.PriceList.Commands.DeletePriceListCommand;
 using Application.Functions.PriceList.Commands.UpdatePriceListCommand;
+using Application.Functions.PriceList.Queries.GetPriceListListQuery;
 using Application.Functions.PriceList.Queries.GetPriceListQuery;
 using Application.Responses;
 using MediatR;
@@ -18,6 +19,14 @@ namespace API.Controllers
         public PriceListController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        [Route("getPriceLists")]
+        public async Task<IActionResult> GetPriceLists()
+        {
+            var priceLists = await _mediator.Send(new GetPriceListListQuery());
+            return Ok(priceLists);
         }
 
         [HttpGet]
