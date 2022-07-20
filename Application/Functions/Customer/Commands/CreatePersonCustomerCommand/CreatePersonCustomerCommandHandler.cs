@@ -23,7 +23,17 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
 
             if (!validatorResult.IsValid) return new CreatePersonCustomerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var newCustomer = _mapper.Map<Domain.Models.Customer>(request);
+            var newPersonDto = new PersonDTO
+            {
+                CompanyName = request.Name + " " + request.LastName,
+                NIP = "",
+                Regon = "",
+                CompanyPhoneNumber = request.CompanyPhoneNumber,
+                CompanyEmailAddress = request.CompanyEmailAddress,
+                IdWorker = request.IdWorker
+            };
+
+            var newCustomer = _mapper.Map<Domain.Models.Customer>(newPersonDto);
 
             await _context.Customers.AddAsync(newCustomer);
             await _context.SaveChangesAsync();
