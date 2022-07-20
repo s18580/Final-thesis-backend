@@ -12,13 +12,21 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
         {
             _context = context;
 
-            RuleFor(p => p.CompanyName)
+            RuleFor(p => p.Name)
                    .NotNull()
-                   .WithMessage("Company name is required.")
+                   .WithMessage("Name is required.")
                    .NotEmpty()
-                   .WithMessage("Company name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Company name length can't be longer then 255 characters.");
+                   .WithMessage("Name is required.")
+                   .MaximumLength(32)
+                   .WithMessage("Name length can't be longer then 32 characters.");
+
+            RuleFor(p => p.LastName)
+                   .NotNull()
+                   .WithMessage("Last name is required.")
+                   .NotEmpty()
+                   .WithMessage("Last name is required.")
+                   .MaximumLength(64)
+                   .WithMessage("Last name length can't be longer then 64 characters.");
 
             RuleFor(p => p.CompanyEmailAddress)
                    .NotNull()
