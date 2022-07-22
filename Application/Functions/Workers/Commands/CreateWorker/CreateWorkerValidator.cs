@@ -38,9 +38,7 @@ namespace Application.Functions.Workers.Commands.CreateWorker
                    .NotEmpty()
                    .WithMessage("Worker email address is required.")
                    .MaximumLength(255)
-                   .WithMessage("Worker email address length can't be longer then 255 characters.")
-                   .EmailAddress()
-                   .WithMessage("Email format is not correct.");
+                   .WithMessage("Worker email address length can't be longer then 255 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)

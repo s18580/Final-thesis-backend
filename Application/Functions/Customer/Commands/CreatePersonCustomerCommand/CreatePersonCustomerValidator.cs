@@ -32,11 +32,11 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
                    .NotNull()
                    .WithMessage("Company email address can't be null.")
                    .MaximumLength(255)
-                   .WithMessage("Company email address length can't be longer then 255 characters.")
+                   .WithMessage("Company email address length can't be longer then 255 characters.");
 
             RuleFor(p => p.CompanyPhoneNumber)
                    .NotNull()
-                   .WithMessage("Company phone number  can't be null.")
+                   .WithMessage("Company phone number can't be null.")
                    .MaximumLength(32)
                    .WithMessage("Company phone number length can't be longer then 32 characters.");
 
@@ -51,11 +51,16 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
 
         private async Task<bool> IsCompanyEmailAddressUnique(CreatePersonCustomerCommand command, CancellationToken cancellationToken)
         {
-            var email = await _context.Customers
+            if (!command.CompanyEmailAddress.Equals(""))
+            {
+                var email = await _context.Customers
                                       .Where(x => x.CompanyEmailAddress == command.CompanyEmailAddress)
                                       .SingleOrDefaultAsync();
 
-            return email == null;
+                return email == null;
+            }
+
+            return true;
         }
 
         private async Task<bool> CheckIfWorkerExists(CreatePersonCustomerCommand command, CancellationToken cancellationToken)

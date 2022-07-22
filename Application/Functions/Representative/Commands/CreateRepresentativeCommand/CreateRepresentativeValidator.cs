@@ -18,29 +18,29 @@ namespace Application.Functions.Representative.Commands.CreateRepresentativeComm
 
             RuleFor(p => p.Name)
                   .NotNull()
-                  .WithMessage("Order status name is required.")
+                  .WithMessage("Representative name is required.")
                   .NotEmpty()
-                  .WithMessage("Order status name is required.")
+                  .WithMessage("Representative name is required.")
                   .MaximumLength(32)
-                  .WithMessage("Order status name length can't be longer then 32 characters.");
+                  .WithMessage("Representative name length can't be longer then 32 characters.");
 
             RuleFor(p => p.LastName)
                   .NotNull()
-                  .WithMessage("Order status name is required.")
+                  .WithMessage("Representative last name is required.")
                   .NotEmpty()
-                  .WithMessage("Order status name is required.")
+                  .WithMessage("Representative last name is required.")
                   .MaximumLength(64)
-                  .WithMessage("Order status name length can't be longer then 64 characters.");
+                  .WithMessage("Representative last name length can't be longer then 64 characters.");
 
             RuleFor(p => p.PhoneNumber)
                    .MaximumLength(32)
                    .WithMessage("Phone number length can't be longer then 32 characters.");
 
             RuleFor(p => p.EmailAddress)
+                   .NotNull()
+                   .WithMessage("Email address can't be null.")
                    .MaximumLength(255)
-                   .WithMessage("Email address length can't be longer then 255 characters.")
-                   .EmailAddress()
-                   .WithMessage("Email format is not correct.");
+                   .WithMessage("Email address length can't be longer then 255 characters.");
 
             RuleFor(p => p).
                 MustAsync(DoesOwnerExists)

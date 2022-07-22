@@ -30,19 +30,13 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
 
             RuleFor(p => p.CompanyEmailAddress)
                    .NotNull()
-                   .WithMessage("Company email address is required.")
-                   .NotEmpty()
-                   .WithMessage("Company email address is required.")
+                   .WithMessage("Company email address can't be null..")
                    .MaximumLength(255)
-                   .WithMessage("Company email address length can't be longer then 255 characters.")
-                   .EmailAddress()
-                   .WithMessage("Email format is not correct.");
+                   .WithMessage("Company email address length can't be longer then 255 characters.");
 
             RuleFor(p => p.CompanyPhoneNumber)
                    .NotNull()
-                   .WithMessage("Company phone number is required.")
-                   .NotEmpty()
-                   .WithMessage("Company phone number is required.")
+                   .WithMessage("Company phone number can't be null..")
                    .MaximumLength(32)
                    .WithMessage("Company phone number length can't be longer then 32 characters.");
 
@@ -61,11 +55,16 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
 
         private async Task<bool> IsCompanyEmailAddressUnique(UpdatePersonCustomerCommand command, CancellationToken cancellationToken)
         {
-            var email = await _context.Customers
+            if (!command.CompanyEmailAddress.Equals(""))
+            {
+                var email = await _context.Customers
                                       .Where(x => x.CompanyEmailAddress == command.CompanyEmailAddress)
                                       .SingleOrDefaultAsync();
 
-            return email == null;
+                return email == null;
+            }
+
+            return true;
         }
 
         private async Task<bool> DoesWorkerExists(UpdatePersonCustomerCommand command, CancellationToken cancellationToken)

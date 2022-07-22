@@ -33,10 +33,10 @@ namespace Application.Functions.Representative.Commands.UpdateRepresentativeComm
                    .WithMessage("Phone number length can't be longer then 32 characters.");
 
             RuleFor(p => p.EmailAddress)
+                   .NotNull()
+                   .WithMessage("Email address can't be null.")
                    .MaximumLength(255)
-                   .WithMessage("Email address length can't be longer then 255 characters.")
-                   .EmailAddress()
-                   .WithMessage("Email format is not correct.");
+                   .WithMessage("Email address length can't be longer then 255 characters.");
 
             RuleFor(p => p).
                 MustAsync(DoesRepresentativeExists)
