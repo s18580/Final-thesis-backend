@@ -45,7 +45,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
 
             var user = _mapper.Map<LoggedUserDTO>(worker);
 
-            var token = _authorization.CreateUserToken(user);
+            var token = _authorization.CreateUserToken(user.Email, new List<string>());
 
             return new LoginUserResponse(token);
         }
