@@ -28,7 +28,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
             if (!validatorResult.IsValid) return new LoginUserResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var worker = await _context.Workers
-                                       .Where(p => p.EmailAddres == request.anonymousUserData.Email)
+                                       .Where(p => p.EmailAddres == request.Email)
                                        .SingleAsync();
 
             if (worker.IsDisabled)
@@ -36,7 +36,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
                 return new LoginUserResponse("Worker is disabled.", false, Responses.ResponseStatus.ValidationError);
             }
 
-            var isValidUser = _authentication.VerifyPassword(request.anonymousUserData.Password, worker.Password, worker.Salt);
+            var isValidUser = _authentication.VerifyPassword(request.Password, worker.Password, worker.Salt);
 
             if (!isValidUser)
             {
