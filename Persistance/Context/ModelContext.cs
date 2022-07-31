@@ -66,6 +66,9 @@ namespace Persistance.Context
                    .HasMaxLength(255)
                    .IsRequired();
 
+                opt.Property(p => p.RefreshToken)
+                   .HasMaxLength(255);
+
                 opt.HasOne(p => p.Worksite)
                    .WithMany(p => p.Workers)
                    .HasForeignKey(p => p.IdWorksite);
