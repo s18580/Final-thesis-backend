@@ -19,12 +19,16 @@ namespace Persistance.Security
 
         public string CreateUserToken(string userEmail, List<string> roles)
         {
-
             List<Claim> userClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, userEmail),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Email, userEmail)
             };
+
+            foreach (string role in roles)
+            {
+                userClaims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("SecretValidationKey").Value));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
