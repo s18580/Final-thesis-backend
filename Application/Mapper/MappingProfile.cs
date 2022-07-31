@@ -40,7 +40,7 @@ namespace Application.Mapper
         {
             CreateMap<Worksite, CreateWorksiteCommand>().ReverseMap();
             CreateMap<Role, CreateRoleCommand>().ReverseMap();
-            CreateMap<Worker, RegisterUserCommand>().ReverseMap();
+            CreateMap<RegisterUserCommand, Worker>().ForMember(d => d.Password, opt => opt.Ignore()).ReverseMap();
             CreateMap<Worker, WorkerDTO>().ReverseMap();
             CreateMap<RoleAssignment, CreateRoleAssignmentCommand>().ReverseMap();
             CreateMap<SupplyItemType, CreateSupplyItemTypeCommand>().ReverseMap();
