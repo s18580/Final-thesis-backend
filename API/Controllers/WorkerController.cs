@@ -1,5 +1,4 @@
-﻿using Application.Functions.Workers.Commands.CreateWorker;
-using Application.Functions.Workers.Commands.DeleteWorker;
+﻿using Application.Functions.Workers.Commands.DeleteWorker;
 using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
 using Application.Functions.Workers.Queries.GetWorker;
@@ -41,26 +40,6 @@ namespace API.Controllers
             }
 
             return Ok(worker);
-        }
-
-        [HttpPost]
-        [Route("createWorker")]
-        public async Task<IActionResult> CreateWorker([FromBody] CreateWorkerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok(response.Id);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
         }
 
         [HttpPost]

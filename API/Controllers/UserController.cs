@@ -1,6 +1,7 @@
 ﻿using Application.Functions.User;
 using Application.Functions.User.Commands.RefreshTokenCommand;
 using Application.Functions.User.Commands.RegisterUserCommand;
+using Application.Functions.User.Queries.LoginUserQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -21,12 +22,12 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] AnonymousUserDTO data)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
         {
-            var response = await _mediator.Send(new RegisterUserCommand { anonymousUserData = data });
+            var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok(response.loggedUserData);
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
@@ -40,12 +41,12 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> LoginUser([FromBody] AnonymousUserDTO data)
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserQuery query)
         {
-            var response = await _mediator.Send(new RegisterUserCommand { anonymousUserData = data });
+            var response = await _mediator.Send(query);
             if (response.Success)
             {
-                return Ok(response.loggedUserData);
+                return Ok(response);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

@@ -23,10 +23,10 @@ using Application.Functions.Supplier.Commands.CreateSupplierCommand;
 using Application.Functions.Supply.Commands.CreateSupplyCommand;
 using Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeCommand;
 using Application.Functions.User;
+using Application.Functions.User.Commands.RegisterUserCommand;
 using Application.Functions.Valuation.Commands.CreateValuationCommand;
 using Application.Functions.ValuationPriceList.Commands.CreateValuationPriceListCommand;
 using Application.Functions.Workers;
-using Application.Functions.Workers.Commands.CreateWorker;
 using Application.Functions.Worksites.Commands.CreateWorksite;
 using AutoMapper;
 using Domain.Models;
@@ -40,7 +40,7 @@ namespace Application.Mapper
         {
             CreateMap<Worksite, CreateWorksiteCommand>().ReverseMap();
             CreateMap<Role, CreateRoleCommand>().ReverseMap();
-            CreateMap<Worker, CreateWorkerCommand>().ReverseMap();
+            CreateMap<Worker, RegisterUserCommand>().ReverseMap();
             CreateMap<Worker, WorkerDTO>().ReverseMap();
             CreateMap<RoleAssignment, CreateRoleAssignmentCommand>().ReverseMap();
             CreateMap<SupplyItemType, CreateSupplyItemTypeCommand>().ReverseMap();
