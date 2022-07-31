@@ -70,6 +70,8 @@ namespace Application.Functions.User.Commands.RegisterUserCommand
 
         private async Task<bool> DoesWorksiteExists(RegisterUserCommand command, CancellationToken cancellationToken)
         {
+            if (command.IdWorksite == null) return true;
+
             var worksite = await _context.Worksites
                                          .Where(x => x.IdWorksite == command.IdWorksite)
                                          .SingleOrDefaultAsync();

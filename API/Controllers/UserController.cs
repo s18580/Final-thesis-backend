@@ -46,7 +46,8 @@ namespace API.Controllers
             var response = await _mediator.Send(query);
             if (response.Success)
             {
-                return Ok(response);
+                SetRefreshToken(response.refreshToken);
+                return Ok(response.token);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

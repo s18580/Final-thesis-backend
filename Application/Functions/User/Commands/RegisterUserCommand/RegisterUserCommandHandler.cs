@@ -29,6 +29,7 @@ namespace Application.Functions.User.Commands.RegisterUserCommand
             _authentication.CreatePasswordHash(request.Password, out passHash, out salt);
 
             var newWorker = _mapper.Map<Worker>(request);
+            newWorker.RefreshToken = "";
             newWorker.Password = passHash;
             newWorker.Salt = salt;
             newWorker.IsDisabled = false;

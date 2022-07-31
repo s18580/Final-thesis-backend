@@ -43,11 +43,17 @@ namespace Application.Functions.User.Queries.LoginUserQuery
                 return new LoginUserResponse("Invalid email or password.", false, Responses.ResponseStatus.NotFound);
             }
 
-            var user = _mapper.Map<LoggedUserDTO>(worker);
+            var roleAssignments = await _context.RoleAssignments.Include(p => p.Role).Include(p => p.Worker).Where(p => p.Worker.IdWorker == worker.IdWorker).ToListAsync();
+            var userRoles = new List<string>();
+            foreach (Domain.Models.RoleAssignment assignment in roleAssignments)
+            {
+                userRoles.Add(assignment.Role.Name);
+            }
 
-            var token = _authorization.CreateUserToken(user.Email, new List<string>());
+            var token = _authorization.CreateUserToken(request.Email, new List<string>());
+            var refreshToken = _authorization.CreateRefreshToken();
 
-            return new LoginUserResponse(token);
+            return new LoginUserResponse(token, refreshToken);
         }
     }
 }

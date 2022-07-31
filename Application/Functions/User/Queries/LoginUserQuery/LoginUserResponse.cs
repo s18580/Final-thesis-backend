@@ -6,10 +6,12 @@ namespace Application.Functions.User.Queries.LoginUserQuery
     public class LoginUserResponse : BaseResponse
     {
         public string token { get; set; }
+        public RefreshToken refreshToken { get; set; }
 
-        public LoginUserResponse(string data) : base()
+        public LoginUserResponse(string token, RefreshToken refreshToken) : base()
         {
-            token = data;
+            this.token = token;
+            this.refreshToken = refreshToken;
         }
 
         public LoginUserResponse(ValidationResult validationResult, ResponseStatus status)
