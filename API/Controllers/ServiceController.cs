@@ -6,6 +6,7 @@ using Application.Functions.Service.Queries.GetServiceListByValuationQuery;
 using Application.Functions.Service.Queries.GetServiceQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ServiceController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getServicesByOrderItem")]
         public async Task<IActionResult> GetServicesByOrderItem([FromQuery] int id)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getServicesByValuation")]
         public async Task<IActionResult> GetServicesByValuation([FromQuery] int id)
         {
@@ -68,7 +70,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getService")]
         public async Task<IActionResult> GetService([FromQuery] int id)
         {
@@ -81,7 +83,7 @@ namespace API.Controllers
             return Ok(service);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createService")]
         public async Task<IActionResult> CreateService([FromBody] CreateServiceCommand command)
         {
@@ -101,7 +103,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateService")]
         public async Task<IActionResult> UpdateService([FromBody] UpdateServiceCommand command)
         {
@@ -124,7 +126,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteService")]
         public async Task<IActionResult> DeleteService([FromBody] DeleteServiceCommand command)
         {

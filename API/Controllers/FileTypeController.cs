@@ -5,6 +5,7 @@ using Application.Functions.FileType.Queries.GetFileTypeListQuery;
 using Application.Functions.FileType.Queries.GetFileTypeQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FileTypeController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFileTypes")]
         public async Task<IActionResult> GetFileTypes()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(fileTypes);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFileType")]
         public async Task<IActionResult> GetFileType([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(fileType);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createFileType")]
         public async Task<IActionResult> CreateFileType([FromBody] CreateFileTypeCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateFileType")]
         public async Task<IActionResult> UpdateFileType([FromBody] UpdateFileTypeCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteFileType")]
         public async Task<IActionResult> DeleteFileType([FromBody] DeleteFileTypeCommand command)
         {

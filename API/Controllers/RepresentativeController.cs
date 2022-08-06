@@ -5,6 +5,7 @@ using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RepresentativeController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRepresentatives")]
         public async Task<IActionResult> GetRepresentatives()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(representatives);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRepresentative")]
         public async Task<IActionResult> GetRepresentative([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(representative);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createRepresentative")]
         public async Task<IActionResult> CreateRepresentative([FromBody] CreateRepresentativeCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateRepresentative")]
         public async Task<IActionResult> UpdateRepresentative([FromBody] UpdateRepresentativeCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteRepresentative")]
         public async Task<IActionResult> DeleteRepresentative([FromBody] DeleteRepresentativeCommand command)
         {

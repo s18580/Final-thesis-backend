@@ -4,6 +4,7 @@ using Application.Functions.User.Commands.RegisterUserCommand;
 using Application.Functions.User.Queries.LoginUserQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private IMediator _mediator;
@@ -20,7 +22,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
         {
@@ -39,7 +41,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         [Route("login")]
         public async Task<IActionResult> LoginUser([FromBody] LoginUserQuery query)
         {
@@ -61,7 +63,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("refreshToken")]
+        [Route("refreshToken"), AllowAnonymous]
         public async Task<IActionResult> RefreshToken([FromBody] string userEmail)
         {
             var refreshToken = Request.Cookies["printingRefreshToken"];

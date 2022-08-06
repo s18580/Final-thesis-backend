@@ -7,6 +7,7 @@ using Application.Functions.Customer.Queries.GetCustomerListQuery;
 using Application.Functions.Customer.Queries.GetCustomerQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private IMediator _mediator;
@@ -23,7 +25,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getCustomers")]
         public async Task<IActionResult> GetCustomers()
         {
@@ -31,7 +33,7 @@ namespace API.Controllers
             return Ok(customers);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getCustomer")]
         public async Task<IActionResult> GetCustomer([FromQuery] int id)
         {
@@ -44,7 +46,7 @@ namespace API.Controllers
             return Ok(customer);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createCompanyCustomer")]
         public async Task<IActionResult> CreateCompanyCustomer([FromBody] CreateCompanyCustomerCommand command)
         {
@@ -64,7 +66,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createPersonCustomer")]
         public async Task<IActionResult> CreatePersonCustomer([FromBody] CreatePersonCustomerCommand command)
         {
@@ -84,7 +86,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateCompanyCustomer")]
         public async Task<IActionResult> UpdateCompanyCustomer([FromBody] UpdateCompanyCustomerCommand command)
         {
@@ -107,7 +109,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updatePersonCustomer")]
         public async Task<IActionResult> UpdatePersonCustomer([FromBody] UpdatePersonCustomerCommand command)
         {
@@ -130,7 +132,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteCustomer")]
         public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerCommand command)
         {

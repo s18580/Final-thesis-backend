@@ -7,6 +7,7 @@ using Application.Functions.Address.Queries.GetAddressListQuery;
 using Application.Functions.Address.Queries.GetAddressQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AddressController : ControllerBase
     {
         private IMediator _mediator;
@@ -23,7 +25,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAddresses")]
         public async Task<IActionResult> GetAddresses()
         {
@@ -31,7 +33,7 @@ namespace API.Controllers
             return Ok(addresses);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAddressesByCustomer")]
         public async Task<IActionResult> GetAddressesByCustomer([FromQuery] int id)
         {
@@ -54,7 +56,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAddressesBySupplier")]
         public async Task<IActionResult> GetAddressesBySupplier([FromQuery] int id)
         {
@@ -77,7 +79,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAddress")]
         public async Task<IActionResult> GetAddress([FromQuery] int id)
         {
@@ -90,7 +92,7 @@ namespace API.Controllers
             return Ok(address);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createAddress")]
         public async Task<IActionResult> CreateAddress([FromBody] CreateAddressCommand command)
         {
@@ -110,7 +112,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateAddress")]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressCommand command)
         {
@@ -133,7 +135,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteAddress")]
         public async Task<IActionResult> DeleteAddress([FromBody] DeleteAddressCommand command)
         {

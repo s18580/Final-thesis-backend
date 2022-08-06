@@ -6,6 +6,7 @@ using Application.Functions.Valuation.Queries.GetValuationListByWorkerQuery;
 using Application.Functions.Valuation.Queries.GetValuationQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ValuationController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getValuationsByOrderItem")]
         public async Task<IActionResult> GetValuationsByOrderItem([FromQuery] int id)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getValuationsByWorker")]
         public async Task<IActionResult> GetValuationsByWorker([FromQuery] int id)
         {
@@ -68,7 +70,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getValuation")]
         public async Task<IActionResult> GetValuation([FromQuery] int id)
         {
@@ -81,7 +83,7 @@ namespace API.Controllers
             return Ok(valuation);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createValuation")]
         public async Task<IActionResult> CreateValuation([FromBody] CreateValuationCommand command)
         {
@@ -101,7 +103,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateValuation")]
         public async Task<IActionResult> UpdateValuation([FromBody] UpdateValuationCommand command)
         {
@@ -124,7 +126,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Office")]
         [Route("deleteValuation")]
         public async Task<IActionResult> DeleteValuation([FromBody] DeleteValuationCommand command)
         {

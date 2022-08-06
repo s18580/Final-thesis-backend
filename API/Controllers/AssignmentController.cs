@@ -6,6 +6,7 @@ using Application.Functions.Assignment.Queries.GetAssignmentListByWorkerQuery;
 using Application.Functions.Assignment.Queries.GetAssignmentQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AssignmentController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAssignmentsByWorker")]
         public async Task<IActionResult> GetAssignmentsByWorker([FromQuery] int workerId)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAssignmentsByOrder")]
         public async Task<IActionResult> GetAssignmentsByOrder([FromQuery] int orderId)
         {
@@ -68,7 +70,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getAssignment")]
         public async Task<IActionResult> GetAssignment([FromQuery] int orderId, int workerId)
         {
@@ -81,7 +83,7 @@ namespace API.Controllers
             return Ok(assignment);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createAssignment")]
         public async Task<IActionResult> CreateAssignment([FromBody] CreateAssignmentCommand command)
         {
@@ -105,7 +107,7 @@ namespace API.Controllers
 
         }
         
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateAssignment")]
         public async Task<IActionResult> UpdateAssignment([FromBody] UpdateAssignmentCommand command)
         {
@@ -125,7 +127,7 @@ namespace API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteAssignment")]
         public async Task<IActionResult> DeleteAssignment([FromBody] DeleteAssignmentCommand command)
         {

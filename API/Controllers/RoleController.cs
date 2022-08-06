@@ -5,6 +5,7 @@ using Application.Functions.Roles.Queries.GetRole;
 using Application.Functions.Roles.Queries.GetRolesList;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRoles")]
         public async Task<IActionResult> GetRoles()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(roles);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRole")]
         public async Task<IActionResult> GetRole([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(role);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createRole")]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateRole")]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteRole")]
         public async Task<IActionResult> DeleteRole([FromBody] DeleteRoleCommand command)
         {

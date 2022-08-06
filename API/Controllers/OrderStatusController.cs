@@ -5,6 +5,7 @@ using Application.Functions.OrderStatus.Queries.GetOrderStatusListQuery;
 using Application.Functions.OrderStatus.Queries.GetOrderStatusQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderStatusController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderStatuses")]
         public async Task<IActionResult> GetOrderStatuses()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(orderStatuses);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderStatus")]
         public async Task<IActionResult> GetOrderStatus([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(orderStatus);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createOrderStatus")]
         public async Task<IActionResult> CreateOrderStatus([FromBody] CreateOrderStatusCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateOrderStatus")]
         public async Task<IActionResult> UpdateOrderStatus([FromBody] UpdateOrderStatusCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteOrderStatus")]
         public async Task<IActionResult> DeleteOrderStatus([FromBody] DeleteOrderStatusCommand command)
         {
