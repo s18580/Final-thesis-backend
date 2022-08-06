@@ -50,10 +50,10 @@ namespace Application.Functions.User.Queries.LoginUserQuery
                 userRoles.Add(assignment.Role.Name);
             }
 
-            var token = _authorization.CreateUserToken(request.Email, new List<string>());
+            var token = _authorization.CreateUserToken(request.Email, userRoles);
             var refreshToken = _authorization.CreateRefreshToken();
 
-            return new LoginUserResponse(token, refreshToken);
+            return new LoginUserResponse(token, refreshToken, worker.Name + " " + worker.LastName, userRoles);
         }
     }
 }

@@ -47,11 +47,11 @@ namespace API.Controllers
             if (response.Success)
             {
                 SetRefreshToken(response.refreshToken);
-                return Ok(response.token);
+                return Ok(new LoggedUserDTO() { UserName = response.userName, UserToken =  response.token, UserRoles = response.userRoles });
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
-                return UnprocessableEntity(response.Message);
+                return Unauthorized(response.Message);
             }
             else
             {

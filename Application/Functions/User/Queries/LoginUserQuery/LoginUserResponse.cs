@@ -5,13 +5,17 @@ namespace Application.Functions.User.Queries.LoginUserQuery
 {
     public class LoginUserResponse : BaseResponse
     {
+        public List<string> userRoles { get; set; }
+        public string userName { get; set; }
         public string token { get; set; }
         public RefreshToken refreshToken { get; set; }
 
-        public LoginUserResponse(string token, RefreshToken refreshToken) : base()
+        public LoginUserResponse(string token, RefreshToken refreshToken, string name, List<string> roles) : base()
         {
+            this.userName = name;
             this.token = token;
             this.refreshToken = refreshToken;
+            this.userRoles = roles;
         }
 
         public LoginUserResponse(ValidationResult validationResult, ResponseStatus status)
