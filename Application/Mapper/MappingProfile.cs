@@ -22,7 +22,6 @@ using Application.Functions.ServiceName.Commands.CreateServiceNameCommand;
 using Application.Functions.Supplier.Commands.CreateSupplierCommand;
 using Application.Functions.Supply.Commands.CreateSupplyCommand;
 using Application.Functions.SupplyItemType.Commands.CreateSupplyItemTypeCommand;
-using Application.Functions.User;
 using Application.Functions.User.Commands.RegisterUserCommand;
 using Application.Functions.Valuation.Commands.CreateValuationCommand;
 using Application.Functions.ValuationPriceList.Commands.CreateValuationPriceListCommand;
@@ -67,7 +66,6 @@ namespace Application.Mapper
             CreateMap<CreatePriceListCommand, PriceList>().ReverseMap();
             CreateMap<CreateValuationCommand, Valuation>().ReverseMap();
             CreateMap<CreateValuationPriceListCommand, ValuationPriceList>().ReverseMap();
-            CreateMap<Worker, LoggedUserDTO>().ReverseMap();
         }
     }
 }
