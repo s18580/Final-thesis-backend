@@ -49,7 +49,7 @@ namespace API.Controllers
             if (response.Success)
             {
                 SetRefreshToken(response.refreshToken);
-                return Ok(new LoggedUserDTO() { UserName = response.userName, UserToken =  response.token, UserRoles = response.userRoles });
+                return Ok(new LoggedUserDTO() { UserName = response.userName, UserToken =  response.token, UserRoles = response.userRoles, UserId = response.userId });
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
