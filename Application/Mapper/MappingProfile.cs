@@ -9,6 +9,7 @@ using Application.Functions.DeliveryType.Commands.CreateDeliveryTypeCommand;
 using Application.Functions.File.Commands.CreateFileCommand;
 using Application.Functions.FileStatus.Commands.CreateFileStatusCommand;
 using Application.Functions.FileType.Commands.CreateFileTypeCommand;
+using Application.Functions.Order.Commands.CreateOrderCommand;
 using Application.Functions.OrderItem.Commands.CreateOrderItemCommand;
 using Application.Functions.OrderItemType.Commands.CreateOrderItemTypeCommand;
 using Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand;
@@ -66,6 +67,7 @@ namespace Application.Mapper
             CreateMap<CreatePriceListCommand, PriceList>().ReverseMap();
             CreateMap<CreateValuationCommand, Valuation>().ReverseMap();
             CreateMap<CreateValuationPriceListCommand, ValuationPriceList>().ReverseMap();
+            CreateMap<CreateOrderCommand, Order>();
         }
     }
 }

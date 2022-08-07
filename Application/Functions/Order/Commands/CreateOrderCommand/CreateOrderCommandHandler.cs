@@ -24,7 +24,7 @@ namespace Application.Functions.Order.Commands.CreateOrderCommand
 
             var newOrder = _mapper.Map<Domain.Models.Order>(request);
             newOrder.CreationDate = DateTime.Now;
-            newOrder.Identifier = "SomeBuissnesIdentifierToAdd";
+            newOrder.Identifier = "SomeBuissnesIdentifier";
 
             await _context.Orders.AddAsync(newOrder);
             await _context.SaveChangesAsync();
