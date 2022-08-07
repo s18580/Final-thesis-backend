@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Order.Commands.CreateOrderCommand;
 using Application.Functions.Order.Commands.DeleteOrderCommand;
 using Application.Functions.Order.Commands.UpdateOrderCommand;
+using Application.Functions.Order.Queries.GetOrderListByWorkerQuery;
 using Application.Functions.Order.Queries.GetOrderListQuery;
 using Application.Functions.Order.Queries.GetOrderQuery;
 using Application.Responses;
@@ -44,6 +45,25 @@ namespace API.Controllers
             return Ok(order);
         }
 
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getOrdersByWorker")]
+        public async Task<IActionResult> GetOrdersByWorker([FromQuery] int id)
+        {
+            var response = await _mediator.Send(new GetOrderListByWorkerQuery() { IdWorker = id });
+            if (response.Success)
+            {
+                return Ok(response.Orders);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost, Authorize(Roles = "Basic")]
         [Route("createOrder")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
@@ -61,7 +81,6 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-
         }
 
         [HttpPost, Authorize(Roles = "Basic")]
