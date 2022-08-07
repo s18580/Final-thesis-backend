@@ -5,11 +5,11 @@ namespace Application.Functions.User.Commands.RegisterUserCommand
 {
     public class RegisterUserResponse : BaseResponse
     {
-        public LoggedUserDTO loggedUserData { get; set; }
+        public int Id { get; }
 
-        public RegisterUserResponse(LoggedUserDTO data) : base()
+        public RegisterUserResponse(int id) : base()
         {
-            loggedUserData = data;
+            this.Id = id;
         }
 
         public RegisterUserResponse(ValidationResult validationResult, ResponseStatus status)

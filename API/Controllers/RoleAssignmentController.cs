@@ -5,6 +5,7 @@ using Application.Functions.RoleAssignment.Queries.GetRoleAssignmentQuery;
 using Application.Functions.RoleAssignment.Queries.GetRoleAssignmentsListQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleAssignmentController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRoleAssignmentsWorker")]
         public async Task<IActionResult> GetRoleAssignmentsByWorker([FromQuery] int workerId)
         {
@@ -44,7 +46,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRoleAssignmentsRole")]
         public async Task<IActionResult> GetRoleAssignmentsByRole([FromQuery] int roleId)
         {
@@ -67,7 +69,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getRoleAssignment")]
         public async Task<IActionResult> GetRoleAssignment([FromQuery] int roleId, int workerId)
         {
@@ -80,7 +82,7 @@ namespace API.Controllers
             return Ok(roleAssignment);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createRoleAssignment")]
         public async Task<IActionResult> CreateRoleAssignment([FromBody] CreateRoleAssignmentCommand command)
         {
@@ -104,7 +106,7 @@ namespace API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteRoleAssignment")]
         public async Task<IActionResult> DeleteRoleAssignment([FromBody] DeleteRoleAssignmentCommand command)
         {

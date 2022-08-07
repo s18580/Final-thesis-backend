@@ -5,6 +5,7 @@ using Application.Functions.Supplier.Queries.GetSupplierListQuery;
 using Application.Functions.Supplier.Queries.GetSupplierQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SupplierController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSuppliers")]
         public async Task<IActionResult> GetDeliveryTypes()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(suppliers);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSupplier")]
         public async Task<IActionResult> GetSupplier([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(supplier);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createSupplier")]
         public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateSupplier")]
         public async Task<IActionResult> UpdateSupplier([FromBody] UpdateSupplierCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteSupplier")]
         public async Task<IActionResult> DeleteSupplier([FromBody] DeleteSupplierCommand command)
         {

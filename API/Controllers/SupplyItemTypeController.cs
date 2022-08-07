@@ -5,6 +5,7 @@ using Application.Functions.SupplyItemType.Queries.GetSupplyItemTypeListQuery;
 using Application.Functions.SupplyItemType.Queries.GetSupplyItemTypeQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SupplyItemTypeController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSupplyItemsTypes")]
         public async Task<IActionResult> GetSupplyItemsTypes()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(supplyItemsType);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSupplyItemsType")]
         public async Task<IActionResult> GetSupplyItemsType([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(supplyItemType);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createSupplyItemsType")]
         public async Task<IActionResult> CreateSupplyItemsType([FromBody] CreateSupplyItemTypeCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateSupplyItemsType")]
         public async Task<IActionResult> UpdateSupplyItemsType([FromBody] UpdateSupplyItemTypeCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteSupplyItemsType")]
         public async Task<IActionResult> DeleteSupplyItemsType([FromBody] DeleteSupplyItemTypeCommand command)
         {

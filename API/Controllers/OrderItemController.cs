@@ -6,6 +6,7 @@ using Application.Functions.OrderItem.Queries.GetOrderItemListQuery;
 using Application.Functions.OrderItem.Queries.GetOrderItemQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderItemController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderItemsByOrder")]
         public async Task<IActionResult> GetOrderItemsByOrder([FromQuery] int id)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderItems")]
         public async Task<IActionResult> GetOrderItems()
         {
@@ -53,7 +55,7 @@ namespace API.Controllers
             return Ok(orderItems);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderItem")]
         public async Task<IActionResult> GetOrderItem([FromQuery] int id)
         {
@@ -66,7 +68,7 @@ namespace API.Controllers
             return Ok(orderItem);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createOrderItem")]
         public async Task<IActionResult> CreateOrderItem([FromBody] CreateOrderItemCommand command)
         {
@@ -86,7 +88,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateOrderItem")]
         public async Task<IActionResult> UpdateOrderItem([FromBody] UpdateOrderItemCommand command)
         {
@@ -109,7 +111,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteOrderItem")]
         public async Task<IActionResult> DeleteOrderItem([FromBody] DeleteOrderItemCommand command)
         {

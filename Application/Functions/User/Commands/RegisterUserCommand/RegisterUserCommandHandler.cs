@@ -1,7 +1,7 @@
 ﻿using Application.Services;
 using AutoMapper;
+using Domain.Models;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.User.Commands.RegisterUserCommand
 {
@@ -25,22 +25,19 @@ namespace Application.Functions.User.Commands.RegisterUserCommand
 
             if (!validatorResult.IsValid) return new RegisterUserResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var worker = await _context.Workers
-                                       .Include(p => p.RoleAssignments)
-                                       .Where(p => p.EmailAddres == request.anonymousUserData.Email)
-                                       .SingleAsync();
-
             byte[] salt, passHash;
-            _authentication.CreatePasswordHash(request.anonymousUserData.Password, out passHash, out salt);
+            _authentication.CreatePasswordHash(request.Password, out passHash, out salt);
 
-            worker.Password = passHash;
-            worker.Salt = salt;
+            var newWorker = _mapper.Map<Worker>(request);
+            newWorker.RefreshToken = "";
+            newWorker.Password = passHash;
+            newWorker.Salt = salt;
+            newWorker.IsDisabled = false;
 
+            await _context.Workers.AddAsync(newWorker);
             await _context.SaveChangesAsync();
 
-            var user = _mapper.Map<LoggedUserDTO>(worker);
-
-            return new RegisterUserResponse(user);
+            return new RegisterUserResponse(newWorker.IdWorker);
         }
     }
 }

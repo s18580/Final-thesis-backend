@@ -1,7 +1,10 @@
 ﻿using Application.Functions.User;
+using Application.Functions.User.Commands.RefreshTokenCommand;
 using Application.Functions.User.Commands.RegisterUserCommand;
+using Application.Functions.User.Queries.LoginUserQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +12,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private IMediator _mediator;
@@ -18,14 +22,14 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] AnonymousUserDTO data)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
         {
-            var response = await _mediator.Send(new RegisterUserCommand { anonymousUserData = data });
+            var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok(response.loggedUserData);
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
@@ -37,14 +41,38 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         [Route("login")]
-        public async Task<IActionResult> LoginUser([FromBody] AnonymousUserDTO data)
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserQuery query)
         {
-            var response = await _mediator.Send(new RegisterUserCommand { anonymousUserData = data });
+            var response = await _mediator.Send(query);
             if (response.Success)
             {
-                return Ok(response.loggedUserData);
+                SetRefreshToken(response.refreshToken);
+                return Ok(new LoggedUserDTO() { UserName = response.userName, UserToken =  response.token, UserRoles = response.userRoles });
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return Unauthorized(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost]
+        [Route("refreshToken"), AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody] string userEmail)
+        {
+            var refreshToken = Request.Cookies["printingRefreshToken"];
+
+            var response = await _mediator.Send(new RefreshTokenCommand { userEmail = userEmail, refreshToken = refreshToken });
+            if (response.Success)
+            {
+                SetRefreshToken(response.refreshToken);
+                return Ok(response.token);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
@@ -54,7 +82,17 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
+        }
 
+        private void SetRefreshToken(RefreshToken refreshTokenToSet)
+        {
+            var coockieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = refreshTokenToSet.Expires,
+            };
+
+            Response.Cookies.Append("printingRefreshToken", refreshTokenToSet.Token, coockieOptions);
         }
     }
 }

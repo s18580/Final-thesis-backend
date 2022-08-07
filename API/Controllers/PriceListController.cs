@@ -5,6 +5,7 @@ using Application.Functions.PriceList.Queries.GetPriceListListQuery;
 using Application.Functions.PriceList.Queries.GetPriceListQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PriceListController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getPriceLists")]
         public async Task<IActionResult> GetPriceLists()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(priceLists);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getPriceList")]
         public async Task<IActionResult> GetPriceList([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(priceList);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createPriceList")]
         public async Task<IActionResult> CreatePriceList([FromBody] CreatePriceListCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updatePriceList")]
         public async Task<IActionResult> UpdatePriceList([FromBody] UpdatePriceListCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deletePriceList")]
         public async Task<IActionResult> DeletePriceList([FromBody] DeletePriceListCommand command)
         {
