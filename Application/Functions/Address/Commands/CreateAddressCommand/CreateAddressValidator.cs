@@ -41,6 +41,8 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
                    .WithMessage("City length can't be longer then 50 characters.");
 
             RuleFor(p => p.PostCode)
+                   .NotNull()
+                   .WithMessage("Post code can't be null.")
                    .MaximumLength(10)
                    .WithMessage("Post code length can't be longer then 10 characters.");
 
@@ -62,9 +64,7 @@ namespace Application.Functions.Address.Commands.CreateAddressCommand
 
             RuleFor(p => p.ApartmentNumber)
                    .NotNull()
-                   .WithMessage("Apartment number is required.")
-                   .NotEmpty()
-                   .WithMessage("Apartment number is required.")
+                   .WithMessage("Apartment number can't be null.")
                    .MaximumLength(10)
                    .WithMessage("Apartment number length can't be longer then 10 characters.");
 

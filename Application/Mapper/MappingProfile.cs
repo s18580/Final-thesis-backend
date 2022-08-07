@@ -49,7 +49,7 @@ namespace Application.Mapper
             CreateMap<FileType, CreateFileTypeCommand>().ReverseMap();
             CreateMap<FileStatus, CreateFileStatusCommand>().ReverseMap();
             CreateMap<CreateCompanyCustomerCommand, Customer>().ReverseMap();
-            CreateMap<CreatePersonCustomerCommand, Customer>().ReverseMap();
+            CreateMap<PersonDTO, Customer>().ReverseMap();
             CreateMap<CreateSupplierCommand, Supplier>().ReverseMap();
             CreateMap<CreateRepresentativeCommand, Representative>().ReverseMap();
             CreateMap<CreateAssignmentCommand, Assignment>().ReverseMap();

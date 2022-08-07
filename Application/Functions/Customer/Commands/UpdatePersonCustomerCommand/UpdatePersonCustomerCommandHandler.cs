@@ -21,10 +21,10 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
             if (!validatorResult.IsValid) return new UpdatePersonCustomerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var selectedCustomer = await _context.Customers
-                                                   .Where(p => p.IdCustomer == request.IdCustomer)
-                                                   .SingleAsync();
+                                                  .Where(p => p.IdCustomer == request.IdCustomer)
+                                                  .SingleAsync();
 
-            if (selectedCustomer.CompanyName != request.CompanyName) { selectedCustomer.CompanyName = request.CompanyName; }
+            if (selectedCustomer.CompanyName != request.Name + " " + request.LastName) { selectedCustomer.CompanyName = request.Name + " " + request.LastName; }
             if (selectedCustomer.CompanyPhoneNumber != request.CompanyPhoneNumber) { selectedCustomer.CompanyPhoneNumber = request.CompanyPhoneNumber; }
             if (selectedCustomer.CompanyEmailAddress != request.CompanyEmailAddress) { selectedCustomer.CompanyEmailAddress = request.CompanyEmailAddress; }
             if (selectedCustomer.IdWorker != request.IdWorker) { selectedCustomer.IdWorker = request.IdWorker; }

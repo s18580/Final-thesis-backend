@@ -21,10 +21,10 @@ namespace Application.Functions.Supplier.Commands.UpdateSupplierCommand
                    .WithMessage("Supplier name length can't be longer then 255 characters.");
 
             RuleFor(p => p.EmailAddress)
+                   .NotNull()
+                   .WithMessage("Email address can't be null.")
                    .MaximumLength(255)
-                   .WithMessage("Email address length can't be longer then 255 characters.")
-                   .EmailAddress()
-                   .WithMessage("Email format is not correct.");
+                   .WithMessage("Email address length can't be longer then 255 characters.");
 
             RuleFor(p => p.Description)
                    .MaximumLength(255)
