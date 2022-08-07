@@ -2,9 +2,8 @@
 {
     public class LoggedUserDTO
     {
-        public int IdWorker { get; set; }
-        public string Email { get; set; }
-
-        public ICollection<Domain.Models.RoleAssignment> RoleAssignments { get; set; }
+        public string UserName { get; set; }
+        public string UserToken { get; set; }
+        public List<string> UserRoles { get; set; }
     }
 }

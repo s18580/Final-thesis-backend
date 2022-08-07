@@ -6,6 +6,7 @@ using Application.Functions.Color.Queries.GetColorListByValuationQuery;
 using Application.Functions.Color.Queries.GetColorQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ColorController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getColorsByOrderItem")]
         public async Task<IActionResult> GetColorsByOrderItem([FromQuery] int id)
         {
@@ -30,7 +32,7 @@ namespace API.Controllers
             return Ok(colors.colors);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getColorsByValuation")]
         public async Task<IActionResult> GetColorsByValuation([FromQuery] int id)
         {
@@ -38,7 +40,7 @@ namespace API.Controllers
             return Ok(colors.colors);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getColor")]
         public async Task<IActionResult> GetColor([FromQuery] int id)
         {
@@ -51,7 +53,7 @@ namespace API.Controllers
             return Ok(color);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createColor")]
         public async Task<IActionResult> CreateColor([FromBody] CreateColorCommand command)
         {
@@ -71,7 +73,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateColor")]
         public async Task<IActionResult> UpdateColor([FromBody] UpdateColorCommand command)
         {
@@ -94,7 +96,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteColor")]
         public async Task<IActionResult> DeleteColor([FromBody] DeleteColorCommand command)
         {

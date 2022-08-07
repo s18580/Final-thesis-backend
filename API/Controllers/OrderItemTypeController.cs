@@ -5,6 +5,7 @@ using Application.Functions.OrderItemType.Queries.GetOrderItemTypeListQuery;
 using Application.Functions.OrderItemType.Queries.GetOrderItemTypeQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderItemTypeController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderItemsTypes")]
         public async Task<IActionResult> GetOrderItemsTypes()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(orderItemsType);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderItemsType")]
         public async Task<IActionResult> GetOrderItemsType([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(orderItemType);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createOrderItemsType")]
         public async Task<IActionResult> CreateOrderItemsType([FromBody] CreateOrderItemTypeCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateOrderItemsType")]
         public async Task<IActionResult> UpdateOrderItemsType([FromBody] UpdateOrderItemTypeCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteOrderItemsType")]
         public async Task<IActionResult> DeleteOrderItemsType([FromBody] DeleteOrderItemTypeCommand command)
         {

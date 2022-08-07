@@ -5,6 +5,7 @@ using Application.Functions.Worksites.Queries.GetWorksite;
 using Application.Functions.Worksites.Queries.GetWorksitesList;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WorksiteController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getWorksites")]
         public async Task<IActionResult> GetWorksites()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(worksites);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getWorksite")]
         public async Task<IActionResult> GetWorksite([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(worksite);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createWorksite")]
         public async Task<IActionResult> CreateWorksite([FromBody] CreateWorksiteCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateWorksite")]
         public async Task<IActionResult> UpdateWorksite([FromBody] UpdateWorksiteCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteWorksite")]
         public async Task<IActionResult> DeleteWorksite([FromBody] DeleteWorksiteCommand command)
         {

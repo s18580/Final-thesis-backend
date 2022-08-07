@@ -5,6 +5,7 @@ using Application.Functions.DeliveryType.Queries.GetDeliveryTypeListQuery;
 using Application.Functions.DeliveryType.Queries.GetDeliveryTypeQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DeliveryTypeController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getDeliveryTypes")]
         public async Task<IActionResult> GetDeliveryTypes()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(deliveryTypes);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getDeliveryType")]
         public async Task<IActionResult> GetDeliveryType([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(deliveryType);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createDeliveryType")]
         public async Task<IActionResult> CreateDeliveryType([FromBody] CreateDeliveryTypeCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateDeliveryType")]
         public async Task<IActionResult> UpdateDeliveryType([FromBody] UpdateDeliveryTypeCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteDeliveryType")]
         public async Task<IActionResult> DeleteDeliveryType([FromBody] DeleteDeliveryTypeCommand command)
         {

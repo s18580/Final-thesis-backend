@@ -7,6 +7,7 @@ using Application.Functions.File.Queries.GetFileListByValuationQuery;
 using Application.Functions.File.Queries.GetFileQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FileController : ControllerBase
     {
         private IMediator _mediator;
@@ -23,7 +25,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFilesByValuation")]
         public async Task<IActionResult> GetFilesByValuation([FromQuery] int id)
         {
@@ -46,7 +48,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFilesByOrderItem")]
         public async Task<IActionResult> GetFilesByOrderItem([FromQuery] int id)
         {
@@ -69,7 +71,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFilesByOrder")]
         public async Task<IActionResult> GetFilesByOrder([FromQuery] int id)
         {
@@ -95,7 +97,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFile")]
         public async Task<IActionResult> GetFile([FromQuery] int id)
         {
@@ -108,7 +110,7 @@ namespace API.Controllers
             return Ok(file);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createFile")]
         public async Task<IActionResult> CreateFile([FromBody] CreateFileCommand command)
         {
@@ -128,7 +130,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateFile")]
         public async Task<IActionResult> UpdateFile([FromBody] UpdateFileCommand command)
         {
@@ -151,7 +153,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteFile")]
         public async Task<IActionResult> DeleteFile([FromBody] DeleteFileCommand command)
         {

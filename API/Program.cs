@@ -6,28 +6,27 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddCors();
+builder.Services.AddControllers()
+                .AddJsonOptions(x =>
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-builder.Services.AddApplicationLayer();
-builder.Services.AddPersistanceLayer(builder.Configuration);
+builder.Services.AddApplicationLayer(); // mapper and mediatR
+builder.Services.AddPersistanceLayer(builder.Configuration); // auth scheme and services
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen( options =>
-{
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        Description = "Authorization header schame (\"bearer {token}\")",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
-    });
+                {
+                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                    {
+                        Description = "Authorization header schame (\"bearer {token}\")",
+                        In = ParameterLocation.Header,
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey
+                    });
 
-    options.OperationFilter<SecurityRequirementsOperationFilter>();
-});
+                    options.OperationFilter<SecurityRequirementsOperationFilter>();
+                });
 
 var app = builder.Build();
 

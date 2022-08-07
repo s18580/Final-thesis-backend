@@ -6,6 +6,7 @@ using Application.Functions.DeliveriesAddresses.Queries.GetDeliveriesAddressesLi
 using Application.Functions.DeliveriesAddresses.Queries.GetDeliveriesAddressesQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DeliveriesAddressesController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getDeliveriesAddressesByOrder")]
         public async Task<IActionResult> GetDeliveriesAddressesByOrder([FromQuery] int id)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getDeliveriesAddressesBySupply")]
         public async Task<IActionResult> GetDeliveriesAddressesBySupply([FromQuery] int id)
         {
@@ -68,7 +70,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getDeliveriesAddressesByAddress")]
         public async Task<IActionResult> GetDeliveriesAddressesByAddress([FromQuery] int id)
         {
@@ -91,7 +93,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getDeliveriesAddress")]
         public async Task<IActionResult> GetDeliveriesAddress([FromQuery] int id)
         {
@@ -104,7 +106,7 @@ namespace API.Controllers
             return Ok(deliveriesAddress);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createDeliveriesAddress")]
         public async Task<IActionResult> CreateDeliveriesAddress([FromBody] CreateDeliveriesAddressesCommand command)
         {
@@ -124,7 +126,7 @@ namespace API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deleteDeliveriesAddress")]
         public async Task<IActionResult> DeleteDeliveriesAddress([FromBody] DeleteDeliveriesAddressesCommand command)
         {

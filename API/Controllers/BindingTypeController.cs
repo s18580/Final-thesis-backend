@@ -5,6 +5,7 @@ using Application.Functions.BindingType.Queries.GetBindingTypeListQuery;
 using Application.Functions.BindingType.Queries.GetBindingTypeQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BindingTypeController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getBindingTypes")]
         public async Task<IActionResult> GetBindingTypes()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(bindingTypes);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getBindingType")]
         public async Task<IActionResult> GetBindingType([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(bindingType);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createBindingType")]
         public async Task<IActionResult> CreateBindingType([FromBody] CreateBindingTypeCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateBindingType")]
         public async Task<IActionResult> UpdateBindingType([FromBody] UpdateBindingTypeCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteBindingType")]
         public async Task<IActionResult> DeleteBindingType([FromBody] DeleteBindingTypeCommand command)
         {

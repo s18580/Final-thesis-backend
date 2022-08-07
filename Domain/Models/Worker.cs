@@ -11,6 +11,9 @@ namespace Domain.Models
         public string EmailAddres { get; set; }
         public byte[]? Password { get; set; }
         public byte[]? Salt { get; set; }
+        public string RefreshToken { get; set; }
+        public DateTime? TokenCreated { get; set; }
+        public DateTime? TokenExpires { get; set; }
         public bool IsDisabled { get; set; }
         public int? IdWorksite { get; set; }
 

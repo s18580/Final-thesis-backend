@@ -6,6 +6,7 @@ using Application.Functions.Paper.Queries.GetPaperListByValuationQuery;
 using Application.Functions.Paper.Queries.GetPaperQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PaperController : ControllerBase
     {
         private IMediator _mediator;
@@ -22,7 +24,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getPapersByOrderItem")]
         public async Task<IActionResult> GetPapersByOrderItem([FromQuery] int id)
         {
@@ -45,7 +47,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getPapersByValuation")]
         public async Task<IActionResult> GetPapersByValuation([FromQuery] int id)
         {
@@ -68,7 +70,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getPaper")]
         public async Task<IActionResult> GetPaper([FromQuery] int id)
         {
@@ -81,7 +83,7 @@ namespace API.Controllers
             return Ok(paper);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("createPaper")]
         public async Task<IActionResult> CreatePaper([FromBody] CreatePaperCommand command)
         {
@@ -101,7 +103,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Basic")]
         [Route("updatePaper")]
         public async Task<IActionResult> UpdatePaper([FromBody] UpdatePaperCommand command)
         {
@@ -124,7 +126,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Basic")]
         [Route("deletePaper")]
         public async Task<IActionResult> DeletePaper([FromBody] DeletePaperCommand command)
         {

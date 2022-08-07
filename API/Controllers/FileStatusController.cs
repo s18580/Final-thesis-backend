@@ -5,6 +5,7 @@ using Application.Functions.FileStatus.Queries.GetFileStatusListQuery;
 using Application.Functions.FileStatus.Queries.GetFileStatusQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FileStatusController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFileStatuses")]
         public async Task<IActionResult> GetFileStatuses()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(fileStatuses);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getFileStatus")]
         public async Task<IActionResult> GetFileStatus([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(fileStatus);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createFileStatus")]
         public async Task<IActionResult> CreateFileStatus([FromBody] CreateFileStatusCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateFileStatus")]
         public async Task<IActionResult> UpdateFileStatus([FromBody] UpdateFileStatusCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteFileStatus")]
         public async Task<IActionResult> DeleteFileStatus([FromBody] DeleteFileStatusCommand command)
         {

@@ -12,7 +12,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
         {
             _context = context;
 
-            RuleFor(p => p.anonymousUserData.Password)
+            RuleFor(p => p.Password)
                 .NotNull()
                    .WithMessage("Password is required.")
                    .NotEmpty()
@@ -28,7 +28,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
         private async Task<bool> DoesWorkerExists(LoginUserQuery command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
-                                       .Where(p => p.EmailAddres == command.anonymousUserData.Email)
+                                       .Where(p => p.EmailAddres == command.Email)
                                        .Where(p => p.Password != null)
                                        .SingleOrDefaultAsync();
 

@@ -5,6 +5,7 @@ using Application.Functions.ValuationPriceList.Queries.GetValuationPriceListList
 using Application.Functions.ValuationPriceList.Queries.GetValuationPriceListQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ValuationPriceListController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getValuationPriceListByValuation")]
         public async Task<IActionResult> GetValuationPriceListByValuation([FromQuery] int id)
         {
@@ -44,7 +46,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getValuationPriceListByPriceList")]
         public async Task<IActionResult> GetValuationPriceListByPriceList([FromQuery] int id)
         {
@@ -67,7 +69,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getValuationPriceList")]
         public async Task<IActionResult> GetValuationPriceList([FromQuery] int priceListId, int valuationId)
         {
@@ -80,7 +82,7 @@ namespace API.Controllers
             return Ok(valuationPriceList);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createValuationPriceList")]
         public async Task<IActionResult> CreateValuationPriceList([FromBody] CreateValuationPriceListCommand command)
         {
@@ -104,7 +106,7 @@ namespace API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Office")]
         [Route("deleteValuationPriceList")]
         public async Task<IActionResult> DeleteValuationPriceList([FromBody] DeleteValuationPriceListCommand command)
         {

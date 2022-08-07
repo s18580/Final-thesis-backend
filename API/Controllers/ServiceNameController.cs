@@ -5,6 +5,7 @@ using Application.Functions.ServiceName.Queries.GetServiceNameListQuery;
 using Application.Functions.ServiceName.Queries.GetServiceNameQuery;
 using Application.Responses;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ServiceNameController : ControllerBase
     {
         private IMediator _mediator;
@@ -21,7 +23,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getServiceNames")]
         public async Task<IActionResult> GetServiceNames()
         {
@@ -29,7 +31,7 @@ namespace API.Controllers
             return Ok(serviceNames);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getServiceName")]
         public async Task<IActionResult> GetServiceName([FromQuery] int id)
         {
@@ -42,7 +44,7 @@ namespace API.Controllers
             return Ok(serviceName);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("createServiceName")]
         public async Task<IActionResult> CreateServiceName([FromBody] CreateServiceNameCommand command)
         {
@@ -62,7 +64,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateServiceName")]
         public async Task<IActionResult> UpdateServiceName([FromBody] UpdateServiceNameCommand command)
         {
@@ -85,7 +87,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(Roles = "Admin")]
         [Route("deleteServiceName")]
         public async Task<IActionResult> DeleteServiceName([FromBody] DeleteServiceNameCommand command)
         {
