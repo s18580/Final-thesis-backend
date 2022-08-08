@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery
 {
-    public class GetOrderListByDeliveryDateQueryHandler : IRequestHandler<GetOrderListByDeliveryDateQuery, List<Domain.Models.Order>>
+    public class GetOrderListByDeliveryDateQueryHandler : IRequestHandler<GetOrderListByDeliveryDateQuery, List<TableOrderListClosestDTO>>
     {
         private readonly IApplicationContext _context;
 
@@ -14,11 +14,39 @@ namespace Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery
 
         }
 
-        public async Task<List<Domain.Models.Order>> Handle(GetOrderListByDeliveryDateQuery request, CancellationToken cancellationToken)
+        public async Task<List<TableOrderListClosestDTO>> Handle(GetOrderListByDeliveryDateQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _context.Orders
+            var rawOrders = await _context.Orders
+                                       .Include(b => b.OrderItems)
+                                       .Include(b => b.Status)
                                        .OrderBy(p => p.ExpectedDeliveryDate)
                                        .ToListAsync();
+
+            var orders = new List<TableOrderListClosestDTO>();
+
+            foreach (var order in rawOrders)
+            {
+                var orderItemNames = new List<string>();
+                foreach (var orderItem in order.OrderItems)
+                {
+                    orderItemNames.Add(orderItem.Name);
+                }
+
+                var newOrder = new TableOrderListClosestDTO()
+                {
+                    IdOrder = order.IdOrder,
+                    Identifier = order.Identifier,
+                    Name = order.Name,
+                    CreationDate = order.CreationDate.ToString("dd/MM/yyyy"),
+                    ExpectedDeliveryDate = order.ExpectedDeliveryDate.HasValue ? order.ExpectedDeliveryDate.Value.ToString("dd/MM/yyyy") : "-",
+                    IsAuction = order.IsAuction,
+                    StatusName = order.Status.Name,
+                    OrderItemsNames = orderItemNames
+                };
+
+                orders.Add(newOrder);
+            }
+
 
             return orders;
         }

@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,19 +21,34 @@ namespace Application.Functions.Order.Queries.GetOrderListByWorkerQuery
 
             if (!validatorResult.IsValid) return new GetOrderListByWorkerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var assignmentsWithOrders = await _context.Assignments
-                                         .Include(b => b.Order)
-                                         .Where(p => p.IdWorker == request.IdWorker)
-                                         .Where(p => p.OrderLeader == true)
-                                         .ToListAsync();
+            var rawOrders = await _context.Orders
+                                          .Include(b => b.Assignments.Where(p => p.IdWorker == request.IdWorker).Where(p => p.OrderLeader == true))
+                                          .Include(b => b.OrderItems)
+                                          .Include(b => b.Status)
+                                          .ToListAsync();
 
-            List<Domain.Models.Order> orders = new List<Domain.Models.Order>();
+            var orders = new List<TableOrderListDTO>();
 
-            foreach(Domain.Models.Assignment assignment in assignmentsWithOrders)
+            foreach(var order in rawOrders)
             {
-                var order = assignment.Order;
-                order.Assignments = null;
-                orders.Add(order);
+                var orderItemNames = new List<string>();
+                foreach (var orderItem in order.OrderItems)
+                {
+                    orderItemNames.Add(orderItem.Name);
+                }
+
+                var newOrder = new TableOrderListDTO()
+                {
+                    IdOrder = order.IdOrder,
+                    Identifier = order.Identifier,
+                    Name = order.Name,
+                    CreationDate = order.CreationDate.ToString("dd/MM/yyyy"),
+                    IsAuction = order.IsAuction,
+                    StatusName = order.Status.Name,
+                    OrderItemsNames = orderItemNames
+                };
+
+                orders.Add(newOrder);
             }
 
             return new GetOrderListByWorkerResponse(orders);

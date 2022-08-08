@@ -5,9 +5,9 @@ namespace Application.Functions.Order.Queries.GetOrderListByWorkerQuery
 {
     public class GetOrderListByWorkerResponse : BaseResponse
     {
-        public List<Domain.Models.Order> Orders { get; }
+        public List<TableOrderListDTO> Orders { get; }
 
-        public GetOrderListByWorkerResponse(List<Domain.Models.Order> orders) : base()
+        public GetOrderListByWorkerResponse(List<TableOrderListDTO> orders) : base()
         {
             Orders = orders;
         }
