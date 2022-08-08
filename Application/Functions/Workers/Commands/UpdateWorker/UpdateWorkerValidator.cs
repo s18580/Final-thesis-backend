@@ -58,10 +58,19 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
         private async Task<bool> IsWorkerEmailUnique(UpdateWorkerCommand command, CancellationToken cancellationToken)
         {
             var worker = await _context.Workers
-                                         .Where(x => x.EmailAddres == command.EmailAddres)
+                                         .Where(p => p.IdWorker == command.Id)
                                          .SingleOrDefaultAsync();
 
-            return worker == null;
+            if (worker.EmailAddres != command.EmailAddres)
+            {
+                var otherWorker = await _context.Workers
+                                            .Where(x => x.EmailAddres == command.EmailAddres)
+                                            .SingleOrDefaultAsync();
+
+                return otherWorker == null;
+            }
+
+            return true;
         }
 
         private async Task<bool> DoesWorkerExists(UpdateWorkerCommand command, CancellationToken cancellationToken)
@@ -79,7 +88,7 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
                                          .Where(x => x.IdWorksite == command.IdWorksite)
                                          .SingleOrDefaultAsync();
 
-            return worksite == null;
+            return worksite != null;
         }
     }
 }
