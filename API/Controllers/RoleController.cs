@@ -1,7 +1,4 @@
-﻿using Application.Functions.Roles.Commands.CreateRole;
-using Application.Functions.Roles.Commands.DeleteRole;
-using Application.Functions.Roles.Commands.UpdateRole;
-using Application.Functions.Roles.Queries.GetRole;
+﻿using Application.Functions.Roles.Queries.GetRole;
 using Application.Functions.Roles.Queries.GetRolesList;
 using Application.Responses;
 using MediatR;
@@ -42,72 +39,6 @@ namespace API.Controllers
             }
 
             return Ok(role);
-        }
-
-        [HttpPost, Authorize(Roles = "Admin")]
-        [Route("createRole")]
-        public async Task<IActionResult> CreateRole([FromBody] CreateRoleCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok(response.Id);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPost, Authorize(Roles = "Admin")]
-        [Route("updateRole")]
-        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Admin")]
-        [Route("deleteRole")]
-        public async Task<IActionResult> DeleteRole([FromBody] DeleteRoleCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
         }
     }
 }
