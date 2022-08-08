@@ -17,7 +17,6 @@ using Application.Functions.Paper.Commands.CreatePaperCommand;
 using Application.Functions.PriceList.Commands.CreatePriceListCommand;
 using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.RoleAssignment.Commands.CreateRoleAssignmentCommand;
-using Application.Functions.Roles.Commands.CreateRole;
 using Application.Functions.Service.Commands.CreateServiceCommand;
 using Application.Functions.ServiceName.Commands.CreateServiceNameCommand;
 using Application.Functions.Supplier.Commands.CreateSupplierCommand;
@@ -39,7 +38,6 @@ namespace Application.Mapper
         public MappingProfile()
         {
             CreateMap<Worksite, CreateWorksiteCommand>().ReverseMap();
-            CreateMap<Role, CreateRoleCommand>().ReverseMap();
             CreateMap<RegisterUserCommand, Worker>().ForMember(d => d.Password, opt => opt.Ignore()).ReverseMap();
             CreateMap<Worker, WorkerDTO>().ReverseMap();
             CreateMap<RoleAssignment, CreateRoleAssignmentCommand>().ReverseMap();
