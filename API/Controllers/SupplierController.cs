@@ -1,4 +1,5 @@
 ﻿using Application.Functions.Supplier.Commands.CreateSupplierCommand;
+using Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand;
 using Application.Functions.Supplier.Commands.DeleteSupplierCommand;
 using Application.Functions.Supplier.Commands.UpdateSupplierCommand;
 using Application.Functions.Supplier.Queries.GetSupplierListQuery;
@@ -52,6 +53,26 @@ namespace API.Controllers
             if (response.Success)
             {
                 return Ok(response.Id);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost, Authorize(Roles = "Basic")]
+        [Route("createSupplierWithData")]
+        public async Task<IActionResult> CreateSupplierWithData([FromBody] CreateSupplierWithDataCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Success)
+            {
+                return Ok();
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
