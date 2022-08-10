@@ -58,7 +58,7 @@ namespace Application.Functions.User.Commands.RegisterUserWithRolesCommand
                 dbContextTransaction.Commit();
             }
 
-            return new RegisterUserWithRolesResponse(22);
+            return new RegisterUserWithRolesResponse();
         }
     }
 }

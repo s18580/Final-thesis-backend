@@ -5,12 +5,8 @@ namespace Application.Functions.User.Commands.RegisterUserWithRolesCommand
 {
     public class RegisterUserWithRolesResponse : BaseResponse
     {
-        public int Id { get; }
-
-        public RegisterUserWithRolesResponse(int id) : base()
-        {
-            this.Id = id;
-        }
+        public RegisterUserWithRolesResponse() : base()
+        { }
 
         public RegisterUserWithRolesResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
