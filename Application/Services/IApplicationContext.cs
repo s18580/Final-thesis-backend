@@ -1,11 +1,13 @@
 ﻿using Domain.Models;
 using Domain.Models.DictionaryModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Application.Services
 {
     public interface IApplicationContext
     {
+        DatabaseFacade Database { get; }
         DbSet<Worksite> Worksites { get; set; }
         DbSet<Worker> Workers { get; set; }
         DbSet<Address> Addresses { get; set; }

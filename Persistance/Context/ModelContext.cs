@@ -2,11 +2,13 @@
 using Domain.Models;
 using Domain.Models.DictionaryModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Persistance.Context
 {
     public class ModelContext : DbContext, IApplicationContext
     {
+        public DatabaseFacade Database { get => base.Database; }
         public DbSet<Worksite> Worksites { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<Address> Addresses { get; set; }
