@@ -1,16 +1,11 @@
-﻿using Application.Services;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
 {
     public class CreateSupplierWithDataValidator : AbstractValidator<CreateSupplierWithDataCommand>
     {
-        private readonly IApplicationContext _context;
-
-        public CreateSupplierWithDataValidator(IApplicationContext context)
+        public CreateSupplierWithDataValidator()
         {
-            _context = context;
-
             RuleFor(p => p.Name)
                    .NotNull()
                    .WithMessage("Supplier name is required.")

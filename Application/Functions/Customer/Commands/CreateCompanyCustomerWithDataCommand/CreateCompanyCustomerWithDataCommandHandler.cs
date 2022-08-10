@@ -2,52 +2,55 @@
 using Application.Services;
 using MediatR;
 
-namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
+namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand
 {
-    public class CreateSupplierWithDataCommandHandler : IRequestHandler<CreateSupplierWithDataCommand, CreateSupplierWithDataResponse>
+
+    public class CreateCompanyCustomerWithDataCommandHandler : IRequestHandler<CreateCompanyCustomerWithDataCommand, CreateCompanyCustomerWithDataResponse>
     {
         private readonly IApplicationContext _context;
 
-        public CreateSupplierWithDataCommandHandler(IApplicationContext context)
+        public CreateCompanyCustomerWithDataCommandHandler(IApplicationContext context)
         {
             _context = context;
         }
 
-        public async Task<CreateSupplierWithDataResponse> Handle(CreateSupplierWithDataCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCompanyCustomerWithDataResponse> Handle(CreateCompanyCustomerWithDataCommand request, CancellationToken cancellationToken)
         {
             // create validators
-            var supplierValidator = new CreateSupplierWithDataValidator();
+            var customerValidator = new CreateCompanyCustomerWithDataValidator(_context);
             var addressValidator = new AddressDTOValidator();
             var representativeValidator = new RepresentativeDTOValidator();
 
             // validate data
-            var supplierValidatorResult = await supplierValidator.ValidateAsync(request);
-            if (!supplierValidatorResult.IsValid) return new CreateSupplierWithDataResponse(supplierValidatorResult, Responses.ResponseStatus.ValidationError);
+            var customerValidatorResult = await customerValidator.ValidateAsync(request);
+            if (!customerValidatorResult.IsValid) return new CreateCompanyCustomerWithDataResponse(customerValidatorResult, Responses.ResponseStatus.ValidationError);
 
             foreach (var address in request.Addresses)
             {
                 var addressValidatorResult = await addressValidator.ValidateAsync(address);
-                if (!addressValidatorResult.IsValid) return new CreateSupplierWithDataResponse(addressValidatorResult, Responses.ResponseStatus.ValidationError);
+                if (!addressValidatorResult.IsValid) return new CreateCompanyCustomerWithDataResponse(addressValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
             foreach (var representative in request.Representatives)
             {
                 var representativeValidatorResult = await representativeValidator.ValidateAsync(representative);
-                if (!representativeValidatorResult.IsValid) return new CreateSupplierWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
+                if (!representativeValidatorResult.IsValid) return new CreateCompanyCustomerWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
-                var newSupplier = new Domain.Models.Supplier
+                var newCustomer = new Domain.Models.Customer
                 {
-                    Name = request.Name,
-                    Description = request.Description,
-                    PhoneNumber = request.PhoneNumber,
-                    EmailAddress = request.EmailAddress,
+                    CompanyName = request.CompanyName,
+                    NIP = request.NIP,
+                    Regon = request.Regon,
+                    CompanyPhoneNumber = request.CompanyPhoneNumber,
+                    CompanyEmailAddress = request.CompanyEmailAddress,
+                    IdWorker = request.IdWorker,
                 };
 
-                await _context.Suppliers.AddAsync(newSupplier);
+                await _context.Customers.AddAsync(newCustomer);
                 await _context.SaveChangesAsync();
 
                 foreach (var address in request.Addresses)
@@ -61,8 +64,8 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                         StreetName = address.StreetName,
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
-                        IdSupplier = newSupplier.IdSupplier,
-                        IdCustomer = null,
+                        IdSupplier = null,
+                        IdCustomer = newCustomer.IdCustomer,
                     };
 
                     await _context.Addresses.AddAsync(newAddress);
@@ -77,8 +80,8 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
-                        IdSupplier = newSupplier.IdSupplier,
-                        IdCustomer = null,
+                        IdSupplier = null,
+                        IdCustomer = newCustomer.IdCustomer,
                     };
 
                     await _context.Representatives.AddAsync(newRepresentative);
@@ -88,7 +91,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                 dbContextTransaction.Commit();
             }
 
-            return new CreateSupplierWithDataResponse();
+            return new CreateCompanyCustomerWithDataResponse();
         }
     }
 }

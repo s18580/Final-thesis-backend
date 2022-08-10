@@ -1,5 +1,7 @@
 ﻿using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
+using Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
+using Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCommand;
 using Application.Functions.Customer.Commands.DeleteCustomerCommand;
 using Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.UpdatePersonCustomerCommand;
@@ -74,6 +76,46 @@ namespace API.Controllers
             if (response.Success)
             {
                 return Ok(response.Id);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost, Authorize(Roles = "Basic")]
+        [Route("createCompanyCustomerWithData")]
+        public async Task<IActionResult> CreateCompanyCustomerWithData([FromBody] CreateCompanyCustomerWithDataCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Success)
+            {
+                return Ok();
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost, Authorize(Roles = "Basic")]
+        [Route("createPersonCustomerWithData")]
+        public async Task<IActionResult> CreatePersonCustomerWithData([FromBody] CreatePersonCustomerWithDataCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Success)
+            {
+                return Ok();
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
