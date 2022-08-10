@@ -1,6 +1,7 @@
 ﻿using Application.Functions.User;
 using Application.Functions.User.Commands.RefreshTokenCommand;
 using Application.Functions.User.Commands.RegisterUserCommand;
+using Application.Functions.User.Commands.RegisterUserWithRolesCommand;
 using Application.Functions.User.Queries.LoginUserQuery;
 using Application.Responses;
 using MediatR;
@@ -25,6 +26,25 @@ namespace API.Controllers
         [HttpPost, Authorize(Roles = "Admin")]
         [Route("register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Success)
+            {
+                return Ok(response.Id);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost, Authorize(Roles = "Admin")]
+        [Route("registerWithRoles")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserWithRolesCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
