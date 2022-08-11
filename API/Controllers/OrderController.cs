@@ -1,4 +1,5 @@
 ﻿using Application.Functions.Order.Commands.CreateOrderCommand;
+using Application.Functions.Order.Commands.CreateOrderWithDataCommand;
 using Application.Functions.Order.Commands.DeleteOrderCommand;
 using Application.Functions.Order.Commands.UpdateOrderCommand;
 using Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery;
@@ -81,6 +82,25 @@ namespace API.Controllers
             if (response.Success)
             {
                 return Ok(response.Id);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost, Authorize(Roles = "Basic")]
+        [Route("createOrderWithData")]
+        public async Task<IActionResult> CreateOrderWithData([FromBody] CreateOrderWithDataCommand command)
+        {
+            var response = await _mediator.Send(command);
+            if (response.Success)
+            {
+                return Ok();
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

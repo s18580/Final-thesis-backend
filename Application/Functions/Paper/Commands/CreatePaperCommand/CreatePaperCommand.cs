@@ -1,5 +1,4 @@
-﻿using Domain.Enumerators;
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Functions.Paper.Commands.CreatePaperCommand
 {
