@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.Representative.Commands.DeleteRepresentativeCommand;
 using Application.Functions.Representative.Commands.UpdateRepresentativeCommand;
+using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
 using Application.Responses;
@@ -29,6 +30,25 @@ namespace API.Controllers
         {
             var representatives = await _mediator.Send(new GetRepresentativeListQuery());
             return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getRepresentativesByCustomer")]
+        public async Task<IActionResult> GetRepresentativesByCustomer([FromQuery] int id)
+        {
+            var response = await _mediator.Send(new GetRepresentativeListByCustomerQuery { CustomerId = id });
+            if (response.Success)
+            {
+                return Ok(response.Representatives);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
@@ -61,7 +81,6 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-
         }
 
         [HttpPost, Authorize(Roles = "Basic")]
