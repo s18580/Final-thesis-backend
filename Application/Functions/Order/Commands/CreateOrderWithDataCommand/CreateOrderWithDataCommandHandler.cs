@@ -1,5 +1,6 @@
 ﻿using Application.Functions.DTOs.DTOsValidators;
 using Application.Services;
+using Domain.Enumerators;
 using MediatR;
 
 namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
@@ -118,6 +119,62 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
 
                     await _context.OrderItems.AddAsync(newOrderItem);
                     await _context.SaveChangesAsync();
+
+                    foreach (var color in orderItem.Colors)
+                    {
+                        var newColor = new Domain.Models.Color
+                        {
+                            Name = color.Name,
+                            IdOrderItem = newOrderItem.IdOrderItem,
+                            IdValuation = null,
+                        };
+
+                        await _context.Colors.AddAsync(newColor);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    foreach (var paper in orderItem.Papers)
+                    {
+                        FiberDirection fiberD;
+                        if (paper.FiberDirection == FiberDirection.Poziomy.ToString())
+                        {
+                            fiberD = FiberDirection.Poziomy;
+                        } 
+                        else
+                        {
+                            fiberD = FiberDirection.Pionowy;
+                        }
+
+                        var newPaper = new Domain.Models.Paper
+                        {
+                            Name = paper.Name,
+                            Kind = paper.Kind,
+                            SheetFormat = paper.SheetFormat,
+                            Opacity = paper.Opacity,
+                            FiberDirection = fiberD,
+                            PricePerKilogram = paper.PricePerKilogram,
+                            Quantity = paper.Quantity,
+                            IdOrderItem = newOrderItem.IdOrderItem,
+                            IdValuation = null,
+                        };
+
+                        await _context.Papers.AddAsync(newPaper);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    foreach (var service in orderItem.Services)
+                    {
+                        var newService = new Domain.Models.Service
+                        {
+                            Price = service.Price,
+                            IdServiceName = service.IdServiceName,
+                            IdOrderItem = newOrderItem.IdOrderItem,
+                            IdValuation = null,
+                        };
+
+                        await _context.Services.AddAsync(newService);
+                        await _context.SaveChangesAsync();
+                    }
                 }
 
                 foreach (var assignment in request.WorkersToAssign)
