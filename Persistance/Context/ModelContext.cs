@@ -260,6 +260,10 @@ namespace Persistance.Context
                 opt.Property(p => p.Name)
                    .HasMaxLength(30)
                    .IsRequired();
+
+                opt.Property(p => p.ChipColor)
+                   .HasMaxLength(8)
+                   .IsRequired();
             });
 
             modelBuilder.Entity<Domain.Models.File>(opt =>
