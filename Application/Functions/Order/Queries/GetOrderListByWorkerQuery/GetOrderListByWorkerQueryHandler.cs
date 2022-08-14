@@ -45,6 +45,7 @@ namespace Application.Functions.Order.Queries.GetOrderListByWorkerQuery
                     CreationDate = order.CreationDate.ToString("dd/MM/yyyy"),
                     IsAuction = order.IsAuction,
                     StatusName = order.Status.Name,
+                    StatusColor = order.Status.ChipColor,
                     OrderItemsNames = orderItemNames
                 };
 

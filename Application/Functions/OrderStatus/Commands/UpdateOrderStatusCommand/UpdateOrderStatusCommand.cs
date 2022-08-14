@@ -6,5 +6,6 @@ namespace Application.Functions.OrderStatus.Commands.UpdateOrderStatusCommand
     {
         public int IdOrderStatus { get; set; }
         public string Name { get; set; }
+        public string ChipColor { get; set; }
     }
 }

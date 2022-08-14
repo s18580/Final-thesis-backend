@@ -42,6 +42,7 @@ namespace Application.Functions.Order.Queries.GetOnGoingOrdersListQuery
                     ExpectedDeliveryDate = order.ExpectedDeliveryDate.HasValue ? order.ExpectedDeliveryDate.Value.ToString("dd/MM/yyyy") : "-",
                     IsAuction = order.IsAuction,
                     StatusName = order.Status.Name,
+                    StatusColor = order.Status.ChipColor,
                     OrderItemsNames = orderItemNames
                 };
 

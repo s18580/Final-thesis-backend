@@ -25,6 +25,7 @@ namespace Application.Functions.OrderStatus.Commands.UpdateOrderStatusCommand
                                                     .SingleAsync();
 
             if (selectedOrderStatus.Name != request.Name) { selectedOrderStatus.Name = request.Name; }
+            if (selectedOrderStatus.ChipColor != request.ChipColor) { selectedOrderStatus.ChipColor = request.ChipColor; }
 
             await _context.SaveChangesAsync();
 
