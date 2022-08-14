@@ -26,6 +26,14 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
             selectedWorker.Salt = null;
             selectedWorker.IdWorksite = null;
 
+            var roleAssignments = await _context.RoleAssignments.Where(p => p.IdWorker == selectedWorker.IdWorker).ToListAsync();
+            foreach (var roleAssignment in roleAssignments)
+            {
+                _context.RoleAssignments.Remove(roleAssignment);
+                await _context.SaveChangesAsync();
+            }
+
+            _context.Workers.Remove(selectedWorker);
             await _context.SaveChangesAsync();
 
             return new DeleteWorkerResponse();

@@ -90,7 +90,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Admin")]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("disableWorker")]
         public async Task<IActionResult> DisableWorker([FromBody] DisableWorkerCommand command)
         {

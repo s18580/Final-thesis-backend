@@ -42,6 +42,12 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
                    .EmailAddress()
                    .WithMessage("Email format is not correct.");
 
+            RuleFor(p => p.NewPassword)
+                   .NotNull()
+                   .WithMessage("User password is required.")
+                   .MaximumLength(25)
+                   .WithMessage("User password length can't be longer then 25 characters.");
+
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)
                 .WithMessage("Worker with the same email address already exist.");
