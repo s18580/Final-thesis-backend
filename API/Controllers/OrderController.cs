@@ -2,6 +2,7 @@
 using Application.Functions.Order.Commands.CreateOrderWithDataCommand;
 using Application.Functions.Order.Commands.DeleteOrderCommand;
 using Application.Functions.Order.Commands.UpdateOrderCommand;
+using Application.Functions.Order.Queries.GetOnGoingOrdersListQuery;
 using Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery;
 using Application.Functions.Order.Queries.GetOrderListByWorkerQuery;
 using Application.Functions.Order.Queries.GetOrderListQuery;
@@ -71,6 +72,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetOrdersByDeliveryDate()
         {
             var orders = await _mediator.Send(new GetOrderListByDeliveryDateQuery());
+            return Ok(orders);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getOnGoingOrdersList")]
+        public async Task<IActionResult> GetOnGoingOrdersList()
+        {
+            var orders = await _mediator.Send(new GetOnGoingOrdersListQuery());
             return Ok(orders);
         }
 
