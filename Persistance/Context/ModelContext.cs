@@ -414,11 +414,11 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Colors)
-                   .HasForeignKey(p => p.IdColor);
+                   .HasForeignKey(p => p.IdValuation);
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Colors)
-                   .HasForeignKey(p => p.IdColor);
+                   .HasForeignKey(p => p.IdOrderItem);
             });
 
             modelBuilder.Entity<BindingType>(opt =>
@@ -495,11 +495,11 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Papers)
-                   .HasForeignKey(p => p.IdPaper);
+                   .HasForeignKey(p => p.IdOrderItem);
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Papers)
-                   .HasForeignKey(p => p.IdPaper);
+                   .HasForeignKey(p => p.IdValuation);
             });
 
             modelBuilder.Entity<Service>(opt =>
@@ -513,11 +513,11 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdService);
+                   .HasForeignKey(p => p.IdOrderItem);
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdService);
+                   .HasForeignKey(p => p.IdValuation);
             });
 
             modelBuilder.Entity<PriceList>(opt =>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class RebuildAfterMigrationsDelete : Migration
+    public partial class RebuildMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,7 +80,8 @@ namespace Persistance.Migrations
                 {
                     IdStatus = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    ChipColor = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -184,6 +185,9 @@ namespace Persistance.Migrations
                     EmailAddres = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Password = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    RefreshToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    TokenCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDisabled = table.Column<bool>(type: "bit", nullable: false),
                     IdWorksite = table.Column<int>(type: "int", nullable: true)
                 },
@@ -205,8 +209,8 @@ namespace Persistance.Migrations
                     IdCustomer = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    NIP = table.Column<int>(type: "int", nullable: true),
-                    Regon = table.Column<int>(type: "int", nullable: true),
+                    NIP = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Regon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyPhoneNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     CompanyEmailAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IdWorker = table.Column<int>(type: "int", nullable: true)
@@ -255,7 +259,7 @@ namespace Persistance.Migrations
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Country = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    PostCode = table.Column<int>(type: "int", nullable: true),
+                    PostCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StreetName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     StreetNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     ApartmentNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -543,7 +547,8 @@ namespace Persistance.Migrations
                 name: "Colors",
                 columns: table => new
                 {
-                    IdColor = table.Column<int>(type: "int", nullable: false),
+                    IdColor = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IdValuation = table.Column<int>(type: "int", nullable: true),
                     IdOrderItem = table.Column<int>(type: "int", nullable: true)
@@ -552,14 +557,14 @@ namespace Persistance.Migrations
                 {
                     table.PrimaryKey("PK_Colors", x => x.IdColor);
                     table.ForeignKey(
-                        name: "FK_Colors_OrderItems_IdColor",
-                        column: x => x.IdColor,
+                        name: "FK_Colors_OrderItems_IdOrderItem",
+                        column: x => x.IdOrderItem,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Colors_Valuations_IdColor",
-                        column: x => x.IdColor,
+                        name: "FK_Colors_Valuations_IdValuation",
+                        column: x => x.IdValuation,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -618,7 +623,8 @@ namespace Persistance.Migrations
                 name: "Papers",
                 columns: table => new
                 {
-                    IdPaper = table.Column<int>(type: "int", nullable: false),
+                    IdPaper = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Kind = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     SheetFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -633,14 +639,14 @@ namespace Persistance.Migrations
                 {
                     table.PrimaryKey("PK_Papers", x => x.IdPaper);
                     table.ForeignKey(
-                        name: "FK_Papers_OrderItems_IdPaper",
-                        column: x => x.IdPaper,
+                        name: "FK_Papers_OrderItems_IdOrderItem",
+                        column: x => x.IdOrderItem,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Papers_Valuations_IdPaper",
-                        column: x => x.IdPaper,
+                        name: "FK_Papers_Valuations_IdValuation",
+                        column: x => x.IdValuation,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -650,7 +656,8 @@ namespace Persistance.Migrations
                 name: "Services",
                 columns: table => new
                 {
-                    IdService = table.Column<int>(type: "int", nullable: false),
+                    IdService = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<double>(type: "float", nullable: false),
                     IdOrderItem = table.Column<int>(type: "int", nullable: true),
                     IdValuation = table.Column<int>(type: "int", nullable: true),
@@ -660,8 +667,8 @@ namespace Persistance.Migrations
                 {
                     table.PrimaryKey("PK_Services", x => x.IdService);
                     table.ForeignKey(
-                        name: "FK_Services_OrderItems_IdService",
-                        column: x => x.IdService,
+                        name: "FK_Services_OrderItems_IdOrderItem",
+                        column: x => x.IdOrderItem,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
@@ -672,8 +679,8 @@ namespace Persistance.Migrations
                         principalColumn: "IdServiceName",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Services_Valuations_IdService",
-                        column: x => x.IdService,
+                        name: "FK_Services_Valuations_IdValuation",
+                        column: x => x.IdValuation,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation",
                         onDelete: ReferentialAction.Restrict);
@@ -717,6 +724,16 @@ namespace Persistance.Migrations
                 name: "IX_Assignments_IdOrder",
                 table: "Assignments",
                 column: "IdOrder");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Colors_IdOrderItem",
+                table: "Colors",
+                column: "IdOrderItem");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Colors_IdValuation",
+                table: "Colors",
+                column: "IdValuation");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdWorker",
@@ -794,6 +811,16 @@ namespace Persistance.Migrations
                 column: "IdStatus");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Papers_IdOrderItem",
+                table: "Papers",
+                column: "IdOrderItem");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Papers_IdValuation",
+                table: "Papers",
+                column: "IdValuation");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Representatives_IdCustomer",
                 table: "Representatives",
                 column: "IdCustomer");
@@ -809,9 +836,19 @@ namespace Persistance.Migrations
                 column: "IdRole");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Services_IdOrderItem",
+                table: "Services",
+                column: "IdOrderItem");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Services_IdServiceName",
                 table: "Services",
                 column: "IdServiceName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Services_IdValuation",
+                table: "Services",
+                column: "IdValuation");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Supplies_IdOrderItem",
