@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Functions.DTOs;
+using MediatR;
 
 namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
 {
@@ -17,5 +18,9 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
         public int IdDeliveryType { get; set; }
         public int? IdBindingType { get; set; }
         public int IdOrderItemType { get; set; }
+
+        public ICollection<ColorDTO> Colors { get; set; }
+        public ICollection<PaperDTO> Papers { get; set; }
+        public ICollection<ServiceDTO> Services { get; set; }
     }
 }
