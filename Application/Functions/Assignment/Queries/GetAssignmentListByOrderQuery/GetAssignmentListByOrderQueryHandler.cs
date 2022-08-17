@@ -21,6 +21,8 @@ namespace Application.Functions.Assignment.Queries.GetAssignmentListByOrderQuery
 
             var assignments = await _context.Assignments
                                             .Where(p => p.IdOrder == request.IdOrder)
+                                            .Include(m => m.Worker)
+                                            .ThenInclude(m => m.Worksite)
                                             .ToListAsync();
 
             return new GetAssignmentListByOrderResponse(assignments);

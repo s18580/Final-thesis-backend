@@ -21,6 +21,9 @@ namespace Application.Functions.OrderItem.Queries.GetOrderItemListByOrderIdQuery
             if (!validatorResult.IsValid) return new GetOrderItemListByOrderIdResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var orderItems = await _context.OrderItems
+                                           .Include(m => m.Papers)
+                                           .Include(m => m.Colors)
+                                           .Include(m => m.Services)
                                            .Where(p => p.IdOrder == request.IdOrder)
                                            .ToListAsync();
             
