@@ -18,7 +18,7 @@ namespace Application.Functions.DTOs.DTOsValidators
 
             RuleFor(p => p).
                 MustAsync(DoesWorkerExists)
-                .WithMessage("Worker with given ids already exist.");
+                .WithMessage("Worker with given does not exist.");
         }
 
         private async Task<bool> DoesWorkerExists(WorkerAssignmentDTO command, CancellationToken cancellationToken)

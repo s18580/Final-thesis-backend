@@ -23,7 +23,7 @@ namespace Application.Functions.DeliveriesAddresses.Commands.DeleteDeliveriesAdd
                                                   .Where(p => p.IdDeliveriesAddresses == command.IdDeliveriesAddresses)
                                                   .SingleOrDefaultAsync();
 
-            return deliveriesAddress == null;
+            return deliveriesAddress != null;
         }
     }
 }
