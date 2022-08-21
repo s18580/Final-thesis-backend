@@ -5,6 +5,7 @@ using Application.Functions.Representative.Queries.GetCustomerRepresentativesLis
 using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
+using Application.Functions.Representative.Queries.GetSearchRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetSupplierRepresentativesListQuery;
 using Application.Responses;
 using MediatR;
@@ -31,6 +32,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetRepresentatives()
         {
             var representatives = await _mediator.Send(new GetRepresentativeListQuery());
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchRepresentatives")]
+        public async Task<IActionResult> GetSearchRepresentatives([FromQuery] string name, string lastName, string email, string phone, string customer, string supplier)
+        {
+            var representatives = await _mediator.Send(new GetSearchRepresentativeListQuery() { Name = name, LastName = lastName, Email = email, Phone = phone, Customer = customer, Supplier = supplier});
             return Ok(representatives);
         }
 
