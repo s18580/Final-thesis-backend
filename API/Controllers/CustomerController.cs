@@ -7,6 +7,7 @@ using Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.UpdatePersonCustomerCommand;
 using Application.Functions.Customer.Queries.GetCustomerListQuery;
 using Application.Functions.Customer.Queries.GetCustomerQuery;
+using Application.Functions.Customer.Queries.GetSearchCustomerListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetCustomers()
         {
             var customers = await _mediator.Send(new GetCustomerListQuery());
+            return Ok(customers);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchCustomers")]
+        public async Task<IActionResult> GetSearchCustomers([FromQuery] string customerName, string customerPhone, string customerEmail, string nIP, string rEGON, string representativeName, string representativeLastName, string representativePhone, string representativeEmail, string workerLeader)
+        {
+            var customers = await _mediator.Send(new GetSearchCustomerListQuery() { CustomerName = customerName, CustomerPhone = customerPhone, CustomerEmail = customerEmail, NIP = nIP, REGON = rEGON, RepresentativeName = representativeName, RepresentativeLastName = representativeLastName, RepresentativeEmail = representativeEmail, RepresentativePhone = representativePhone });
             return Ok(customers);
         }
 
