@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Workers.Commands.DeleteWorker;
 using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
+using Application.Functions.Workers.Queries.GetSearchWorkers;
 using Application.Functions.Workers.Queries.GetWorker;
 using Application.Functions.Workers.Queries.GetWorkersList;
 using Application.Responses;
@@ -28,6 +29,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetWorkers()
         {
             var workers = await _mediator.Send(new GetWorkersListQuery());
+            return Ok(workers);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchWorkers")]
+        public async Task<IActionResult> GetSearchWorkers([FromQuery] string name, string lastName, string worksite)
+        {
+            var workers = await _mediator.Send(new GetSearchWorkers() { Name = name, LastName = lastName, WorksiteName = worksite });
             return Ok(workers);
         }
 
