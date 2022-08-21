@@ -1,9 +1,11 @@
 ﻿using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.Representative.Commands.DeleteRepresentativeCommand;
 using Application.Functions.Representative.Commands.UpdateRepresentativeCommand;
+using Application.Functions.Representative.Queries.GetCustomerRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
+using Application.Functions.Representative.Queries.GetSupplierRepresentativesListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +31,22 @@ namespace API.Controllers
         public async Task<IActionResult> GetRepresentatives()
         {
             var representatives = await _mediator.Send(new GetRepresentativeListQuery());
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getCustomerRepresentatives")]
+        public async Task<IActionResult> GetCustomerRepresentatives()
+        {
+            var representatives = await _mediator.Send(new GetCustomerRepresentativesListQuery());
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSupplierRepresentatives")]
+        public async Task<IActionResult> GetSupplierRepresentatives()
+        {
+            var representatives = await _mediator.Send(new GetSupplierRepresentativesListQuery());
             return Ok(representatives);
         }
 
