@@ -17,7 +17,7 @@ namespace Application.Functions.Order.Queries.GetSearchOrderListQuery
         public async Task<List<SearchOrderDTO>> Handle(GetSearchOrderListQuery request, CancellationToken cancellationToken)
         {
             List<Domain.Models.Order> orders = new List<Domain.Models.Order>();
-            if (request.Name.Equals("null") && request.Identifier.Equals("null") && request.ExpectedDeliveryDate.Equals("null") && request.Status.Equals("null"))
+            if (request.Name.Equals("null") && request.Identifier.Equals("null") && request.ExpectedDeliveryDate.Equals("null") && request.Status.Equals("null") && request.CustomerRepresentativeName.Equals("null") && request.SupplierRepresentativeName.Equals("null") && request.WorkerName.Equals("null") && request.OrderItemType.Equals("null"))
             {
                 orders = await _context.Orders
                                        .Include(m => m.Status)
@@ -38,7 +38,8 @@ namespace Application.Functions.Order.Queries.GetSearchOrderListQuery
                                        .ThenInclude(m => m.Worker)
                                        .Include(m => m.OrderItems)
                                        .ThenInclude(m => m.OrderItemType)
-                                       .Where(p => p.Name == request.Name || p.Identifier == request.Identifier || p.ExpectedDeliveryDate == dateToCheck || p.Status.Name == request.Status)
+                                       .Where(p => p.Name == request.Name || p.Identifier == request.Identifier || p.ExpectedDeliveryDate == dateToCheck || p.Status.Name == request.Status ||
+                                              p.Assignments.Where(p => (p.Worker.Name + " " + p.Worker.LastName) == request.WorkerName).Count() > 0 || (p.Representative.Name + " " + p.Representative.LastName) == request.CustomerRepresentativeName || p.OrderItems.Where(p => p.OrderItemType.Name == request.OrderItemType).Count() > 0 || p.OrderItems.Where(p => p.Supplies.Where(p => (p.Representative.Name + " " + p.Representative.LastName) == request.SupplierRepresentativeName).Count() > 0).Count() > 0)
                                        .ToListAsync();
             }
 
