@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Supply.Commands.CreateSupplyCommand;
 using Application.Functions.Supply.Commands.DeleteSupplyCommand;
 using Application.Functions.Supply.Commands.UpdateSupplyCommand;
+using Application.Functions.Supply.Queries.GetSearchSupplyQuery;
 using Application.Functions.Supply.Queries.GetSupplyListQuery;
 using Application.Functions.Supply.Queries.GetSupplyQuery;
 using Application.Responses;
@@ -28,6 +29,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetSupplies()
         {
             var supplies = await _mediator.Send(new GetSupplyListQuery());
+            return Ok(supplies);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchSupplies")]
+        public async Task<IActionResult> GetSearchSupplies([FromQuery] string supplyItemTypeName, string representativeName, string supplierName, bool isReceived, string supplyDate)
+        {
+            var supplies = await _mediator.Send(new GetSearchSupplyQuery() { SupplyDate = supplyDate, SupplyItemTypeName = supplyItemTypeName, RepresentativeName = representativeName, SupplierName = supplierName, IsReceived = isReceived });
             return Ok(supplies);
         }
 

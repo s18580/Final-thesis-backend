@@ -20,16 +20,16 @@ namespace Application.Functions.Workers.Queries.GetSearchWorkers
             List<Worker> workers = new List<Worker>();
             if (request.Name.Equals("null") && request.LastName.Equals("null") && request.WorksiteName.Equals("null"))
             {
-                workers = workers = await _context.Workers
-                                                  .Include(b => b.Worksite)
-                                                  .ToListAsync();
+                workers = await _context.Workers
+                                        .Include(b => b.Worksite)
+                                        .ToListAsync();
             }
             else
             {
-                workers = workers = await _context.Workers
-                                                  .Include(b => b.Worksite)
-                                                  .Where(b => b.Name == request.Name || b.LastName == request.LastName || b.Worksite.Name == request.WorksiteName)
-                                                  .ToListAsync();
+                workers = await _context.Workers
+                                        .Include(b => b.Worksite)
+                                        .Where(b => b.Name == request.Name || b.LastName == request.LastName || b.Worksite.Name == request.WorksiteName)
+                                        .ToListAsync();
             }
 
             var workersDTO = new List<SearchWorkerDTO>();
