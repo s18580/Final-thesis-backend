@@ -38,9 +38,9 @@ namespace API.Controllers
 
         [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSearchOrders")]
-        public async Task<IActionResult> GetSearchOrders()
+        public async Task<IActionResult> GetSearchOrders(bool isAuction, string name, string identifier, string expectedDeliveryDate, string status, string customerRepresentativeName, string supplierRepresentativeName, string workerName, string orderItemType)
         {
-            var orders = await _mediator.Send(new GetSearchOrderListQuery());
+            var orders = await _mediator.Send(new GetSearchOrderListQuery() { Name = name, Identifier = identifier, ExpectedDeliveryDate = expectedDeliveryDate, Status = status, CustomerRepresentativeName = customerRepresentativeName, SupplierRepresentativeName = supplierRepresentativeName, WorkerName = workerName, OrderItemType = orderItemType, IsAuction = isAuction});
             return Ok(orders);
         }
 
