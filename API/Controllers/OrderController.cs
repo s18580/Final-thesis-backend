@@ -7,6 +7,7 @@ using Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery;
 using Application.Functions.Order.Queries.GetOrderListByWorkerQuery;
 using Application.Functions.Order.Queries.GetOrderListQuery;
 using Application.Functions.Order.Queries.GetOrderQuery;
+using Application.Functions.Order.Queries.GetSearchOrderListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetOrders()
         {
             var orders = await _mediator.Send(new GetOrderListQuery());
+            return Ok(orders);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchOrders")]
+        public async Task<IActionResult> GetSearchOrders()
+        {
+            var orders = await _mediator.Send(new GetSearchOrderListQuery());
             return Ok(orders);
         }
 
