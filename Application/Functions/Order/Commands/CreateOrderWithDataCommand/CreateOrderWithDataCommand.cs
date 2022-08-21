@@ -15,7 +15,7 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
         public int IdStatus { get; set; }
         public int IdCustomer { get; set; }
 
-        public ICollection<AddressDTO> DeliveryAddresses { get; set; }
+        public ICollection<DeliveriesAddressesDTO> DeliveryAddresses { get; set; }
         public ICollection<WorkerAssignmentDTO> WorkersToAssign { get; set; }
         public ICollection<OrderItemDTO> OrderItems { get; set; }
     }

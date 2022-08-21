@@ -17,11 +17,16 @@ namespace Application.Functions.Order.Queries.GetOrderQuery
         {
             var order = await _context.Orders
                                       .Include(m => m.Assignments)
-                                      .Include(m => m.OrderItems)
                                       .Include(m => m.DeliveriesAddresses)
                                       .Include(m => m.Files)
                                       .Include(m => m.Representative)
                                       .Include(m => m.Status)
+                                      .Include(m => m.OrderItems)
+                                      .ThenInclude(b => b.Papers)
+                                      .Include(m => m.OrderItems)
+                                      .ThenInclude(b => b.Colors)
+                                      .Include(m => m.OrderItems)
+                                      .ThenInclude(b => b.Services)
                                       .Where(p => p.IdOrder == request.IdOrder)
                                       .SingleOrDefaultAsync();
 

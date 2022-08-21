@@ -18,7 +18,7 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
         {
             // create validators
             var orderValidator = new CreateOrderWithDataValidator(_context);
-            var addressValidator = new AddressDTOValidator();
+            var addressValidator = new DeliveriesAddressesDTOValidator(_context);
             var orderItemValidator = new OrderItemDTOValidator(_context);
             var workerAssignmentValidator = new WorkerAssignmentDTOValidator(_context);
             var paperValidator = new PaperDTOValidator(_context);
@@ -81,20 +81,14 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
 
                 foreach (var address in request.DeliveryAddresses)
                 {
-                    var newAddress = new Domain.Models.Address
+                    var newAddress = new Domain.Models.DeliveriesAddresses
                     {
-                        Name = address.Name,
-                        City = address.City,
-                        Country = address.Country,
-                        PostCode = address.PostCode,
-                        StreetName = address.StreetName,
-                        StreetNumber = address.StreetNumber,
-                        ApartmentNumber = address.ApartmentNumber,
-                        IdSupplier = null,
-                        IdCustomer = request.IdCustomer,
+                        IdAddress = address.IdAddress,
+                        IdOrder = newOrder.IdOrder,
+                        IdSupply = null,
                     };
 
-                    await _context.Addresses.AddAsync(newAddress);
+                    await _context.DeliveriesAddresses.AddAsync(newAddress);
                     await _context.SaveChangesAsync();
                 }
 
