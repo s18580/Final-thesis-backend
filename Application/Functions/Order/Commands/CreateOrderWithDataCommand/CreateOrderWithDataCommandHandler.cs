@@ -66,7 +66,6 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
                     Name = request.Name,
                     CreationDate = DateTime.Now,
                     Identifier = "SomeBuissnesIdentifier",
-                    OrderSubmissionDate = request.OrderSubmissionDate,
                     Note = request.Note,
                     IsAuction = request.IsAuction,
                     ExpectedDeliveryDate = request.ExpectedDeliveryDate,

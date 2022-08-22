@@ -6,7 +6,6 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
     public class CreateOrderWithDataCommand : IRequest<CreateOrderWithDataResponse>
     {
         public string Name { get; set; }
-        public DateTime? OrderSubmissionDate { get; set; }
         public string Note { get; set; }
         public bool IsAuction { get; set; }
         public DateTime? ExpectedDeliveryDate { get; set; }
