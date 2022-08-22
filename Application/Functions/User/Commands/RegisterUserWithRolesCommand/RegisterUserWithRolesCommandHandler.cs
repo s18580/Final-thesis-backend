@@ -34,6 +34,8 @@ namespace Application.Functions.User.Commands.RegisterUserWithRolesCommand
                     PhoneNumber = request.PhoneNumber,
                     EmailAddres = request.EmailAddres,
                     IdWorksite = request.IdWorksite,
+                    AccessKeyAWS = request.AccessKey,
+                    SecretKeyAWS = request.SecretKey,
                 };
                 newWorker.RefreshToken = "";
                 newWorker.Password = passHash;

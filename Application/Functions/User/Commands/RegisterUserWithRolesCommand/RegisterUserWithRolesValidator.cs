@@ -50,6 +50,18 @@ namespace Application.Functions.User.Commands.RegisterUserWithRolesCommand
                    .MaximumLength(25)
                    .WithMessage("User password length can't be longer then 25 characters.");
 
+            RuleFor(p => p.AccessKey)
+                .NotNull()
+                   .WithMessage("AccessKey is required.")
+                   .MaximumLength(50)
+                   .WithMessage("AccessKey length can't be longer then 50 characters.");
+
+            RuleFor(p => p.SecretKey)
+                .NotNull()
+                   .WithMessage("SecretKey is required.")
+                   .MaximumLength(50)
+                   .WithMessage("SecretKey length can't be longer then 50 characters.");
+
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)
                 .WithMessage("Worker with the same email address already exist.");

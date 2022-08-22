@@ -9,6 +9,8 @@ namespace Application.Functions.User.Commands.RegisterUserWithRolesCommand
         public string PhoneNumber { get; set; }
         public string EmailAddres { get; set; }
         public string Password { get; set; }
+        public string AccessKey { get; set; }
+        public string SecretKey { get; set; }
         public int? IdWorksite { get; set; }
 
         public ICollection<RoleDTO> UserRoles { get; set; }

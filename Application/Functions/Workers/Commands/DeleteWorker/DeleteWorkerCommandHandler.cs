@@ -24,6 +24,8 @@ namespace Application.Functions.Workers.Commands.DeleteWorker
             selectedWorker.PhoneNumber = "";
             selectedWorker.Password = null;
             selectedWorker.Salt = null;
+            selectedWorker.AccessKeyAWS = "";
+            selectedWorker.SecretKeyAWS = "";
             selectedWorker.IdWorksite = null;
 
             var roleAssignments = await _context.RoleAssignments.Where(p => p.IdWorker == selectedWorker.IdWorker).ToListAsync();

@@ -11,6 +11,8 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
         public string PhoneNumber { get; set; }
         public string EmailAddres { get; set; }
         public string NewPassword { get; set; }
+        public string NewAccessKey { get; set; }
+        public string NewSecretKey { get; set; }
         public int? IdWorksite { get; set; }
 
         public ICollection<RoleDTO> UserRoles { get; set; }

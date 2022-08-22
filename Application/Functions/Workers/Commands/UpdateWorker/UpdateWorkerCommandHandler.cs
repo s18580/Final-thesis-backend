@@ -33,6 +33,8 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
                 if (selectedWorker.PhoneNumber != request.PhoneNumber) { selectedWorker.PhoneNumber = request.PhoneNumber; }
                 if (selectedWorker.EmailAddres != request.EmailAddres) { selectedWorker.EmailAddres = request.EmailAddres; }
                 if (selectedWorker.IdWorksite != request.IdWorksite) { selectedWorker.IdWorksite = request.IdWorksite; }
+                if (selectedWorker.AccessKeyAWS != request.NewAccessKey) { selectedWorker.AccessKeyAWS = request.NewAccessKey; }
+                if (selectedWorker.SecretKeyAWS != request.NewSecretKey) { selectedWorker.SecretKeyAWS = request.NewSecretKey; }
 
                 //reset password
                 if (!request.NewPassword.Equals(string.Empty))
