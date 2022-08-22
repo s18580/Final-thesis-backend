@@ -64,6 +64,14 @@ namespace Persistance.Context
                 opt.Property(p => p.PhoneNumber)
                    .HasMaxLength(32);
 
+                opt.Property(p => p.AccessKeyAWS)
+                   .HasMaxLength(50)
+                   .IsRequired();
+
+                opt.Property(p => p.SecretKeyAWS)
+                   .HasMaxLength(50)
+                   .IsRequired();
+
                 opt.Property(p => p.EmailAddres)
                    .HasMaxLength(255)
                    .IsRequired();
