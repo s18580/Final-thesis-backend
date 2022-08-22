@@ -25,6 +25,7 @@ namespace Domain.Models
         public int? IdBindingType { get; set; }
 
         public Worker Author { get; set; }
+        public OrderItem OrderItem { get; set; }
         public BindingType BindingType { get; set; }
         public ICollection<File> Files { get; set; }
         public ICollection<Color> Colors { get; set; }
