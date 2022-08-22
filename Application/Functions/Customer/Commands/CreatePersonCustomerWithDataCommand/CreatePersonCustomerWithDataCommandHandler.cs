@@ -52,7 +52,18 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                 await _context.Customers.AddAsync(newCustomer);
                 await _context.SaveChangesAsync();
 
-                //add customer as representative ?
+                var newCustomerRepresentative = new Domain.Models.Representative
+                {
+                    Name = request.Name,
+                    LastName = request.LastName,
+                    PhoneNumber = request.CompanyPhoneNumber,
+                    EmailAddress = request.CompanyEmailAddress,
+                    IdSupplier = null,
+                    IdCustomer = newCustomer.IdCustomer
+                };
+
+                await _context.Representatives.AddAsync(newCustomerRepresentative);
+                await _context.SaveChangesAsync();
 
                 foreach (var address in request.Addresses)
                 {
