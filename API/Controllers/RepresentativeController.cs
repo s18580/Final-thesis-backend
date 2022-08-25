@@ -3,6 +3,7 @@ using Application.Functions.Representative.Commands.DeleteRepresentativeCommand;
 using Application.Functions.Representative.Commands.UpdateRepresentativeCommand;
 using Application.Functions.Representative.Queries.GetCustomerRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
+using Application.Functions.Representative.Queries.GetRepresentativeListBySupplierQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
 using Application.Functions.Representative.Queries.GetSearchRepresentativeListQuery;
@@ -64,6 +65,25 @@ namespace API.Controllers
         public async Task<IActionResult> GetRepresentativesByCustomer([FromQuery] int id)
         {
             var response = await _mediator.Send(new GetRepresentativeListByCustomerQuery { CustomerId = id });
+            if (response.Success)
+            {
+                return Ok(response.Representatives);
+            }
+            else if (response.Status == ResponseStatus.ValidationError)
+            {
+                return UnprocessableEntity(response.Message);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getRepresentativesBySupplier")]
+        public async Task<IActionResult> GetRepresentativesBySupplier([FromQuery] int id)
+        {
+            var response = await _mediator.Send(new GetRepresentativeListBySupplierQuery { SupplierId = id });
             if (response.Success)
             {
                 return Ok(response.Representatives);
