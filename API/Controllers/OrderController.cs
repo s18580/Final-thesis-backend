@@ -7,6 +7,7 @@ using Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery;
 using Application.Functions.Order.Queries.GetOrderListByWorkerQuery;
 using Application.Functions.Order.Queries.GetOrderListQuery;
 using Application.Functions.Order.Queries.GetOrderQuery;
+using Application.Functions.Order.Queries.GetOrdersListByRepresentativeQuery;
 using Application.Functions.Order.Queries.GetSearchOrderListQuery;
 using Application.Responses;
 using MediatR;
@@ -74,6 +75,14 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getOrdersByRepresentative")]
+        public async Task<IActionResult> GetOrdersByRepresentative([FromQuery] int id)
+        {
+            var orders = await _mediator.Send(new GetOrdersListByRepresentativeQuery() { Id = id });
+            return Ok(orders);
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
