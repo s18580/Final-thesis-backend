@@ -16,6 +16,7 @@ namespace Application.Functions.Customer.Queries.GetCustomerQuery
         public async Task<Domain.Models.Customer> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
             var customer = await _context.Customers
+                                         .Include(p => p.Representatives)
                                          .Where(p => p.IdCustomer == request.IdCustomer)
                                          .SingleOrDefaultAsync();
 

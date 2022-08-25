@@ -27,6 +27,7 @@ namespace Application.Functions.Order.Queries.GetOrderQuery
                                       .ThenInclude(b => b.Colors)
                                       .Include(m => m.OrderItems)
                                       .ThenInclude(b => b.Services)
+                                      .ThenInclude(b => b.ServiceName)
                                       .Where(p => p.IdOrder == request.IdOrder)
                                       .SingleOrDefaultAsync();
 

@@ -22,7 +22,7 @@ namespace Application.Functions.Supply.Queries.GetSearchSupplyQuery
                 supplies = await _context.Supplies
                                          .Include(m => m.SupplyItemType)
                                          .Include(m => m.OrderItem.Order)
-                                         .ThenInclude(m => m.Representative)
+                                         .Include(m => m.Representative)
                                          .ThenInclude(m => m.Supplier)
                                          .Where(b => b.IsReceived == request.IsReceived)
                                          .ToListAsync();
@@ -30,11 +30,11 @@ namespace Application.Functions.Supply.Queries.GetSearchSupplyQuery
             else
             {
                 //Date format
-                var requestSupplyDate = DateTime.Parse(request.SupplyDate);
+                DateTime? requestSupplyDate = request.SupplyDate.Equals("null") ? null : DateTime.Parse(request.SupplyDate);
                 supplies = await _context.Supplies
                                          .Include(m => m.SupplyItemType)
                                          .Include(m => m.OrderItem.Order)
-                                         .ThenInclude(m => m.Representative)
+                                         .Include(m => m.Representative)
                                          .ThenInclude(m => m.Supplier)
                                          .Where(b => b.IsReceived == request.IsReceived)
                                          .Where(b => b.SupplyDate == requestSupplyDate || b.SupplyItemType.Name == request.SupplyItemTypeName || (b.OrderItem.Order.Representative.Name + " " + b.OrderItem.Order.Representative.Name) == request.RepresentativeName || b.OrderItem.Order.Representative.Supplier.Name == request.SupplierName)
@@ -50,8 +50,8 @@ namespace Application.Functions.Supply.Queries.GetSearchSupplyQuery
                     IdSupply = supply.IdSupply,
                     SupplyDate = supply.SupplyDate,
                     OrderName = supply.OrderItem.Order.Name,
-                    SupplierName = supply.OrderItem.Order.Representative.Supplier.Name,
-                    RepresentativeName = supply.OrderItem.Order.Representative.Name + " " + supply.OrderItem.Order.Representative.LastName,
+                    SupplierName = supply.Representative.Supplier.Name,
+                    RepresentativeName = supply.Representative.Name + " " + supply.Representative.LastName,
                     SupplyType = supply.SupplyItemType.Name,
                     IsReceived = supply.IsReceived
                 };
