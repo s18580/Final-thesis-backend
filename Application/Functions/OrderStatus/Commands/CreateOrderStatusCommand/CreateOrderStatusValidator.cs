@@ -20,6 +20,14 @@ namespace Application.Functions.OrderStatus.Commands.CreateOrderStatusCommand
                    .MaximumLength(30)
                    .WithMessage("Order status name length can't be longer then 30 characters.");
 
+            RuleFor(p => p.ChipColor)
+                   .NotNull()
+                   .WithMessage("Order status name is required.")
+                   .NotEmpty()
+                   .WithMessage("Order status name is required.")
+                   .MaximumLength(8)
+                   .WithMessage("Order status name length can't be longer then 8 characters.");
+
             RuleFor(p => p).
                 MustAsync(IsOrderStatusNameUnique)
                 .WithMessage("Order status with the same name already exist");

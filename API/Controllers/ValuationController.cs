@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Valuation.Commands.CreateValuationCommand;
 using Application.Functions.Valuation.Commands.DeleteValuationCommand;
 using Application.Functions.Valuation.Commands.UpdateValuationCommand;
+using Application.Functions.Valuation.Queries.GetSearchValuationListQuery;
 using Application.Functions.Valuation.Queries.GetValuationListByOrderItemQuery;
 using Application.Functions.Valuation.Queries.GetValuationListByWorkerQuery;
 using Application.Functions.Valuation.Queries.GetValuationQuery;
@@ -81,6 +82,14 @@ namespace API.Controllers
             }
 
             return Ok(valuation);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchValuations")]
+        public async Task<IActionResult> GetSearchValuations(string valuationName, string author, string paper, string color, string serviceName, string bindingType, string orderName, string orderItemType, string orderItem, string creationDate)
+        {
+            var valuations = await _mediator.Send(new GetSearchValuationListQuery() { ValuationName = valuationName, Author = author, Paper = paper, Color = color, ServiceName = serviceName, BindingType = bindingType, OrderName = orderName, OrderItemType = orderItemType, OrderItem = orderItem, CreationDate = creationDate });
+            return Ok(valuations);
         }
 
         [HttpPost, Authorize(Roles = "Office")]

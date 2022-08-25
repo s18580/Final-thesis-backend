@@ -47,8 +47,20 @@ namespace Application.Functions.User.Commands.RegisterUserCommand
                    .WithMessage("User password is required.")
                    .NotEmpty()
                    .WithMessage("User password is required.")
-                   .MaximumLength(30)
-                   .WithMessage("User password length can't be longer then 30 characters.");
+                   .MaximumLength(25)
+                   .WithMessage("User password length can't be longer then 25 characters.");
+
+            RuleFor(p => p.AccessKey)
+                .NotNull()
+                   .WithMessage("AccessKey is required.")
+                   .MaximumLength(50)
+                   .WithMessage("AccessKey length can't be longer then 50 characters.");
+
+            RuleFor(p => p.SecretKey)
+                .NotNull()
+                   .WithMessage("SecretKey is required.")
+                   .MaximumLength(50)
+                   .WithMessage("SecretKey length can't be longer then 50 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsWorkerEmailUnique)

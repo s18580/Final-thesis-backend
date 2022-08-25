@@ -20,10 +20,18 @@ namespace Application.Functions.Workers.Queries.GetWorker
         {
             var worker = await _context.Workers
                                        .Include(m => m.Worksite)
+                                       .Include(m => m.RoleAssignments)
+                                       .ThenInclude(m => m.Role)
                                        .Where(p => p.IdWorker == request.Id)
                                        .SingleOrDefaultAsync();
 
             var workerDTO = _mapper.Map<WorkerDTO>(worker);
+
+            foreach(var roleAssignment in workerDTO.RoleAssignments)
+            {
+                roleAssignment.Role.RoleAssignments = null;
+                roleAssignment.Worker = null;
+            }
 
             return workerDTO;
         }

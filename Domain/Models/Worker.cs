@@ -16,6 +16,8 @@ namespace Domain.Models
         public DateTime? TokenExpires { get; set; }
         public bool IsDisabled { get; set; }
         public int? IdWorksite { get; set; }
+        public string AccessKeyAWS { get; set; }
+        public string SecretKeyAWS { get; set; }
 
         public Worksite Worksite { get; set; }
         public ICollection<RoleAssignment> RoleAssignments { get; set; }

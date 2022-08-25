@@ -1,6 +1,8 @@
 ﻿using Application.Functions.Workers.Commands.DeleteWorker;
 using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
+using Application.Functions.Workers.Queries.GetAWSCreds;
+using Application.Functions.Workers.Queries.GetSearchWorkers;
 using Application.Functions.Workers.Queries.GetWorker;
 using Application.Functions.Workers.Queries.GetWorkersList;
 using Application.Responses;
@@ -32,6 +34,14 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSearchWorkers")]
+        public async Task<IActionResult> GetSearchWorkers([FromQuery] string name, string lastName, string worksite)
+        {
+            var workers = await _mediator.Send(new GetSearchWorkers() { Name = name, LastName = lastName, WorksiteName = worksite });
+            return Ok(workers);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getWorker")]
         public async Task<IActionResult> GetWorker([FromQuery] int id)
         {
@@ -42,6 +52,19 @@ namespace API.Controllers
             }
 
             return Ok(worker);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getAWS")]
+        public async Task<IActionResult> GetAWSCreds([FromQuery] int id)
+        {
+            var response = await _mediator.Send(new GetAWSCreds { Id = id });
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]
@@ -90,7 +113,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Admin")]
+        [HttpPost, Authorize(Roles = "Admin")]
         [Route("disableWorker")]
         public async Task<IActionResult> DisableWorker([FromBody] DisableWorkerCommand command)
         {

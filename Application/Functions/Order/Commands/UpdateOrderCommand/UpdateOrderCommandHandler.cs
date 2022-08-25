@@ -25,7 +25,6 @@ namespace Application.Functions.Order.Commands.UpdateOrderCommand
                                               .SingleAsync();
 
             if (selectedOrder.Name != request.Name) { selectedOrder.Name = request.Name; }
-            if (selectedOrder.OrderSubmissionDate != request.OrderSubmissionDate) { selectedOrder.OrderSubmissionDate = request.OrderSubmissionDate; }
             if (selectedOrder.Note != request.Note) { selectedOrder.Note = request.Note; }
             if (selectedOrder.IsAuction != request.IsAuction) { selectedOrder.IsAuction = request.IsAuction; }
             if (selectedOrder.ExpectedDeliveryDate != request.ExpectedDeliveryDate) { selectedOrder.ExpectedDeliveryDate = request.ExpectedDeliveryDate; }

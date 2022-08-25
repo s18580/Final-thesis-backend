@@ -53,7 +53,7 @@ namespace Application.Functions.User.Queries.LoginUserQuery
             var token = _authorization.CreateUserToken(request.Email, userRoles);
             var refreshToken = _authorization.CreateRefreshToken();
 
-            return new LoginUserResponse(token, refreshToken, worker.Name + " " + worker.LastName, userRoles);
+            return new LoginUserResponse(token, refreshToken, worker.Name + " " + worker.LastName, userRoles, worker.IdWorker);
         }
     }
 }

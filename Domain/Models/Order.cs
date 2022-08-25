@@ -8,7 +8,6 @@ namespace Domain.Models
         public string Identifier { get; set; }
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
-        public DateTime? OrderSubmissionDate { get; set; }
         public string Note { get; set; }
         public bool IsAuction { get; set; }
         public DateTime? ExpectedDeliveryDate { get; set; }

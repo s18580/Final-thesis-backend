@@ -21,10 +21,24 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
             if (!validatorResult.IsValid) return new UpdatePersonCustomerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var selectedCustomer = await _context.Customers
-                                                  .Where(p => p.IdCustomer == request.IdCustomer)
-                                                  .SingleAsync();
+                                                 .Where(p => p.IdCustomer == request.IdCustomer)
+                                                 .SingleAsync();
 
-            if (selectedCustomer.CompanyName != request.Name + " " + request.LastName) { selectedCustomer.CompanyName = request.Name + " " + request.LastName; }
+            var selectedRepresentativeCustomer = await _context.Representatives
+                                                               .Include(p => p.Customer)
+                                                               .Where(p => p.IdCustomer == request.IdCustomer)
+                                                               .Where(p => p.Name + " " + p.LastName == p.Customer.CompanyName)
+                                                               .SingleOrDefaultAsync();
+
+            if (selectedCustomer.CompanyName != request.Name + " " + request.LastName)
+            {
+                selectedCustomer.CompanyName = request.Name + " " + request.LastName;
+                if (selectedRepresentativeCustomer != null)
+                {
+                    selectedRepresentativeCustomer.Name = request.Name;
+                    selectedRepresentativeCustomer.LastName = request.LastName;
+                }
+            }
             if (selectedCustomer.CompanyPhoneNumber != request.CompanyPhoneNumber) { selectedCustomer.CompanyPhoneNumber = request.CompanyPhoneNumber; }
             if (selectedCustomer.CompanyEmailAddress != request.CompanyEmailAddress) { selectedCustomer.CompanyEmailAddress = request.CompanyEmailAddress; }
             if (selectedCustomer.IdWorker != request.IdWorker) { selectedCustomer.IdWorker = request.IdWorker; }

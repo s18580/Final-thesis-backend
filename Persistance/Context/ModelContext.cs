@@ -2,11 +2,13 @@
 using Domain.Models;
 using Domain.Models.DictionaryModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Persistance.Context
 {
     public class ModelContext : DbContext, IApplicationContext
     {
+        public DatabaseFacade Database { get => base.Database; }
         public DbSet<Worksite> Worksites { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -61,6 +63,14 @@ namespace Persistance.Context
 
                 opt.Property(p => p.PhoneNumber)
                    .HasMaxLength(32);
+
+                opt.Property(p => p.AccessKeyAWS)
+                   .HasMaxLength(50)
+                   .IsRequired();
+
+                opt.Property(p => p.SecretKeyAWS)
+                   .HasMaxLength(50)
+                   .IsRequired();
 
                 opt.Property(p => p.EmailAddres)
                    .HasMaxLength(255)
@@ -258,6 +268,10 @@ namespace Persistance.Context
                 opt.Property(p => p.Name)
                    .HasMaxLength(30)
                    .IsRequired();
+
+                opt.Property(p => p.ChipColor)
+                   .HasMaxLength(8)
+                   .IsRequired();
             });
 
             modelBuilder.Entity<Domain.Models.File>(opt =>
@@ -408,11 +422,11 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Colors)
-                   .HasForeignKey(p => p.IdColor);
+                   .HasForeignKey(p => p.IdValuation);
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Colors)
-                   .HasForeignKey(p => p.IdColor);
+                   .HasForeignKey(p => p.IdOrderItem);
             });
 
             modelBuilder.Entity<BindingType>(opt =>
@@ -489,11 +503,11 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Papers)
-                   .HasForeignKey(p => p.IdPaper);
+                   .HasForeignKey(p => p.IdOrderItem);
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Papers)
-                   .HasForeignKey(p => p.IdPaper);
+                   .HasForeignKey(p => p.IdValuation);
             });
 
             modelBuilder.Entity<Service>(opt =>
@@ -507,11 +521,11 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdService);
+                   .HasForeignKey(p => p.IdOrderItem);
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdService);
+                   .HasForeignKey(p => p.IdValuation);
             });
 
             modelBuilder.Entity<PriceList>(opt =>

@@ -19,12 +19,17 @@ namespace Application.Functions.Workers.Queries.GetWorkersList
 
         public async Task<List<WorkerDTO>> Handle(GetWorkersListQuery request, CancellationToken cancellationToken)
         {
-            var workers = await _context.Workers.ToListAsync();
+            var workers = await _context.Workers.Include(b => b.Worksite).ToListAsync();
             List<WorkerDTO> workersDTO = new List<WorkerDTO>();
 
             foreach(Worker w in workers)
             {
-                workersDTO.Add(_mapper.Map<WorkerDTO>(w));
+                var mappedWorker = _mapper.Map<WorkerDTO>(w);
+                if (mappedWorker.Worksite != null)
+                {
+                    mappedWorker.Worksite.Workers = null;
+                }
+                workersDTO.Add(mappedWorker);
             }
 
             return workersDTO;

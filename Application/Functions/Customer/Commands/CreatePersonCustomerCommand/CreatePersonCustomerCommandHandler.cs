@@ -23,22 +23,40 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerCommand
 
             if (!validatorResult.IsValid) return new CreatePersonCustomerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var newPersonDto = new PersonDTO
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
-                CompanyName = request.Name + " " + request.LastName,
-                NIP = "",
-                Regon = "",
-                CompanyPhoneNumber = request.CompanyPhoneNumber,
-                CompanyEmailAddress = request.CompanyEmailAddress,
-                IdWorker = request.IdWorker
-            };
+                var newPersonDto = new PersonDTO
+                {
+                    CompanyName = request.Name + " " + request.LastName,
+                    NIP = "",
+                    Regon = "",
+                    CompanyPhoneNumber = request.CompanyPhoneNumber,
+                    CompanyEmailAddress = request.CompanyEmailAddress,
+                    IdWorker = request.IdWorker
+                };
 
-            var newCustomer = _mapper.Map<Domain.Models.Customer>(newPersonDto);
+                var newCustomer = _mapper.Map<Domain.Models.Customer>(newPersonDto);
 
-            await _context.Customers.AddAsync(newCustomer);
-            await _context.SaveChangesAsync();
+                await _context.Customers.AddAsync(newCustomer);
+                await _context.SaveChangesAsync();
 
-            return new CreatePersonCustomerResponse(newCustomer.IdCustomer);
+                var newRepresentative = new Domain.Models.Representative
+                {
+                    Name = request.Name,
+                    LastName = request.LastName,
+                    PhoneNumber = request.CompanyPhoneNumber,
+                    EmailAddress = request.CompanyEmailAddress,
+                    IdSupplier = null,
+                    IdCustomer = newCustomer.IdCustomer
+                };
+
+                await _context.Representatives.AddAsync(newRepresentative);
+                await _context.SaveChangesAsync();
+
+                dbContextTransaction.Commit();
+            }
+
+            return new CreatePersonCustomerResponse();
         }
     }
 }

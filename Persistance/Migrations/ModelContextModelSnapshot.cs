@@ -17,7 +17,7 @@ namespace Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -106,6 +106,8 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdColor"), 1L, 1);
+
                     b.Property<int?>("IdOrderItem")
                         .HasColumnType("int");
 
@@ -118,6 +120,10 @@ namespace Persistance.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("IdColor");
+
+                    b.HasIndex("IdOrderItem");
+
+                    b.HasIndex("IdValuation");
 
                     b.ToTable("Colors");
                 });
@@ -288,6 +294,11 @@ namespace Persistance.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStatus"), 1L, 1);
+
+                    b.Property<string>("ChipColor")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -491,9 +502,6 @@ namespace Persistance.Migrations
                     b.Property<DateTime?>("OfferValidityDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("OrderSubmissionDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("IdOrder");
 
                     b.HasIndex("IdRepresentative");
@@ -577,6 +585,8 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPaper"), 1L, 1);
+
                     b.Property<int>("FiberDirection")
                         .HasColumnType("int");
 
@@ -611,6 +621,10 @@ namespace Persistance.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("IdPaper");
+
+                    b.HasIndex("IdOrderItem");
+
+                    b.HasIndex("IdValuation");
 
                     b.ToTable("Papers");
                 });
@@ -679,6 +693,8 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdService"), 1L, 1);
+
                     b.Property<int?>("IdOrderItem")
                         .HasColumnType("int");
 
@@ -693,7 +709,11 @@ namespace Persistance.Migrations
 
                     b.HasKey("IdService");
 
+                    b.HasIndex("IdOrderItem");
+
                     b.HasIndex("IdServiceName");
+
+                    b.HasIndex("IdValuation");
 
                     b.ToTable("Services");
                 });
@@ -833,7 +853,7 @@ namespace Persistance.Migrations
                     b.Property<DateTime?>("OfferValidityDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("OrderItemIdOrderItem")
+                    b.Property<int>("OrderItemIdOrderItem")
                         .HasColumnType("int");
 
                     b.Property<double>("PrintPrice")
@@ -885,6 +905,11 @@ namespace Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdWorker"), 1L, 1);
 
+                    b.Property<string>("AccessKeyAWS")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("EmailAddres")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -921,6 +946,11 @@ namespace Persistance.Migrations
 
                     b.Property<byte[]>("Salt")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("SecretKeyAWS")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("TokenCreated")
                         .HasColumnType("datetime2");
@@ -975,15 +1005,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Colors")
-                        .HasForeignKey("IdColor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdOrderItem")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Colors")
-                        .HasForeignKey("IdColor")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdValuation")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OrderItem");
 
@@ -1121,15 +1149,13 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Papers")
-                        .HasForeignKey("IdPaper")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdOrderItem")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Papers")
-                        .HasForeignKey("IdPaper")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdValuation")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OrderItem");
 
@@ -1176,19 +1202,17 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Services")
-                        .HasForeignKey("IdService")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Valuation", "Valuation")
-                        .WithMany("Services")
-                        .HasForeignKey("IdService")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("IdOrderItem")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.DictionaryModels.ServiceName", "ServiceName")
                         .WithMany("Services")
                         .HasForeignKey("IdServiceName")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Models.Valuation", "Valuation")
+                        .WithMany("Services")
+                        .HasForeignKey("IdValuation")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OrderItem");
@@ -1238,14 +1262,17 @@ namespace Persistance.Migrations
                         .HasForeignKey("IdBindingType")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Models.OrderItem", null)
+                    b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Valuations")
                         .HasForeignKey("OrderItemIdOrderItem")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Author");
 
                     b.Navigation("BindingType");
+
+                    b.Navigation("OrderItem");
                 });
 
             modelBuilder.Entity("Domain.Models.ValuationPriceList", b =>

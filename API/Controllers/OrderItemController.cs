@@ -75,7 +75,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok(response.Id);
+                return Ok();
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

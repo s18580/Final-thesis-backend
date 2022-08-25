@@ -20,12 +20,24 @@ namespace Application.Functions.Supply.Commands.DeleteSupplyCommand
 
             if (!validatorResult.IsValid) return new DeleteSupplyResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var supplyDelete = await _context.Supplies
-                                             .Where(p => p.IdSupply == request.IdSupply)
-                                             .SingleAsync();
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            {
+                var deliveryAddresses = await _context.DeliveriesAddresses
+                                                  .Where(p => p.IdSupply == request.IdSupply)
+                                                  .ToListAsync();
 
-            _context.Supplies.Remove(supplyDelete);
-            await _context.SaveChangesAsync();
+                _context.DeliveriesAddresses.RemoveRange(deliveryAddresses);
+                await _context.SaveChangesAsync();
+
+                var supplyDelete = await _context.Supplies
+                                                 .Where(p => p.IdSupply == request.IdSupply)
+                                                 .SingleAsync();
+
+                _context.Supplies.Remove(supplyDelete);
+                await _context.SaveChangesAsync();
+
+                dbContextTransaction.Commit();
+            }
 
             return new DeleteSupplyResponse();
         }
