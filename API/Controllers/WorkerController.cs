@@ -1,6 +1,7 @@
 ﻿using Application.Functions.Workers.Commands.DeleteWorker;
 using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
+using Application.Functions.Workers.Queries.GetAWSCreds;
 using Application.Functions.Workers.Queries.GetSearchWorkers;
 using Application.Functions.Workers.Queries.GetWorker;
 using Application.Functions.Workers.Queries.GetWorkersList;
@@ -51,6 +52,19 @@ namespace API.Controllers
             }
 
             return Ok(worker);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getAWS")]
+        public async Task<IActionResult> GetAWSCreds([FromQuery] int id)
+        {
+            var response = await _mediator.Send(new GetAWSCreds { Id = id });
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]
