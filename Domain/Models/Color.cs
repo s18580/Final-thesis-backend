@@ -4,6 +4,7 @@
     {
         public int IdColor { get; set; }
         public string Name { get; set; }
+        public bool IsForCover { get; set; }
         public int? IdValuation { get; set; }
         public int? IdOrderItem { get; set; }
 

@@ -68,6 +68,7 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
                     var newColor = new Domain.Models.Color
                     {
                         Name = color.Name,
+                        IsForCover = color.IsForCover,
                         IdOrderItem = newOrderItem.IdOrderItem,
                         IdValuation = null,
                     };
