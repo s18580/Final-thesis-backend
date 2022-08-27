@@ -16,6 +16,13 @@ namespace Application.Functions.OrderItem.Queries.GetOrderItemQuery
         public async Task<Domain.Models.OrderItem> Handle(GetOrderItemQuery request, CancellationToken cancellationToken)
         {
             var orderItem = await _context.OrderItems
+                                          .Include(p => p.BindingType)
+                                          .Include(p => p.Colors)
+                                          .Include(p => p.Papers)
+                                          .Include(p => p.OrderItemType)
+                                          .Include(p => p.DeliveryType)
+                                          .Include(p => p.Services)
+                                          .ThenInclude(p => p.ServiceName)
                                           .Where(p => p.IdOrderItem == request.IdOrderItem)
                                           .SingleOrDefaultAsync();
 
