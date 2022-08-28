@@ -40,27 +40,8 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
                    .MaximumLength(100)
                    .WithMessage("Inside sheet format length can't be longer then 100 characters.");
 
-            RuleFor(p => p.Circulation)
-                .GreaterThanOrEqualTo(1);
-
             RuleFor(p => p.Capacity)
                 .GreaterThanOrEqualTo(1);
-            
-            RuleFor(p => p.PrintingPlateNuber)
-                .GreaterThanOrEqualTo(1);
-
-
-            RuleFor(p => p.PrintPrice)
-                .GreaterThan(0);
-
-            RuleFor(p => p.UnitPriceNet)
-                .GreaterThan(0);
-
-            RuleFor(p => p.SamplePrintoutsPrice)
-                .GreaterThan(0);
-
-            RuleFor(p => p.GraphicDesignPrice)
-                .GreaterThan(0);
 
             RuleFor(p => p.CoverSheetFormat)
                    .MaximumLength(100)

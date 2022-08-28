@@ -50,7 +50,7 @@ namespace Application.Functions.Valuation.Queries.GetSearchValuationListQuery
                     IdValuation = valuation.IdValuation,
                     Name = valuation.Name,
                     Author = valuation.Author.Name + " " + valuation.Author.LastName,
-                    PrintPrice = valuation.PrintPrice.ToString(),
+                    PrintPrice = valuation.FinalPrice.ToString(),
                     OrderName = valuation.OrderItem.Order.Name,
                     OrderItemTypes = valuation.OrderItem.Name,
                 };
