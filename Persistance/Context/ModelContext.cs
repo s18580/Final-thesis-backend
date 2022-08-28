@@ -458,6 +458,18 @@ namespace Persistance.Context
                    .HasMaxLength(255)
                    .IsRequired();
 
+                opt.Property(p => p.Recipient)
+                   .HasMaxLength(100)
+                   .IsRequired();
+
+                opt.Property(p => p.InsideOther)
+                   .HasMaxLength(255)
+                   .IsRequired();
+
+                opt.Property(p => p.CoverOther)
+                   .HasMaxLength(255)
+                   .IsRequired();
+
                 opt.Property(p => p.InsideFormat)
                    .HasMaxLength(100)
                    .IsRequired();
