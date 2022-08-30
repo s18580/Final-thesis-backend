@@ -80,11 +80,18 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
 
         private async Task<bool> DoesOrderItemExists(CreateValuationCommand command, CancellationToken cancellationToken)
         {
-            var orderItem = await _context.OrderItems
+            if (command.IdOrderItem == null)
+            {
+                return true;
+            }
+            else
+            {
+                var orderItem = await _context.OrderItems
                                           .Where(p => p.IdOrderItem == command.IdOrderItem)
                                           .SingleOrDefaultAsync();
 
-            return orderItem != null;
+                return orderItem != null;
+            }
         }
     }
 }
