@@ -19,10 +19,12 @@ namespace API.Controllers
     public class WorkerController : ControllerBase
     {
         private IMediator _mediator;
+        private readonly IConfiguration _configuration;
 
-        public WorkerController(IMediator mediator)
+        public WorkerController(IMediator mediator, IConfiguration configuration)
         {
             _mediator = mediator;
+            _configuration = configuration;
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
@@ -63,6 +65,8 @@ namespace API.Controllers
             {
                 return NotFound();
             }
+            response.Region = _configuration.GetSection("AwsRegion").Value;
+            response.BucketName = _configuration.GetSection("AwsAlbumBucketName").Value;
 
             return Ok(response);
         }
