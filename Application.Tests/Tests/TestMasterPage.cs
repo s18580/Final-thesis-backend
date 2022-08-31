@@ -5,7 +5,6 @@ using OpenQA.Selenium.Chrome;
 
 namespace Application.Tests.Tests
 {
-    [TestClass]
     public class TestMasterPage
     {
         public IWebDriver _driver { get; }

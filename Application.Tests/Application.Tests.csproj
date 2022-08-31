@@ -21,6 +21,9 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Mappings\NavBar\" />
+    <Folder Include="Mappings\UserMenu\" />
+    <Folder Include="TestData\" />
     <Folder Include="Tests\Customer\" />
     <Folder Include="Tests\Representative\" />
     <Folder Include="Tests\Worker\" />
