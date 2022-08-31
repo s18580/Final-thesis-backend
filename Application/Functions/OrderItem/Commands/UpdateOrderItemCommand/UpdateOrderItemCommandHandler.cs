@@ -32,12 +32,20 @@ namespace Application.Functions.OrderItem.Commands.UpdateOrderItemCommand
             if (selectedOrderItem.CompletionDate != request.CompletionDate) { selectedOrderItem.CompletionDate = request.CompletionDate; }
             if (selectedOrderItem.InsideFormat != request.InsideFormat) { selectedOrderItem.InsideFormat = request.InsideFormat; }
             if (selectedOrderItem.CoverFormat != request.CoverFormat) { selectedOrderItem.CoverFormat = request.CoverFormat; }
-            if (selectedOrderItem.IdSelectedValuation != request.IdSelectedValuation) { selectedOrderItem.IdSelectedValuation = request.IdSelectedValuation; }
+            if (selectedOrderItem.IdSelectedValuation != request.IdSelectedValuation)
+            {
+                selectedOrderItem.IdSelectedValuation = request.IdSelectedValuation;
+
+                var selectedValuation = await _context.Valuations.Where(p => p.IdValuation == request.IdSelectedValuation).SingleAsync();
+                selectedValuation.IdOrderItem = selectedOrderItem.IdOrderItem;
+            }
             if (selectedOrderItem.IdDeliveryType != request.IdDeliveryType) { selectedOrderItem.IdDeliveryType = request.IdDeliveryType; }
             if (selectedOrderItem.IdBindingType != request.IdBindingType) { selectedOrderItem.IdBindingType = request.IdBindingType; }
             if (selectedOrderItem.IdOrderItemType != request.IdOrderItemType) { selectedOrderItem.IdOrderItemType = request.IdOrderItemType; }
 
             await _context.SaveChangesAsync();
+
+            var selectedValuation2 = await _context.Valuations.Where(p => p.IdValuation == request.IdSelectedValuation).SingleAsync();
 
             return new UpdateOrderItemResponse();
         }

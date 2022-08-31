@@ -20,6 +20,10 @@ namespace Application.Functions.Color.Commands.UpdateColorCommand
                    .MaximumLength(10)
                    .WithMessage("Color name length can't be longer then 10 characters.");
 
+            RuleFor(p => p.IsForCover)
+                   .NotNull()
+                   .WithMessage("IsForCover is required.");
+
             RuleFor(p => p).
                 MustAsync(DoesColorExists)
                 .WithMessage("Color with given id does not exist.");

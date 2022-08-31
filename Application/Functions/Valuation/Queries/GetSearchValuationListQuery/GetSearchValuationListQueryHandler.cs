@@ -45,17 +45,34 @@ namespace Application.Functions.Valuation.Queries.GetSearchValuationListQuery
             var valuationsDTO = new List<SearchValuationDTO>();
             foreach (Domain.Models.Valuation valuation in valuations)
             {
-                var valuationDTO = new SearchValuationDTO
+                if (valuation.OrderItem == null)
                 {
-                    IdValuation = valuation.IdValuation,
-                    Name = valuation.Name,
-                    Author = valuation.Author.Name + " " + valuation.Author.LastName,
-                    PrintPrice = valuation.PrintPrice.ToString(),
-                    OrderName = valuation.OrderItem.Order.Name,
-                    OrderItemTypes = valuation.OrderItem.Name,
-                };
+                    var valuationDTO = new SearchValuationDTO
+                    {
+                        IdValuation = valuation.IdValuation,
+                        Name = valuation.Name,
+                        Author = valuation.Author.Name + " " + valuation.Author.LastName,
+                        PrintPrice = valuation.FinalPrice.ToString(),
+                        OrderName = "",
+                        OrderItemTypes = "",
+                    };
 
-                valuationsDTO.Add(valuationDTO);
+                    valuationsDTO.Add(valuationDTO);
+                }
+                else
+                {
+                    var valuationDTO = new SearchValuationDTO
+                    {
+                        IdValuation = valuation.IdValuation,
+                        Name = valuation.Name,
+                        Author = valuation.Author.Name + " " + valuation.Author.LastName,
+                        PrintPrice = valuation.FinalPrice.ToString(),
+                        OrderName = valuation.OrderItem.Order.Name,
+                        OrderItemTypes = valuation.OrderItem.Name,
+                    };
+
+                    valuationsDTO.Add(valuationDTO);
+                }
             }
 
             return valuationsDTO;

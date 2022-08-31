@@ -40,27 +40,8 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
                    .MaximumLength(100)
                    .WithMessage("Inside sheet format length can't be longer then 100 characters.");
 
-            RuleFor(p => p.Circulation)
-                .GreaterThanOrEqualTo(1);
-
             RuleFor(p => p.Capacity)
                 .GreaterThanOrEqualTo(1);
-            
-            RuleFor(p => p.PrintingPlateNuber)
-                .GreaterThanOrEqualTo(1);
-
-
-            RuleFor(p => p.PrintPrice)
-                .GreaterThan(0);
-
-            RuleFor(p => p.UnitPriceNet)
-                .GreaterThan(0);
-
-            RuleFor(p => p.SamplePrintoutsPrice)
-                .GreaterThan(0);
-
-            RuleFor(p => p.GraphicDesignPrice)
-                .GreaterThan(0);
 
             RuleFor(p => p.CoverSheetFormat)
                    .MaximumLength(100)
@@ -99,11 +80,18 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
 
         private async Task<bool> DoesOrderItemExists(CreateValuationCommand command, CancellationToken cancellationToken)
         {
-            var orderItem = await _context.OrderItems
+            if (command.IdOrderItem == null)
+            {
+                return true;
+            }
+            else
+            {
+                var orderItem = await _context.OrderItems
                                           .Where(p => p.IdOrderItem == command.IdOrderItem)
                                           .SingleOrDefaultAsync();
 
-            return orderItem != null;
+                return orderItem != null;
+            }
         }
     }
 }
