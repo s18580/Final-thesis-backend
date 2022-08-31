@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{F
 		{D5C24826-D7FD-4AEB-A56D-A9053E65C8D7} = {D5C24826-D7FD-4AEB-A56D-A9053E65C8D7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{55D25338-881A-42CB-B515-DDF0D9BCE583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "Application.Tests\Application.Tests.csproj", "{55D25338-881A-42CB-B515-DDF0D9BCE583}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
