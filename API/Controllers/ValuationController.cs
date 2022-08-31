@@ -4,6 +4,7 @@ using Application.Functions.Valuation.Commands.UpdateValuationCommand;
 using Application.Functions.Valuation.Queries.GetSearchValuationListQuery;
 using Application.Functions.Valuation.Queries.GetValuationListByOrderItemQuery;
 using Application.Functions.Valuation.Queries.GetValuationListByWorkerQuery;
+using Application.Functions.Valuation.Queries.GetValuationListWithoutOrderItemQuery;
 using Application.Functions.Valuation.Queries.GetValuationQuery;
 using Application.Responses;
 using MediatR;
@@ -46,6 +47,14 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getValuationsWithoutOrderItem")]
+        public async Task<IActionResult> GetValuationsWithoutOrderItem()
+        {
+            var valuations = await _mediator.Send(new GetValuationListWithoutOrderItemQuery());
+            return Ok(valuations);
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
