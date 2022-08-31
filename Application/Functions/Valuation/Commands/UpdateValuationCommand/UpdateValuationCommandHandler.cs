@@ -44,6 +44,7 @@ namespace Application.Functions.Valuation.Commands.UpdateValuationCommand
             if (selectedValuation.InsideSheetFormat != request.InsideSheetFormat) { selectedValuation.InsideSheetFormat = request.InsideSheetFormat; }
             if (selectedValuation.CoverSheetFormat != request.CoverSheetFormat) { selectedValuation.CoverSheetFormat = request.CoverSheetFormat; }
             if (selectedValuation.IdBindingType != request.IdBindingType) { selectedValuation.IdBindingType = request.IdBindingType; }
+            if (selectedValuation.IdOrderItem != request.IdOrderItem) { selectedValuation.IdOrderItem = request.IdOrderItem; }
 
             await _context.SaveChangesAsync();
 

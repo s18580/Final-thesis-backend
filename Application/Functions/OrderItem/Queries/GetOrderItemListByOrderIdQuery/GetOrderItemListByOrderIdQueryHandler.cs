@@ -24,6 +24,7 @@ namespace Application.Functions.OrderItem.Queries.GetOrderItemListByOrderIdQuery
                                            .Include(m => m.Papers)
                                            .Include(m => m.Colors)
                                            .Include(m => m.Supplies)
+                                           .Include(m => m.Valuations)
                                            .Include(m => m.Services)
                                            .ThenInclude(m => m.ServiceName)
                                            .Where(p => p.IdOrder == request.IdOrder)
