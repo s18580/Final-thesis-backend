@@ -6,14 +6,16 @@ namespace Application.Tests.Mappings.NavBar
     public class NavBarActions
     {
         private static NavBar NavBar { get; set; }
-        private static IWebDriver _driver { get; set; }
 
         public static void InitPage(IWebDriver driver)
         {
-            _driver = driver;
             NavBar = new NavBar(driver);
         }
 
+        public static bool CheckToastMessage(string message)
+        {
+            return NavBar.ToastMessage.Text == message;
+        }
         public static void GoToHomePage()
         {
             NavBar.HomePage.Click();

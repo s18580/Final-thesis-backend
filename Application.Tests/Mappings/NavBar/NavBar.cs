@@ -28,6 +28,7 @@ namespace Application.Tests.Mappings.NavBar
         public IWebElement WorkersSection => _driver.FindElement(By.Id("workersSection"));
         public IWebElement SearchWorkers => _driver.FindElement(By.Name("searchWorker"));
         public IWebElement SearchRepresentatives => _driver.FindElement(By.Name("searchRepresentative"));
+        public IWebElement ToastMessage => _driver.FindElement(By.XPath("//*[@class='va-toast__content']"));
 
         public NavBar(IWebDriver driver)
         {
