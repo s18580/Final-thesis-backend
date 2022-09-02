@@ -94,6 +94,7 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
                         Name = paper.Name,
                         Kind = paper.Kind,
                         SheetFormat = paper.SheetFormat,
+                        IsForCover = paper.IsForCover,
                         Opacity = paper.Opacity,
                         FiberDirection = fiberD,
                         PricePerKilogram = paper.PricePerKilogram,
