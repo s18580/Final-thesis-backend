@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Threading;
 
 namespace Application.Tests.Mappings.NavBar
 {
@@ -26,6 +27,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.ManageAccountsSection.Click();
+                Thread.Sleep(500);
                 NavBar.ManageAccounts.Click();
             }
         }
@@ -38,6 +40,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.ManageAccountsSection.Click();
+                Thread.Sleep(500);
                 NavBar.AddAccount.Click();
             }
         }
@@ -54,6 +57,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.OrdersSection.Click();
+                Thread.Sleep(500);
                 NavBar.AddOrder.Click();
             }
         }
@@ -66,6 +70,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.OrdersSection.Click();
+                Thread.Sleep(500);
                 NavBar.SearchOrder.Click();
             }
         }
@@ -78,6 +83,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.OrdersSection.Click();
+                Thread.Sleep(500);
                 NavBar.OnGoingOrders.Click();
             }
 
@@ -91,6 +97,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.CustomersSection.Click();
+                Thread.Sleep(500);
                 NavBar.AddCustomer.Click();
             }
         }
@@ -103,6 +110,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.CustomersSection.Click();
+                Thread.Sleep(500);
                 NavBar.SearchCustomer.Click();
             }
         }
@@ -115,6 +123,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.SupplierAndSuppliersSection.Click();
+                Thread.Sleep(500);
                 NavBar.AddSupplier.Click();
             }
         }
@@ -127,6 +136,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.SupplierAndSuppliersSection.Click();
+                Thread.Sleep(500);
                 NavBar.SearchSupplier.Click();
             }
         }
@@ -139,6 +149,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.SupplierAndSuppliersSection.Click();
+                Thread.Sleep(500);
                 NavBar.AddSupply.Click();
             }
         }
@@ -151,6 +162,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.SupplierAndSuppliersSection.Click();
+                Thread.Sleep(500);
                 NavBar.SearchSupply.Click();
             }
         }
@@ -163,6 +175,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.ValuationsSection.Click();
+                Thread.Sleep(500);
                 NavBar.AddValuation.Click();
             }
         }
@@ -175,6 +188,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.ValuationsSection.Click();
+                Thread.Sleep(500);
                 NavBar.SearchValuation.Click();
             }
         }
@@ -187,6 +201,7 @@ namespace Application.Tests.Mappings.NavBar
             else
             {
                 NavBar.WorkersSection.Click();
+                Thread.Sleep(500);
                 NavBar.SearchWorkers.Click();
             }
         }
