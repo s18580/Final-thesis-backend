@@ -11,7 +11,6 @@ namespace Application.Tests.Tests.Other
         {
             LoginActions.InitPage(_driver);
             LoginActions.Login("admin@gmail.com", "admin");
-            Assert.AreEqual("final-thesis-ui", _driver.Title);
         }
     }
 }

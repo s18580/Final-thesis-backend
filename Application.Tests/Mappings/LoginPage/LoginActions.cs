@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Threading;
 
 namespace Application.Tests.Mappings.LoginPage
 {
@@ -16,6 +17,7 @@ namespace Application.Tests.Mappings.LoginPage
             LoginPage.UserName.SendKeys(userName);
             LoginPage.Password.SendKeys(password);
             LoginPage.LoginButton.Click();
+            Thread.Sleep(2000);
         }
     }
 }

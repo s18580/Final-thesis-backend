@@ -30,6 +30,7 @@ namespace Application.Functions.Paper.Commands.UpdatePaperCommand
             if (selectedPaper.SheetFormat != request.SheetFormat) { selectedPaper.SheetFormat = request.SheetFormat; }
             if ((int)selectedPaper.FiberDirection != request.FiberDirection) { selectedPaper.FiberDirection = (FiberDirection)request.FiberDirection; }
             if (selectedPaper.Opacity != request.Opacity) { selectedPaper.Opacity = request.Opacity; }
+            if (selectedPaper.IsForCover != request.IsForCover) { selectedPaper.IsForCover = request.IsForCover; }
             if (selectedPaper.PricePerKilogram != request.PricePerKilogram) { selectedPaper.PricePerKilogram = request.PricePerKilogram; }
             if (selectedPaper.Quantity != request.Quantity) { selectedPaper.Quantity = request.Quantity; }
 
