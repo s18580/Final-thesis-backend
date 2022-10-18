@@ -1,3 +1,4 @@
+global using Serilog;
 using Application;
 using Microsoft.OpenApi.Models;
 using Persistance;
@@ -5,6 +6,11 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Warning()
+    .WriteTo.Seq("http://localhost:8081")
+    .CreateLogger();
 
 builder.Services.AddCors();
 builder.Services.AddControllers()
@@ -28,6 +34,9 @@ builder.Services.AddSwaggerGen( options =>
                     options.OperationFilter<SecurityRequirementsOperationFilter>();
                 });
 
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog();
+
 var app = builder.Build();
 
 app.UseCors(options =>
@@ -48,4 +57,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+Log.Fatal("Starting the API");
+
 app.Run();
+
+Log.CloseAndFlush();
