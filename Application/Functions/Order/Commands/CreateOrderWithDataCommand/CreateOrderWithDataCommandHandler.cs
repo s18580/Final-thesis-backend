@@ -65,7 +65,7 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
                 {
                     Name = request.Name,
                     CreationDate = DateTime.Now,
-                    Identifier = "SomeBuissnesIdentifier",
+                    Identifier = "",
                     Note = request.Note,
                     IsAuction = request.IsAuction,
                     ExpectedDeliveryDate = request.ExpectedDeliveryDate,
@@ -77,6 +77,8 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
 
                 await _context.Orders.AddAsync(newOrder);
                 await _context.SaveChangesAsync();
+
+                newOrder.Identifier = DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + newOrder.IdOrder;
 
                 foreach (var address in request.DeliveryAddresses)
                 {
