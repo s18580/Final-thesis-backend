@@ -116,13 +116,22 @@ namespace Persistance.Context
                 opt.Property(p => p.IdCustomer).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.CompanyName)
-                   .HasMaxLength(255);
+                   .HasMaxLength(255)
+                   .IsRequired();
+
+                opt.Property(p => p.NIP)
+                   .HasMaxLength(10);
+
+                opt.Property(p => p.Regon)
+                   .HasMaxLength(14);
 
                 opt.Property(p => p.CompanyPhoneNumber)
-                   .HasMaxLength(32);
+                   .HasMaxLength(32)
+                   .IsRequired();
 
                 opt.Property(p => p.CompanyEmailAddress)
-                   .HasMaxLength(255);
+                   .HasMaxLength(255)
+                   .IsRequired();
 
                 opt.HasMany(p => p.Representatives)
                    .WithOne(p => p.Customer)
@@ -177,6 +186,9 @@ namespace Persistance.Context
                 opt.Property(p => p.StreetNumber)
                    .HasMaxLength(10)
                    .IsRequired();
+
+                opt.Property(p => p.PostCode)
+                   .HasMaxLength(10);
 
                 opt.Property(p => p.ApartmentNumber)
                    .HasMaxLength(10);
@@ -467,8 +479,7 @@ namespace Persistance.Context
                    .IsRequired();
 
                 opt.Property(p => p.CoverOther)
-                   .HasMaxLength(255)
-                   .IsRequired();
+                   .HasMaxLength(255);
 
                 opt.Property(p => p.InsideFormat)
                    .HasMaxLength(100)
