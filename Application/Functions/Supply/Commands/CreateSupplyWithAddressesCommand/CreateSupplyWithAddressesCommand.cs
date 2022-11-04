@@ -7,7 +7,7 @@ namespace Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand
     {
         public string ItemDescription { get; set; }
         public double Price { get; set; }
-        public double Quantity { get; set; }
+        public int Quantity { get; set; }
         public DateTime SupplyDate { get; set; }
         public bool IsReceived { get; set; }
         public int IdSupplyItemType { get; set; }
