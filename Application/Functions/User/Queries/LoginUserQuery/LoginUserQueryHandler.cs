@@ -10,14 +10,12 @@ namespace Application.Functions.User.Queries.LoginUserQuery
         private readonly IApplicationContext _context;
         private readonly IAuthenticationService _authentication;
         private readonly IAuthorizationService _authorization;
-        private readonly IMapper _mapper;
 
         public LoginUserQueryHandler(IApplicationContext context, IAuthenticationService authentication, IAuthorizationService authorization, IMapper mapper)
         {
             _context = context;
             _authentication = authentication;
             _authorization = authorization;
-            _mapper = mapper;
         }
 
         public async Task<LoginUserResponse> Handle(LoginUserQuery request, CancellationToken cancellationToken)
