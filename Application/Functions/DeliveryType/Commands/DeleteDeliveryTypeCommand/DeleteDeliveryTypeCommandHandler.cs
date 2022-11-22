@@ -22,6 +22,7 @@ namespace Application.Functions.DeliveryType.Commands.DeleteDeliveryTypeCommand
 
             var deliveryTypeDelete = await _context.DeliveryTypes
                                                      .Where(p => p.IdDeliveryType == request.IdDeliveryType)
+                                                     .Include(p => p.OrderItems)
                                                      .SingleAsync();
 
             _context.DeliveryTypes.Remove(deliveryTypeDelete);

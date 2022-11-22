@@ -22,6 +22,7 @@ namespace Application.Functions.OrderItemType.Commands.DeleteOrderItemTypeComman
 
             var orderItemTypeDelete = await _context.OrderItemTypes
                                                      .Where(p => p.IdOrderItemType == request.IdOrderItemType)
+                                                     .Include(p => p.OrderItems)
                                                      .SingleAsync();
 
             _context.OrderItemTypes.Remove(orderItemTypeDelete);

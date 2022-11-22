@@ -15,6 +15,10 @@ namespace Application.Functions.FileType.Commands.DeleteFileTypeCommand
             RuleFor(p => p).
                 MustAsync(DoesFileTypeExists)
                 .WithMessage("File type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesFilesExists)
+                .WithMessage("File type is still related with some files.");
         }
 
         private async Task<bool> DoesFileTypeExists(DeleteFileTypeCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.FileType.Commands.DeleteFileTypeCommand
                                          .SingleOrDefaultAsync();
 
             return fileType != null;
+        }
+
+        private async Task<bool> DoesFilesExists(DeleteFileTypeCommand command, CancellationToken cancellationToken)
+        {
+            var files = await _context.Files
+                                      .Where(p => p.IdFileType == command.IdFileType)
+                                      .ToListAsync();
+
+            return files.Count == 0;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Application.Functions.FileType.Commands.DeleteFileTypeCommand
 
             var fileTypeDelete = await _context.FileTypes
                                                .Where(p => p.IdFileType == request.IdFileType)
+                                               .Include(p => p.Files)
                                                .SingleAsync();
 
             _context.FileTypes.Remove(fileTypeDelete);

@@ -22,6 +22,7 @@ namespace Application.Functions.FileStatus.Commands.DeleteFileStatusCommand
 
             var fileStatusDelete = await _context.FileStatuses
                                                   .Where(p => p.IdFileStatus == request.IdFileStatus)
+                                                  .Include(p => p.Files)
                                                   .SingleAsync();
 
             _context.FileStatuses.Remove(fileStatusDelete);

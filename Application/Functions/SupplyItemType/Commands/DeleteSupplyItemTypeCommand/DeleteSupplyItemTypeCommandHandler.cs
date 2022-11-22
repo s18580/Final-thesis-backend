@@ -22,6 +22,7 @@ namespace Application.Functions.SupplyItemType.Commands.DeleteSupplyItemTypeComm
 
             var supplyItemTypeDelete = await _context.SupplyItemTypes
                                                      .Where(p => p.IdSupplyItemType == request.IdSupplyItemType)
+                                                     .Include(p => p.Supplies)
                                                      .SingleAsync();
 
             _context.SupplyItemTypes.Remove(supplyItemTypeDelete);

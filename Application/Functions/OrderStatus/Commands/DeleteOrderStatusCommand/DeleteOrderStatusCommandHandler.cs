@@ -22,6 +22,7 @@ namespace Application.Functions.OrderStatus.Commands.DeleteOrderStatusCommand
 
             var orderStatusDelete = await _context.OrderStatuses
                                                      .Where(p => p.IdStatus == request.IdOrderStatus)
+                                                     .Include(p => p.Orders)
                                                      .SingleAsync();
 
             _context.OrderStatuses.Remove(orderStatusDelete);

@@ -20,7 +20,7 @@ namespace Application.Functions.Worksites.Commands.DeleteWorksite
 
             if (!validatorResult.IsValid) return new DeleteWorksiteResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
-            var worksiteToDelete = await _context.Worksites.Where(p => p.IdWorksite == request.IdWorksite).SingleAsync();
+            var worksiteToDelete = await _context.Worksites.Where(p => p.IdWorksite == request.IdWorksite).Include(p => p.Workers).SingleAsync();
 
             _context.Worksites.Remove(worksiteToDelete);
             await _context.SaveChangesAsync();
