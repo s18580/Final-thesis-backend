@@ -81,23 +81,28 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.Worksite)
                    .WithMany(p => p.Workers)
-                   .HasForeignKey(p => p.IdWorksite);
+                   .HasForeignKey(p => p.IdWorksite)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.Valuations)
                    .WithOne(p => p.Author)
-                   .HasForeignKey(p => p.IdAuthor);
+                   .HasForeignKey(p => p.IdAuthor)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.Assignments)
                    .WithOne(p => p.Worker)
-                   .HasForeignKey(p => p.IdWorker);
+                   .HasForeignKey(p => p.IdWorker)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.Customers)
                    .WithOne(p => p.Worker)
-                   .HasForeignKey(p => p.IdWorker);
+                   .HasForeignKey(p => p.IdWorker)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.RoleAssignments)
                    .WithOne(p => p.Worker)
-                   .HasForeignKey(p => p.IdWorker);
+                   .HasForeignKey(p => p.IdWorker)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Worksite>(opt =>
@@ -135,8 +140,8 @@ namespace Persistance.Context
 
                 opt.HasMany(p => p.Representatives)
                    .WithOne(p => p.Customer)
-                   .HasForeignKey(p => p.IdCustomer);
-
+                   .HasForeignKey(p => p.IdCustomer)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Supplier>(opt =>
@@ -159,7 +164,8 @@ namespace Persistance.Context
 
                 opt.HasMany(p => p.Representatives)
                    .WithOne(p => p.Supplier)
-                   .HasForeignKey(p => p.IdSupplier);
+                   .HasForeignKey(p => p.IdSupplier)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Address>(opt =>
@@ -195,15 +201,18 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.Customer)
                    .WithMany(p => p.Addresses)
-                   .HasForeignKey(p => p.IdCustomer);
+                   .HasForeignKey(p => p.IdCustomer)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.Supplier)
                    .WithMany(p => p.Addresses)
-                   .HasForeignKey(p => p.IdSupplier);
+                   .HasForeignKey(p => p.IdSupplier)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasMany(p => p.DeliveriesAddresses)
                    .WithOne(p => p.Address)
-                   .HasForeignKey(p => p.IdAddress);
+                   .HasForeignKey(p => p.IdAddress)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Representative>(opt =>
@@ -249,27 +258,33 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.Status)
                    .WithMany(p => p.Orders)
-                   .HasForeignKey(p => p.IdStatus);
+                   .HasForeignKey(p => p.IdStatus)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.DeliveriesAddresses)
                    .WithOne(p => p.Order)
-                   .HasForeignKey(p => p.IdOrder);
+                   .HasForeignKey(p => p.IdOrder)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.Representative)
                    .WithMany(p => p.Orders)
-                   .HasForeignKey(p => p.IdRepresentative);
+                   .HasForeignKey(p => p.IdRepresentative)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasMany(p => p.Assignments)
                    .WithOne(p => p.Order)
-                   .HasForeignKey(p => p.IdOrder);
+                   .HasForeignKey(p => p.IdOrder)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasMany(p => p.OrderItems)
                    .WithOne(p => p.Order)
-                   .HasForeignKey(p => p.IdOrder);
+                   .HasForeignKey(p => p.IdOrder)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasMany(p => p.Files)
                    .WithOne(p => p.Order)
-                   .HasForeignKey(p => p.IdOrder);
+                   .HasForeignKey(p => p.IdOrder)
+                   .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<OrderStatus>(opt =>
@@ -297,11 +312,13 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.FileStatus)
                    .WithMany(p => p.Files)
-                   .HasForeignKey(p => p.IdFileStatus);
+                   .HasForeignKey(p => p.IdFileStatus)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasOne(p => p.FileType)
                    .WithMany(p => p.Files)
-                   .HasForeignKey(p => p.IdFileType);
+                   .HasForeignKey(p => p.IdFileType)
+                   .OnDelete(DeleteBehavior.Restrict);
 
             });
 
@@ -342,19 +359,23 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.SupplyItemType)
                    .WithMany(p => p.Supplies)
-                   .HasForeignKey(p => p.IdSupplyItemType);
+                   .HasForeignKey(p => p.IdSupplyItemType)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.DeliveriesAddresses)
                    .WithOne(p => p.Supply)
-                   .HasForeignKey(p => p.IdSupply);
+                   .HasForeignKey(p => p.IdSupply)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Supplies)
-                   .HasForeignKey(p => p.IdOrderItem);
+                   .HasForeignKey(p => p.IdOrderItem)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.Representative)
                    .WithMany(p => p.Supplies)
-                   .HasForeignKey(p => p.IdRepresentative);
+                   .HasForeignKey(p => p.IdRepresentative)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<SupplyItemType>(opt =>
@@ -385,22 +406,20 @@ namespace Persistance.Context
                    .HasMaxLength(100)
                    .IsRequired();
 
-                opt.HasMany(p => p.Files)
-                   .WithOne(p => p.OrderItem)
-                   .HasForeignKey(p => p.IdOrderItem);
-
                 opt.HasOne(p => p.OrderItemType)
                    .WithMany(p => p.OrderItems)
-                   .HasForeignKey(p => p.IdOrderItemType);
+                   .HasForeignKey(p => p.IdOrderItemType)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasOne(p => p.DeliveryType)
                    .WithMany(p => p.OrderItems)
-                   .HasForeignKey(p => p.IdDeliveryType);
+                   .HasForeignKey(p => p.IdDeliveryType)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasOne(p => p.BindingType)
                    .WithMany(p => p.OrderItems)
-                   .HasForeignKey(p => p.IdBindingType);
-
+                   .HasForeignKey(p => p.IdBindingType)
+                   .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<DeliveryType>(opt =>
@@ -429,16 +448,18 @@ namespace Persistance.Context
                 opt.Property(p => p.IdColor).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(10)
+                   .HasMaxLength(20)
                    .IsRequired();
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Colors)
-                   .HasForeignKey(p => p.IdValuation);
+                   .HasForeignKey(p => p.IdValuation)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Colors)
-                   .HasForeignKey(p => p.IdOrderItem);
+                   .HasForeignKey(p => p.IdOrderItem)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<BindingType>(opt =>
@@ -497,15 +518,18 @@ namespace Persistance.Context
 
                 opt.HasMany(p => p.Files)
                    .WithOne(p => p.Valuation)
-                   .HasForeignKey(p => p.IdValuation);
+                   .HasForeignKey(p => p.IdValuation)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.BindingType)
                    .WithMany(p => p.Valuations)
-                   .HasForeignKey(p => p.IdBindingType);
+                   .HasForeignKey(p => p.IdBindingType)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasMany(p => p.PriceListPrices)
                    .WithOne(p => p.Valuation)
-                   .HasForeignKey(p => p.IdPriceList);
+                   .HasForeignKey(p => p.IdPriceList)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Paper>(opt =>
@@ -526,11 +550,13 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Papers)
-                   .HasForeignKey(p => p.IdOrderItem);
+                   .HasForeignKey(p => p.IdOrderItem)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Papers)
-                   .HasForeignKey(p => p.IdValuation);
+                   .HasForeignKey(p => p.IdValuation)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<Service>(opt =>
@@ -540,15 +566,18 @@ namespace Persistance.Context
 
                 opt.HasOne(p => p.ServiceName)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdServiceName);
+                   .HasForeignKey(p => p.IdServiceName)
+                   .OnDelete(DeleteBehavior.Restrict);
 
                 opt.HasOne(p => p.OrderItem)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdOrderItem);
+                   .HasForeignKey(p => p.IdOrderItem)
+                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.Valuation)
                    .WithMany(p => p.Services)
-                   .HasForeignKey(p => p.IdValuation);
+                   .HasForeignKey(p => p.IdValuation)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<PriceList>(opt =>
@@ -562,7 +591,8 @@ namespace Persistance.Context
 
                 opt.HasMany(p => p.ValuationPriceLists)
                    .WithOne(p => p.PriceList)
-                   .HasForeignKey(p => p.IdPriceList);
+                   .HasForeignKey(p => p.IdPriceList)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<ValuationPriceList>(opt =>
@@ -580,7 +610,8 @@ namespace Persistance.Context
 
                 opt.HasMany(p => p.RoleAssignments)
                    .WithOne(p => p.Role)
-                   .HasForeignKey(p => p.IdRole);
+                   .HasForeignKey(p => p.IdRole)
+                   .OnDelete(DeleteBehavior.ClientCascade);
             });
 
             modelBuilder.Entity<RoleAssignment>(opt =>

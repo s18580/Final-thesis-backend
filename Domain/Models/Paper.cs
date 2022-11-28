@@ -16,7 +16,7 @@ namespace Domain.Models
         public int? IdValuation { get; set; }
         public int? IdOrderItem { get; set; }
 
-        public OrderItem OrderItem { get; set; }
-        public Valuation Valuation { get; set; }
+        public OrderItem? OrderItem { get; set; }
+        public Valuation? Valuation { get; set; }
     }
 }

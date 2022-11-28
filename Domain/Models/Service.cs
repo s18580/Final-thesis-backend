@@ -8,10 +8,10 @@ namespace Domain.Models
         public double Price { get; set; }
         public int? IdOrderItem { get; set; }
         public int? IdValuation { get; set; }
-        public int? IdServiceName { get; set; }
+        public int IdServiceName { get; set; }
 
-        public OrderItem OrderItem { get; set; }
-        public Valuation Valuation { get; set; }
+        public OrderItem? OrderItem { get; set; }
+        public Valuation? Valuation { get; set; }
         public ServiceName ServiceName { get; set; }
     }
 }

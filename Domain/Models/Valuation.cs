@@ -24,13 +24,14 @@ namespace Domain.Models
         public int? CoverPlateNumber { get; set; }
         public int MainCirculation { get; set; }
         public double FinalPrice { get; set; }
+        public bool IsSelectedValuation { get; set; }
         public int IdAuthor { get; set; }
         public int? IdOrderItem { get; set; }
         public int? IdBindingType { get; set; }
 
         public Worker Author { get; set; }
         public OrderItem? OrderItem { get; set; }
-        public BindingType BindingType { get; set; }
+        public BindingType? BindingType { get; set; }
         public ICollection<File> Files { get; set; }
         public ICollection<Color> Colors { get; set; }
         public ICollection<Paper> Papers { get; set; }

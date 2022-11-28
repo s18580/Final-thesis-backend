@@ -8,7 +8,7 @@
         public string Regon { get; set; }
         public string CompanyPhoneNumber { get; set; }
         public string CompanyEmailAddress { get; set; }
-        public int? IdWorker { get; set; }
+        public int IdWorker { get; set; }
 
         public Worker Worker { get; set; }
         public ICollection<Address> Addresses { get; set; }

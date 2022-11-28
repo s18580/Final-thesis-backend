@@ -10,13 +10,11 @@ namespace Domain.Models
         public int IdFileType { get; set; }
         public int? IdFileStatus { get; set; }
         public int? IdValuation { get; set; }
-        public int? IdOrderItem { get; set; }
         public int? IdOrder { get; set; }
 
         public FileType FileType { get; set; }
-        public FileStatus FileStatus { get; set; }
-        public Order Order { get; set; }
-        public OrderItem OrderItem { get; set; }
-        public Valuation Valuation { get; set; }
+        public FileStatus? FileStatus { get; set; }
+        public Order? Order { get; set; }
+        public Valuation? Valuation { get; set; }
     }
 }

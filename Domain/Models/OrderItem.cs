@@ -14,7 +14,6 @@ namespace Domain.Models
         public DateTime? CompletionDate { get; set; }
         public string InsideFormat { get; set; }
         public string CoverFormat { get; set; }
-        public int? IdSelectedValuation { get; set; }
         public int IdDeliveryType { get; set; }
         public int? IdBindingType { get; set; }
         public int IdOrderItemType { get; set; }
@@ -22,12 +21,11 @@ namespace Domain.Models
         public Order Order { get; set; }
         public OrderItemType OrderItemType { get; set; }
         public DeliveryType DeliveryType { get; set; }
-        public BindingType BindingType { get; set; }
+        public BindingType? BindingType { get; set; }
         public ICollection<Color> Colors { get; set; }
         public ICollection<Paper> Papers { get; set; }
         public ICollection<Service> Services { get; set; }
         public ICollection<Valuation> Valuations { get; set; }
         public ICollection<Supply> Supplies { get; set; }
-        public ICollection<File> Files { get; set; }
     }
 }
