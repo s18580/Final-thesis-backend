@@ -22,6 +22,7 @@ namespace Application.Functions.PriceList.Commands.DeletePriceListCommand
 
             var priceListDelete = await _context.PriceLists
                                                 .Where(p => p.IdPriceList == request.IdPriceList)
+                                                .Include(p => p.ValuationPriceLists)
                                                 .SingleAsync();
 
             _context.PriceLists.Remove(priceListDelete);

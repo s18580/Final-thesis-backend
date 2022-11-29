@@ -4,6 +4,6 @@
     {
         public int IdWorker { get; set; }
         public bool OrderLeader { get; set; }
-        public int? HoursWorked { get; set; }
+        public int HoursWorked { get; set; }
     }
 }

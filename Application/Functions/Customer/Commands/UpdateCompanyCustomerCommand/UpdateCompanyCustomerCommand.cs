@@ -10,6 +10,6 @@ namespace Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand
         public string Regon { get; set; }
         public string CompanyPhoneNumber { get; set; }
         public string CompanyEmailAddress { get; set; }
-        public int? IdWorker { get; set; }
+        public int IdWorker { get; set; }
     }
 }

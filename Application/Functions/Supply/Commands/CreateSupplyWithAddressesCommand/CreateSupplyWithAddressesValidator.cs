@@ -28,6 +28,12 @@ namespace Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand
                    .NotNull()
                    .WithMessage("Quantity is required.");
 
+            RuleFor(p => p.Quantity)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(p => p.Price)
+                .GreaterThan(0);
+
             RuleFor(p => p.SupplyDate)
                    .NotNull()
                    .WithMessage("SupplyDate is required.");

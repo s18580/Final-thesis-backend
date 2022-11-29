@@ -21,8 +21,8 @@ namespace Application.Functions.Color.Commands.CreateColorCommand
                    .WithMessage("Color name is required.")
                    .NotEmpty()
                    .WithMessage("Color name is required.")
-                   .MaximumLength(10)
-                   .WithMessage("Color name length can't be longer then 10 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("Color name length can't be longer then 20 characters.");
 
             RuleFor(p => p.IsForCover)
                    .NotNull()

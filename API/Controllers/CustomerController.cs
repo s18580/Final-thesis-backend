@@ -2,7 +2,6 @@
 using Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCommand;
-using Application.Functions.Customer.Commands.DeleteCustomerCommand;
 using Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.UpdatePersonCustomerCommand;
 using Application.Functions.Customer.Queries.GetCustomerListQuery;
@@ -163,29 +162,6 @@ namespace API.Controllers
         [HttpPost, Authorize(Roles = "Basic")]
         [Route("updatePersonCustomer")]
         public async Task<IActionResult> UpdatePersonCustomer([FromBody] UpdatePersonCustomerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteCustomer")]
-        public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

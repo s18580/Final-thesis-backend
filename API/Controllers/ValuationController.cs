@@ -1,5 +1,4 @@
 ﻿using Application.Functions.Valuation.Commands.CreateValuationCommand;
-using Application.Functions.Valuation.Commands.DeleteValuationCommand;
 using Application.Functions.Valuation.Commands.UpdateValuationCommand;
 using Application.Functions.Valuation.Queries.GetSearchValuationListQuery;
 using Application.Functions.Valuation.Queries.GetValuationListByOrderItemQuery;
@@ -124,29 +123,6 @@ namespace API.Controllers
         [HttpPost, Authorize(Roles = "Office")]
         [Route("updateValuation")]
         public async Task<IActionResult> UpdateValuation([FromBody] UpdateValuationCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Office")]
-        [Route("deleteValuation")]
-        public async Task<IActionResult> DeleteValuation([FromBody] DeleteValuationCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

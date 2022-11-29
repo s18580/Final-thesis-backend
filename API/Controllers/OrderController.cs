@@ -1,6 +1,5 @@
 ﻿using Application.Functions.Order.Commands.CreateOrderCommand;
 using Application.Functions.Order.Commands.CreateOrderWithDataCommand;
-using Application.Functions.Order.Commands.DeleteOrderCommand;
 using Application.Functions.Order.Commands.UpdateOrderCommand;
 using Application.Functions.Order.Queries.GetOnGoingOrdersListQuery;
 using Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery;
@@ -142,29 +141,6 @@ namespace API.Controllers
         [HttpPost, Authorize(Roles = "Basic")]
         [Route("updateOrder")]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteOrder")]
-        public async Task<IActionResult> DeleteOrder([FromBody] DeleteOrderCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

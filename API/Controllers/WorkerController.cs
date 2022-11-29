@@ -1,5 +1,4 @@
-﻿using Application.Functions.Workers.Commands.DeleteWorker;
-using Application.Functions.Workers.Commands.DisableWorker;
+﻿using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
 using Application.Functions.Workers.Queries.GetAWSCreds;
 using Application.Functions.Workers.Queries.GetSearchWorkers;
@@ -74,29 +73,6 @@ namespace API.Controllers
         [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateWorker")]
         public async Task<IActionResult> UpdateWorker([FromBody] UpdateWorkerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Admin")]
-        [Route("deleteWorker")]
-        public async Task<IActionResult> DeleteWorker([FromBody] DeleteWorkerCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

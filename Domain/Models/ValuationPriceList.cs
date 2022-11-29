@@ -6,6 +6,7 @@ namespace Domain.Models
     {
         public int IdValuation { get; set; }
         public int IdPriceList { get; set; }
+        public double UsedPrice { get; set; }
 
         public Valuation Valuation { get; set; }
         public PriceList PriceList { get; set; }

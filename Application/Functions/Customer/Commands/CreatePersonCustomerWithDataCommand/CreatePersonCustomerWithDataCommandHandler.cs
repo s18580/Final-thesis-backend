@@ -58,6 +58,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                     LastName = request.LastName,
                     PhoneNumber = request.CompanyPhoneNumber,
                     EmailAddress = request.CompanyEmailAddress,
+                    IsDisabled = false,
                     IdSupplier = null,
                     IdCustomer = newCustomer.IdCustomer
                 };
@@ -76,6 +77,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                         StreetName = address.StreetName,
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };
@@ -92,6 +94,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };

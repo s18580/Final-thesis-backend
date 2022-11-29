@@ -64,6 +64,7 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                         StreetName = address.StreetName,
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };
@@ -80,6 +81,7 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };

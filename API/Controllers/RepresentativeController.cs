@@ -1,5 +1,5 @@
 ﻿using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
-using Application.Functions.Representative.Commands.DeleteRepresentativeCommand;
+using Application.Functions.Representative.Commands.DisableRepresentativeCommand;
 using Application.Functions.Representative.Commands.UpdateRepresentativeCommand;
 using Application.Functions.Representative.Queries.GetCustomerRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
@@ -153,9 +153,9 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteRepresentative")]
-        public async Task<IActionResult> DeleteRepresentative([FromBody] DeleteRepresentativeCommand command)
+        [HttpPost, Authorize(Roles = "Basic")]
+        [Route("disableRepresentative")]
+        public async Task<IActionResult> DisableRepresentative([FromBody] DisableRepresentativeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

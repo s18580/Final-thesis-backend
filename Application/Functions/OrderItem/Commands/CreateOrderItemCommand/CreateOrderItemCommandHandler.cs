@@ -54,7 +54,6 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
                     CompletionDate = request.CompletionDate,
                     InsideFormat = request.InsideFormat,
                     CoverFormat = request.CoverFormat,
-                    IdSelectedValuation = null,
                     IdDeliveryType = request.IdDeliveryType,
                     IdBindingType = request.IdBindingType,
                     IdOrderItemType = request.IdOrderItemType,

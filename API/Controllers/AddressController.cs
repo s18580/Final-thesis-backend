@@ -1,5 +1,5 @@
 ﻿using Application.Functions.Address.Commands.CreateAddressCommand;
-using Application.Functions.Address.Commands.DeleteAddressCommand;
+using Application.Functions.Address.Commands.DisableAddressCommand;
 using Application.Functions.Address.Commands.UpdateAddressCommand;
 using Application.Functions.Address.Queries.GetAddressListByCustomerIdQuery;
 using Application.Functions.Address.Queries.GetAddressListBySupplierIdQuery;
@@ -135,9 +135,9 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteAddress")]
-        public async Task<IActionResult> DeleteAddress([FromBody] DeleteAddressCommand command)
+        [HttpPost, Authorize(Roles = "Basic")]
+        [Route("disableAddress")]
+        public async Task<IActionResult> DisableAddress([FromBody] DisableAddressCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

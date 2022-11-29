@@ -15,6 +15,10 @@ namespace Application.Functions.FileStatus.Commands.DeleteFileStatusCommand
             RuleFor(p => p).
                 MustAsync(DoesFileStatusExists)
                 .WithMessage("File status with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesFilesWithStatusesExists)
+                .WithMessage("File status is still related with some files.");
         }
 
         private async Task<bool> DoesFileStatusExists(DeleteFileStatusCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.FileStatus.Commands.DeleteFileStatusCommand
                                             .SingleOrDefaultAsync();
 
             return fileStatus != null;
+        }
+
+        private async Task<bool> DoesFilesWithStatusesExists(DeleteFileStatusCommand command, CancellationToken cancellationToken)
+        {
+            var filesWithStatuses = await _context.Files
+                                      .Where(p => p.IdFileStatus == command.IdFileStatus)
+                                      .ToListAsync();
+
+            return filesWithStatuses.Count == 0;
         }
     }
 }

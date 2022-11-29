@@ -106,7 +106,6 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
                         CompletionDate = orderItem.CompletionDate,
                         InsideFormat = orderItem.InsideFormat,
                         CoverFormat = orderItem.CoverFormat,
-                        IdSelectedValuation = null,
                         IdDeliveryType = orderItem.IdDeliveryType,
                         IdBindingType = orderItem.IdBindingType,
                         IdOrderItemType = orderItem.IdOrderItemType,

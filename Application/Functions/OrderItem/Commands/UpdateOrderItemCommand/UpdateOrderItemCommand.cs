@@ -13,7 +13,6 @@ namespace Application.Functions.OrderItem.Commands.UpdateOrderItemCommand
         public DateTime? CompletionDate { get; set; }
         public string InsideFormat { get; set; }
         public string CoverFormat { get; set; }
-        public int? IdSelectedValuation { get; set; }
         public int IdDeliveryType { get; set; }
         public int? IdBindingType { get; set; }
         public int IdOrderItemType { get; set; }

@@ -9,6 +9,6 @@ namespace Application.Functions.Customer.Commands.UpdatePersonCustomerCommand
         public string LastName { get; set; }
         public string CompanyPhoneNumber { get; set; }
         public string CompanyEmailAddress { get; set; }
-        public int? IdWorker { get; set; }
+        public int IdWorker { get; set; }
     }
 }

@@ -6,5 +6,6 @@ namespace Application.Functions.ValuationPriceList.Commands.CreateValuationPrice
     {
         public int IdValuation { get; set; }
         public int IdPriceList { get; set; }
+        public double UsedPrice { get; set; }
     }
 }

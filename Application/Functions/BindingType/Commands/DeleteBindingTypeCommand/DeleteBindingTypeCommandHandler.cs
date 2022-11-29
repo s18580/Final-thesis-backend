@@ -22,6 +22,8 @@ namespace Application.Functions.BindingType.Commands.DeleteBindingTypeCommand
 
             var bindingTypeDelete = await _context.BindingTypes
                                                   .Where(p => p.IdBindingType == request.IdBindingType)
+                                                  .Include(p => p.Valuations)
+                                                  .Include(p => p.OrderItems)
                                                   .SingleAsync();
 
             _context.BindingTypes.Remove(bindingTypeDelete);

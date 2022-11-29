@@ -22,6 +22,7 @@ namespace Application.Functions.ServiceName.Commands.DeleteServiceNameCommand
 
             var serviceNamesDelete = await _context.ServiceNames
                                                    .Where(p => p.IdServiceName == request.IdServiceName)
+                                                   .Include(p => p.Services)
                                                    .SingleAsync();
 
             _context.ServiceNames.Remove(serviceNamesDelete);

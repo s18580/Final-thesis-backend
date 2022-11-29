@@ -20,6 +20,14 @@ namespace Application.Functions.Supply.Commands.UpdateSupplyCommand
                   .MaximumLength(255)
                   .WithMessage("Item description length can't be longer then 255 characters.");
 
+            RuleFor(p => p.Price)
+                   .NotNull()
+                   .WithMessage("Price is required.");
+
+            RuleFor(p => p.Quantity)
+                   .NotNull()
+                   .WithMessage("Quantity is required.");
+
             RuleFor(p => p.Quantity)
                 .GreaterThanOrEqualTo(1);
 

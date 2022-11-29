@@ -62,6 +62,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
                         IdSupplier = newSupplier.IdSupplier,
+                        IsDisabled = false,
                         IdCustomer = null,
                     };
 
@@ -77,6 +78,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
+                        IsDisabled = false,
                         IdSupplier = newSupplier.IdSupplier,
                         IdCustomer = null,
                     };
