@@ -103,7 +103,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
@@ -123,7 +123,7 @@ namespace API.Controllers
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {

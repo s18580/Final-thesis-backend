@@ -37,6 +37,8 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                 if (!representativeValidatorResult.IsValid) return new CreateCompanyCustomerWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -52,6 +54,8 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
 
                 await _context.Customers.AddAsync(newCustomer);
                 await _context.SaveChangesAsync();
+
+                newId = newCustomer.IdCustomer;
 
                 foreach (var address in request.Addresses)
                 {
@@ -93,7 +97,7 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                 dbContextTransaction.Commit();
             }
 
-            return new CreateCompanyCustomerWithDataResponse();
+            return new CreateCompanyCustomerWithDataResponse(newId);
         }
     }
 }

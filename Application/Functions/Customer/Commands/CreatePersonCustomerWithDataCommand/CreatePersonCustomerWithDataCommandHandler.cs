@@ -36,6 +36,8 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                 if (!representativeValidatorResult.IsValid) return new CreatePersonCustomerWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -51,6 +53,8 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
 
                 await _context.Customers.AddAsync(newCustomer);
                 await _context.SaveChangesAsync();
+
+                newId = newCustomer.IdCustomer;
 
                 var newCustomerRepresentative = new Domain.Models.Representative
                 {
@@ -106,7 +110,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                 dbContextTransaction.Commit();
             }
 
-            return new CreatePersonCustomerWithDataResponse();
+            return new CreatePersonCustomerWithDataResponse(newId);
         }
     }
 }
