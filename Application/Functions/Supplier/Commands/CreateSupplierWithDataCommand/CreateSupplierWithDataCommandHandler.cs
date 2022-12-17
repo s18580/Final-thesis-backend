@@ -36,6 +36,8 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                 if (!representativeValidatorResult.IsValid) return new CreateSupplierWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -49,6 +51,8 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
 
                 await _context.Suppliers.AddAsync(newSupplier);
                 await _context.SaveChangesAsync();
+
+                newId = newSupplier.IdSupplier;
 
                 foreach (var address in request.Addresses)
                 {
@@ -90,7 +94,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                 dbContextTransaction.Commit();
             }
 
-            return new CreateSupplierWithDataResponse();
+            return new CreateSupplierWithDataResponse(newId);
         }
     }
 }

@@ -5,8 +5,9 @@ namespace Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand
 {
     public class CreateSupplyWithAddressesResponse : BaseResponse
     { 
-        public CreateSupplyWithAddressesResponse() : base()
-        { }
+        public int Id { get; set; }
+        public CreateSupplyWithAddressesResponse(int id) : base()
+        { Id = id; }
 
         public CreateSupplyWithAddressesResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

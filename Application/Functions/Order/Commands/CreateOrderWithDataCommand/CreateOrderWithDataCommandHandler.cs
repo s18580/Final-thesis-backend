@@ -58,6 +58,8 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
                 if (!workerAssignmentValidatorResult.IsValid) return new CreateOrderWithDataResponse(workerAssignmentValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -77,6 +79,8 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
 
                 await _context.Orders.AddAsync(newOrder);
                 await _context.SaveChangesAsync();
+
+                newId = newOrder.IdOrder;
 
                 newOrder.Identifier = DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + newOrder.IdOrder;
 
@@ -190,7 +194,7 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
                 dbContextTransaction.Commit();
             }
 
-            return new CreateOrderWithDataResponse();
+            return new CreateOrderWithDataResponse(newId);
         }
     }
 }

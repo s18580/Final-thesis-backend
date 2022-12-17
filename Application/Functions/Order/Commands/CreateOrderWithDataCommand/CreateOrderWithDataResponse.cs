@@ -5,8 +5,9 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
 {
     public class CreateOrderWithDataResponse : BaseResponse
     {
-        public CreateOrderWithDataResponse() : base()
-        { }
+        public int Id { get; set; }
+        public CreateOrderWithDataResponse(int id) : base()
+        { Id = id; }
 
         public CreateOrderWithDataResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)
