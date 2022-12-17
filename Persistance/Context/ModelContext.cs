@@ -303,11 +303,9 @@ namespace Persistance.Context
 
             modelBuilder.Entity<Domain.Models.File>(opt =>
             {
-                opt.HasKey(p => p.IdFile);
-                opt.Property(p => p.IdFile).ValueGeneratedOnAdd();
-
-                opt.Property(p => p.Name)
-                   .HasMaxLength(50)
+                opt.HasKey(p => p.FileKey);
+                opt.Property(p => p.FileKey)
+                   .HasMaxLength(200)
                    .IsRequired();
 
                 opt.HasOne(p => p.FileStatus)

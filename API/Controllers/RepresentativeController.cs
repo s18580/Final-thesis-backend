@@ -38,9 +38,9 @@ namespace API.Controllers
 
         [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSearchRepresentatives")]
-        public async Task<IActionResult> GetSearchRepresentatives([FromQuery] string name, string lastName, string email, string phone, string customer, string supplier)
+        public async Task<IActionResult> GetSearchRepresentatives([FromQuery] string name, string lastName, string email, string phone, string customer, string supplier, bool isDisabled)
         {
-            var representatives = await _mediator.Send(new GetSearchRepresentativeListQuery() { Name = name, LastName = lastName, Email = email, Phone = phone, Customer = customer, Supplier = supplier});
+            var representatives = await _mediator.Send(new GetSearchRepresentativeListQuery() { Name = name, LastName = lastName, Email = email, Phone = phone, Customer = customer, Supplier = supplier, IsDisabled = isDisabled });
             return Ok(representatives);
         }
 

@@ -20,7 +20,7 @@ namespace Application.Functions.File.Commands.DeleteFileCommand
         private async Task<bool> DoesFileExists(DeleteFileCommand command, CancellationToken cancellationToken)
         {
             var file = await _context.Files
-                                     .Where(p => p.IdFile == command.IdFile)
+                                     .Where(p => p.FileKey == command.FileKey)
                                      .SingleOrDefaultAsync();
 
             return file != null;

@@ -16,13 +16,13 @@ namespace Application.Functions.File.Commands.CreateFileCommand
                 MustAsync(DoesLinkIsGiven)
                 .WithMessage("Specyfic link was not given.");
 
-            RuleFor(p => p.Name)
+            RuleFor(p => p.FileKey)
                    .NotNull()
                    .WithMessage("File name is required.")
                    .NotEmpty()
                    .WithMessage("File name is required.")
-                   .MaximumLength(50)
-                   .WithMessage("File name length can't be longer then 50 characters.");
+                   .MaximumLength(200)
+                   .WithMessage("File name length can't be longer then 200 characters.");
 
             RuleFor(p => p).
                 MustAsync(DoesFileStatusExists)
@@ -61,27 +61,23 @@ namespace Application.Functions.File.Commands.CreateFileCommand
                                                .Where(p => p.IdValuation == command.IdValuation)
                                                .SingleOrDefaultAsync();
 
-            var orderItem = await _context.OrderItems
-                                          .Where(p => p.IdOrderItem == command.IdOrderItem)
-                                          .SingleOrDefaultAsync();
-
             var order = await _context.Orders
                                       .Where(p => p.IdOrder == command.IdOrder)
                                       .SingleOrDefaultAsync();
 
-            return (valutaion != null || orderItem != null || order != null);
+            return (valutaion != null || order != null);
         }
 
         private async Task<bool> DoesLinkIsGiven(CreateFileCommand command, CancellationToken cancellationToken)
         {
-            return !(command.IdOrder != null && command.IdOrderItem != null && command.IdValuation == null) ||
-                !(command.IdOrder != null && command.IdOrderItem == null && command.IdValuation == null) ||
-                !(command.IdOrder != null && command.IdOrderItem != null && command.IdValuation != null) ||
-                !(command.IdOrder == null && command.IdOrderItem != null && command.IdValuation != null) ||
-                !(command.IdOrder == null && command.IdOrderItem == null && command.IdValuation != null) ||
-                !(command.IdOrder == null && command.IdOrderItem != null && command.IdValuation == null) ||
-                !(command.IdOrder != null && command.IdOrderItem != null && command.IdValuation != null) ||
-                !(command.IdOrder == null && command.IdOrderItem == null && command.IdValuation == null );
+            return !(command.IdOrder != null && command.IdValuation == null) ||
+                !(command.IdOrder != null && command.IdValuation == null) ||
+                !(command.IdOrder != null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdValuation == null) ||
+                !(command.IdOrder != null && command.IdValuation != null) ||
+                !(command.IdOrder == null && command.IdValuation == null );
         }
     }
 }

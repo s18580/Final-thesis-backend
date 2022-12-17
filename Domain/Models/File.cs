@@ -4,9 +4,7 @@ namespace Domain.Models
 {
     public class File
     {
-        public int IdFile { get; set; }
-        public string Name { get; set; }
-        public DateTime AddedDate { get; set; }
+        public string FileKey { get; set; }
         public int IdFileType { get; set; }
         public int? IdFileStatus { get; set; }
         public int? IdValuation { get; set; }

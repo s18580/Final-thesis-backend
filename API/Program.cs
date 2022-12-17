@@ -17,7 +17,7 @@ builder.Services.AddControllers()
                 .AddJsonOptions(x =>
                     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-builder.Services.AddApplicationLayer(); // mapper and mediatR
+builder.Services.AddApplicationLayer(builder.Configuration); // mapper and mediatR
 builder.Services.AddPersistanceLayer(builder.Configuration); // auth scheme and services
 
 builder.Services.AddEndpointsApiExplorer();

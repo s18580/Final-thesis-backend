@@ -22,6 +22,7 @@ namespace Application.Functions.Representative.Queries.GetSearchRepresentativeLi
                 representatives = await _context.Representatives
                                                 .Include(x => x.Customer)
                                                 .Include(b => b.Supplier)
+                                                .Where(p => p.IsDisabled == request.IsDisabled)
                                                 .ToListAsync();
             }
             else
@@ -29,7 +30,7 @@ namespace Application.Functions.Representative.Queries.GetSearchRepresentativeLi
                 representatives = await _context.Representatives
                                                 .Include(x => x.Customer)
                                                 .Include(b => b.Supplier)
-                                                .Where(b => b.Name == request.Name || b.LastName == request.LastName || b.PhoneNumber == request.Phone || b.EmailAddress == request.Email || b.Supplier.Name == request.Supplier || b.Customer.CompanyName == request.Customer)
+                                                .Where(b => (b.Name == request.Name || b.LastName == request.LastName || b.PhoneNumber == request.Phone || b.EmailAddress == request.Email || b.Supplier.Name == request.Supplier || b.Customer.CompanyName == request.Customer) && b.IsDisabled == request.IsDisabled)
                                                 .ToListAsync();
             }
 
@@ -41,7 +42,8 @@ namespace Application.Functions.Representative.Queries.GetSearchRepresentativeLi
                 if (representative.Customer != null)
                 {
                     repName = representative.Customer.CompanyName;
-                } else if (representative.Supplier != null)
+                }
+                else if (representative.Supplier != null)
                 {
                     repName = representative.Supplier.Name;
                 }
