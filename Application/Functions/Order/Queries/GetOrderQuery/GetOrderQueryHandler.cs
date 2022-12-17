@@ -18,8 +18,8 @@ namespace Application.Functions.Order.Queries.GetOrderQuery
             var order = await _context.Orders
                                       .Include(m => m.Assignments)
                                       .Include(m => m.DeliveriesAddresses)
-                                      .Include(m => m.Files)
                                       .Include(m => m.Representative)
+                                      .ThenInclude(m => m.Customer)
                                       .Include(m => m.Status)
                                       .Include(m => m.OrderItems)
                                       .ThenInclude(b => b.Papers)
