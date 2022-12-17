@@ -6,7 +6,6 @@
         public string Region { get; set; }
         public string AccessKeyAWS { get; set; }
         public string SecretKeyAWS { get; set; }
-        public string Marker { get; set; }
 
         public AWSCredsResponse(string access, string secret)
         {
@@ -14,7 +13,6 @@
             Region = "";
             AccessKeyAWS = access;
             SecretKeyAWS = secret;
-            Marker = "phot/";
         }
     }
 }
