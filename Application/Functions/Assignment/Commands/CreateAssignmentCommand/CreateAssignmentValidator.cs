@@ -12,10 +12,6 @@ namespace Application.Functions.Assignment.Commands.CreateAssignmentCommand
         {
             _context = context;
 
-            RuleFor(p => p.HoursWorked)
-                .GreaterThanOrEqualTo(0)
-                .WithMessage("Hours worked can't be less than 0.");
-
             RuleFor(p => p).
                 MustAsync(DoesAssignmentExists)
                 .WithMessage("Assignment with given ids already exist.");

@@ -25,7 +25,6 @@ namespace Application.Functions.Assignment.Commands.UpdateAssignmentCommand
                                                    .Where(p => p.IdOrder == request.IdOrder)
                                                    .SingleAsync();
 
-            if (selectedAssignment.HoursWorked != request.HoursWorked) { selectedAssignment.HoursWorked = request.HoursWorked; }
             if (selectedAssignment.OrderLeader != request.OrderLeader) { selectedAssignment.OrderLeader = request.OrderLeader; }
 
             var prevoiusLeaderAssignments = await _context.Assignments

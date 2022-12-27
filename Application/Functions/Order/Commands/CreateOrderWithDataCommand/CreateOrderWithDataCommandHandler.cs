@@ -184,7 +184,6 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
                         IdWorker = assignment.IdWorker,
                         IdOrder = newOrder.IdOrder,
                         OrderLeader = assignment.OrderLeader,
-                        HoursWorked = assignment.HoursWorked,
                     };
 
                     await _context.Assignments.AddAsync(newWorkerAssignment);
