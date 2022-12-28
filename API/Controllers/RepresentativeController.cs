@@ -1,12 +1,14 @@
 ﻿using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
 using Application.Functions.Representative.Commands.DisableRepresentativeCommand;
 using Application.Functions.Representative.Commands.UpdateRepresentativeCommand;
+using Application.Functions.Representative.Queries.GetCustomerActiveRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetCustomerRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListBySupplierQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
 using Application.Functions.Representative.Queries.GetSearchRepresentativeListQuery;
+using Application.Functions.Representative.Queries.GetSupplierActiveRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetSupplierRepresentativesListQuery;
 using Application.Responses;
 using MediatR;
@@ -53,10 +55,26 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getCustomerActiveRepresentatives")]
+        public async Task<IActionResult> GetCustomerActiveRepresentatives(int id)
+        {
+            var representatives = await _mediator.Send(new GetCustomerActiveRepresentativesListQuery { Id = id });
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSupplierRepresentatives")]
         public async Task<IActionResult> GetSupplierRepresentatives()
         {
             var representatives = await _mediator.Send(new GetSupplierRepresentativesListQuery());
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSupplierActiveRepresentatives")]
+        public async Task<IActionResult> GetSupplierActiveRepresentatives(int id)
+        {
+            var representatives = await _mediator.Send(new GetSupplierActiveRepresentativesListQuery { Id = id });
             return Ok(representatives);
         }
 
