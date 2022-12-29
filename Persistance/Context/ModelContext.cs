@@ -526,7 +526,7 @@ namespace Persistance.Context
 
                 opt.HasMany(p => p.PriceListPrices)
                    .WithOne(p => p.Valuation)
-                   .HasForeignKey(p => p.IdPriceList)
+                   .HasForeignKey(p => p.IdValuation)
                    .OnDelete(DeleteBehavior.ClientCascade);
             });
 

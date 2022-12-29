@@ -62,11 +62,17 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
 
         private async Task<bool> DoesBindingTypeExists(CreateValuationCommand command, CancellationToken cancellationToken)
         {
-            var bindingType = await _context.BindingTypes
+            if (command.IdBindingType != null)
+            {
+                var bindingType = await _context.BindingTypes
                                             .Where(p => p.IdBindingType == command.IdBindingType)
                                             .SingleOrDefaultAsync();
-
-            return bindingType != null;
+                return bindingType != null;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private async Task<bool> DoesAuthorExists(CreateValuationCommand command, CancellationToken cancellationToken)

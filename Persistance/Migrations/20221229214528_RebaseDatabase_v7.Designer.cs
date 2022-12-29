@@ -12,8 +12,8 @@ using Persistance.Context;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20221129152651_RebuildDatabase")]
-    partial class RebuildDatabase
+    [Migration("20221229214528_RebaseDatabase_v7")]
+    partial class RebaseDatabase_v7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,9 +91,6 @@ namespace Persistance.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IdOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HoursWorked")
                         .HasColumnType("int");
 
                     b.Property<bool>("OrderLeader")
@@ -425,14 +422,9 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Models.File", b =>
                 {
-                    b.Property<int>("IdFile")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFile"), 1L, 1);
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("FileKey")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("IdFileStatus")
                         .HasColumnType("int");
@@ -446,12 +438,7 @@ namespace Persistance.Migrations
                     b.Property<int?>("IdValuation")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("IdFile");
+                    b.HasKey("FileKey");
 
                     b.HasIndex("IdFileStatus");
 
@@ -712,6 +699,9 @@ namespace Persistance.Migrations
 
                     b.Property<int?>("IdValuation")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsForCover")
+                        .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");

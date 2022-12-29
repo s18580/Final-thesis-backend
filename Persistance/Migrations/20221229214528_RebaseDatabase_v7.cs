@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class RebuildDatabase : Migration
+    public partial class RebaseDatabase_v7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -350,8 +350,7 @@ namespace Persistance.Migrations
                 {
                     IdWorker = table.Column<int>(type: "int", nullable: false),
                     IdOrder = table.Column<int>(type: "int", nullable: false),
-                    OrderLeader = table.Column<bool>(type: "bit", nullable: false),
-                    HoursWorked = table.Column<int>(type: "int", nullable: false)
+                    OrderLeader = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -566,10 +565,7 @@ namespace Persistance.Migrations
                 name: "Files",
                 columns: table => new
                 {
-                    IdFile = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AddedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FileKey = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IdFileType = table.Column<int>(type: "int", nullable: false),
                     IdFileStatus = table.Column<int>(type: "int", nullable: true),
                     IdValuation = table.Column<int>(type: "int", nullable: true),
@@ -577,7 +573,7 @@ namespace Persistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Files", x => x.IdFile);
+                    table.PrimaryKey("PK_Files", x => x.FileKey);
                     table.ForeignKey(
                         name: "FK_Files_FileStatuses_IdFileStatus",
                         column: x => x.IdFileStatus,
@@ -642,6 +638,7 @@ namespace Persistance.Migrations
                     IdService = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    IsForCover = table.Column<bool>(type: "bit", nullable: false),
                     IdOrderItem = table.Column<int>(type: "int", nullable: true),
                     IdValuation = table.Column<int>(type: "int", nullable: true),
                     IdServiceName = table.Column<int>(type: "int", nullable: false)
