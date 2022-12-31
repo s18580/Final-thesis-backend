@@ -90,16 +90,6 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
 
                 foreach (var paper in request.Papers)
                 {
-                    FiberDirection fiberD;
-                    if (paper.FiberDirection == FiberDirection.Poziomy.ToString())
-                    {
-                        fiberD = FiberDirection.Poziomy;
-                    }
-                    else
-                    {
-                        fiberD = FiberDirection.Pionowy;
-                    }
-
                     var newPaper = new Domain.Models.Paper
                     {
                         Name = paper.Name,
@@ -107,7 +97,7 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
                         SheetFormat = paper.SheetFormat,
                         IsForCover = paper.IsForCover,
                         Opacity = paper.Opacity,
-                        FiberDirection = fiberD,
+                        FiberDirection = (FiberDirection)paper.FiberDirection,
                         PricePerKilogram = paper.PricePerKilogram,
                         Quantity = paper.Quantity,
                         IdOrderItem = null,

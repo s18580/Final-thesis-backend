@@ -524,6 +524,11 @@ namespace Persistance.Context
                    .HasForeignKey(p => p.IdBindingType)
                    .OnDelete(DeleteBehavior.Restrict);
 
+                opt.HasOne(p => p.OrderItem)
+                   .WithMany(p => p.Valuations)
+                   .HasForeignKey(p => p.IdOrderItem)
+                   .OnDelete(DeleteBehavior.Restrict);
+
                 opt.HasMany(p => p.PriceListPrices)
                    .WithOne(p => p.Valuation)
                    .HasForeignKey(p => p.IdValuation)

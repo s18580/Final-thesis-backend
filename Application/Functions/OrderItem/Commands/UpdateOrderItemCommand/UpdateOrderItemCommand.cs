@@ -16,5 +16,9 @@ namespace Application.Functions.OrderItem.Commands.UpdateOrderItemCommand
         public int IdDeliveryType { get; set; }
         public int? IdBindingType { get; set; }
         public int IdOrderItemType { get; set; }
+        public int? IdSelectedValuation { get; set; }
+        public ICollection<ColorUpdateDTO> Colors { get; set; }
+        public ICollection<PaperUpdateDTO> Papers { get; set; }
+        public ICollection<ServiceUpdateDTO> Services { get; set; }
     }
 }

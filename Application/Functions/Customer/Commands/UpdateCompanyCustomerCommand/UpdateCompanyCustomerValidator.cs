@@ -69,7 +69,18 @@ namespace Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand
                                       .Where(x => x.CompanyEmailAddress == command.CompanyEmailAddress)
                                       .SingleOrDefaultAsync();
 
-                return email == null;
+                if (email == null)
+                {
+                    return true;
+                }
+                else if (email.IdCustomer == command.IdCustomer)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             return true;

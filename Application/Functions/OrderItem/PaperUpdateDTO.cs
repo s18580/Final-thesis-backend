@@ -1,7 +1,10 @@
-﻿namespace Application.Functions.DTOs
+﻿using Domain.Enumerators;
+
+namespace Application.Functions.OrderItem
 {
-    public class PaperDTO
+    public class PaperUpdateDTO
     {
+        public int IdPaper { get; set; }
         public string Name { get; set; }
         public string Kind { get; set; }
         public string SheetFormat { get; set; }

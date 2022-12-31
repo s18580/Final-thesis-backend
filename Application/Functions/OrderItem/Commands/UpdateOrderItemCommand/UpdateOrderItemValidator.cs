@@ -57,6 +57,10 @@ namespace Application.Functions.OrderItem.Commands.UpdateOrderItemCommand
             RuleFor(p => p).
                 MustAsync(DoesBindingTypeExists)
                 .WithMessage("Binding type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesValuationExists)
+                .WithMessage("Valutaion with given id does not exist.");
         }
 
         private async Task<bool> DoesOrderItemExists(UpdateOrderItemCommand command, CancellationToken cancellationToken)
@@ -98,6 +102,20 @@ namespace Application.Functions.OrderItem.Commands.UpdateOrderItemCommand
                                             .SingleOrDefaultAsync();
 
             return bindingType != null;
+        }
+
+        private async Task<bool> DoesValuationExists(UpdateOrderItemCommand command, CancellationToken cancellationToken)
+        {
+            if (command.IdSelectedValuation == null)
+            {
+                return true;
+            }
+
+            var valuation = await _context.Valuations
+                                            .Where(p => p.IdValuation == command.IdSelectedValuation)
+                                            .SingleOrDefaultAsync();
+
+            return valuation != null;
         }
     }
 }
