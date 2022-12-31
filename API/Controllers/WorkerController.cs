@@ -1,5 +1,6 @@
 ﻿using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
+using Application.Functions.Workers.Queries.GetActiveWorkerList;
 using Application.Functions.Workers.Queries.GetAWSCreds;
 using Application.Functions.Workers.Queries.GetSearchWorkers;
 using Application.Functions.Workers.Queries.GetWorker;
@@ -30,6 +31,14 @@ namespace API.Controllers
         public async Task<IActionResult> GetWorkers()
         {
             var workers = await _mediator.Send(new GetWorkersListQuery());
+            return Ok(workers);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getActiveWorkers")]
+        public async Task<IActionResult> GetActiveWorkers()
+        {
+            var workers = await _mediator.Send(new GetActiveWorkersListQuery());
             return Ok(workers);
         }
 
