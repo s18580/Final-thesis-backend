@@ -1,6 +1,4 @@
-﻿using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
-using Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand;
-using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
+﻿using Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCommand;
 using Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.UpdatePersonCustomerCommand;
@@ -10,7 +8,6 @@ using Application.Functions.Customer.Queries.GetSearchCustomerListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -54,46 +51,6 @@ namespace API.Controllers
             }
 
             return Ok(customer);
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createCompanyCustomer")]
-        public async Task<IActionResult> CreateCompanyCustomer([FromBody] CreateCompanyCustomerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok(response.Id);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createPersonCustomer")]
-        public async Task<IActionResult> CreatePersonCustomer([FromBody] CreatePersonCustomerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
         }
 
         [HttpPost, Authorize(Roles = "Basic")]

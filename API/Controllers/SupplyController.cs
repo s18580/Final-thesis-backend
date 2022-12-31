@@ -1,15 +1,11 @@
-﻿using Application.Functions.Supply.Commands.CreateSupplyCommand;
-using Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand;
+﻿using Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand;
 using Application.Functions.Supply.Commands.DeleteSupplyCommand;
 using Application.Functions.Supply.Commands.UpdateSupplyCommand;
 using Application.Functions.Supply.Queries.GetSearchSupplyQuery;
-using Application.Functions.Supply.Queries.GetSupplyListByRepresetnativeQuery;
-using Application.Functions.Supply.Queries.GetSupplyListQuery;
 using Application.Functions.Supply.Queries.GetSupplyQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -27,26 +23,10 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getSupplies")]
-        public async Task<IActionResult> GetSupplies()
-        {
-            var supplies = await _mediator.Send(new GetSupplyListQuery());
-            return Ok(supplies);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSearchSupplies")]
         public async Task<IActionResult> GetSearchSupplies([FromQuery] string supplyItemTypeName, string representativeName, string supplierName, bool isReceived, string supplyDate)
         {
             var supplies = await _mediator.Send(new GetSearchSupplyQuery() { SupplyDate = supplyDate, SupplyItemTypeName = supplyItemTypeName, RepresentativeName = representativeName, SupplierName = supplierName, IsReceived = isReceived });
-            return Ok(supplies);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getSuppliesByRepresetnative")]
-        public async Task<IActionResult> GetSuppliesByRepresetnative([FromQuery] int id)
-        {
-            var supplies = await _mediator.Send(new GetSupplyListByRepresetnativeQuery() { Id = id });
             return Ok(supplies);
         }
 
@@ -61,26 +41,6 @@ namespace API.Controllers
             }
 
             return Ok(supply);
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createSupply")]
-        public async Task<IActionResult> CreateSupply([FromBody] CreateSupplyCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok(response.Id);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
         }
 
         [HttpPost, Authorize(Roles = "Basic")]

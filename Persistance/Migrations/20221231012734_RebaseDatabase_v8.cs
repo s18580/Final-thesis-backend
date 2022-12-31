@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class RebaseDatabase_v7 : Migration
+    public partial class RebaseDatabase_v8 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,32 +33,6 @@ namespace Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeliveryTypes", x => x.IdDeliveryType);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FileStatuses",
-                columns: table => new
-                {
-                    IdFileStatus = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FileStatuses", x => x.IdFileStatus);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FileTypes",
-                columns: table => new
-                {
-                    IdFileType = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FileTypes", x => x.IdFileType);
                 });
 
             migrationBuilder.CreateTable(
@@ -479,8 +453,7 @@ namespace Persistance.Migrations
                     IsSelectedValuation = table.Column<bool>(type: "bit", nullable: false),
                     IdAuthor = table.Column<int>(type: "int", nullable: false),
                     IdOrderItem = table.Column<int>(type: "int", nullable: true),
-                    IdBindingType = table.Column<int>(type: "int", nullable: true),
-                    OrderItemIdOrderItem = table.Column<int>(type: "int", nullable: true)
+                    IdBindingType = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -492,8 +465,8 @@ namespace Persistance.Migrations
                         principalColumn: "IdBindingType",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Valuations_OrderItems_OrderItemIdOrderItem",
-                        column: x => x.OrderItemIdOrderItem,
+                        name: "FK_Valuations_OrderItems_IdOrderItem",
+                        column: x => x.IdOrderItem,
                         principalTable: "OrderItems",
                         principalColumn: "IdOrderItem",
                         onDelete: ReferentialAction.Restrict);
@@ -556,44 +529,6 @@ namespace Persistance.Migrations
                         principalColumn: "IdOrderItem");
                     table.ForeignKey(
                         name: "FK_Colors_Valuations_IdValuation",
-                        column: x => x.IdValuation,
-                        principalTable: "Valuations",
-                        principalColumn: "IdValuation");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Files",
-                columns: table => new
-                {
-                    FileKey = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    IdFileType = table.Column<int>(type: "int", nullable: false),
-                    IdFileStatus = table.Column<int>(type: "int", nullable: true),
-                    IdValuation = table.Column<int>(type: "int", nullable: true),
-                    IdOrder = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Files", x => x.FileKey);
-                    table.ForeignKey(
-                        name: "FK_Files_FileStatuses_IdFileStatus",
-                        column: x => x.IdFileStatus,
-                        principalTable: "FileStatuses",
-                        principalColumn: "IdFileStatus",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Files_FileTypes_IdFileType",
-                        column: x => x.IdFileType,
-                        principalTable: "FileTypes",
-                        principalColumn: "IdFileType",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Files_Orders_IdOrder",
-                        column: x => x.IdOrder,
-                        principalTable: "Orders",
-                        principalColumn: "IdOrder",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Files_Valuations_IdValuation",
                         column: x => x.IdValuation,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation");
@@ -681,8 +616,8 @@ namespace Persistance.Migrations
                         principalTable: "PriceLists",
                         principalColumn: "IdPriceList");
                     table.ForeignKey(
-                        name: "FK_ValuationPriceLists_Valuations_IdPriceList",
-                        column: x => x.IdPriceList,
+                        name: "FK_ValuationPriceLists_Valuations_IdValuation",
+                        column: x => x.IdValuation,
                         principalTable: "Valuations",
                         principalColumn: "IdValuation");
                 });
@@ -731,26 +666,6 @@ namespace Persistance.Migrations
                 name: "IX_DeliveriesAddresses_IdSupply",
                 table: "DeliveriesAddresses",
                 column: "IdSupply");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_IdFileStatus",
-                table: "Files",
-                column: "IdFileStatus");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_IdFileType",
-                table: "Files",
-                column: "IdFileType");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_IdOrder",
-                table: "Files",
-                column: "IdOrder");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_IdValuation",
-                table: "Files",
-                column: "IdValuation");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_IdBindingType",
@@ -853,9 +768,9 @@ namespace Persistance.Migrations
                 column: "IdBindingType");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Valuations_OrderItemIdOrderItem",
+                name: "IX_Valuations_IdOrderItem",
                 table: "Valuations",
-                column: "OrderItemIdOrderItem");
+                column: "IdOrderItem");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workers_IdWorksite",
@@ -875,9 +790,6 @@ namespace Persistance.Migrations
                 name: "DeliveriesAddresses");
 
             migrationBuilder.DropTable(
-                name: "Files");
-
-            migrationBuilder.DropTable(
                 name: "Papers");
 
             migrationBuilder.DropTable(
@@ -894,12 +806,6 @@ namespace Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "Supplies");
-
-            migrationBuilder.DropTable(
-                name: "FileStatuses");
-
-            migrationBuilder.DropTable(
-                name: "FileTypes");
 
             migrationBuilder.DropTable(
                 name: "Roles");

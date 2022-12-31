@@ -3,12 +3,9 @@ using Application.Functions.Address.Commands.DisableAddressCommand;
 using Application.Functions.Address.Commands.UpdateAddressCommand;
 using Application.Functions.Address.Queries.GetAddressListByCustomerIdQuery;
 using Application.Functions.Address.Queries.GetAddressListBySupplierIdQuery;
-using Application.Functions.Address.Queries.GetAddressListQuery;
-using Application.Functions.Address.Queries.GetAddressQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -23,14 +20,6 @@ namespace API.Controllers
         public AddressController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getAddresses")]
-        public async Task<IActionResult> GetAddresses()
-        {
-            var addresses = await _mediator.Send(new GetAddressListQuery());
-            return Ok(addresses);
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
@@ -77,19 +66,6 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getAddress")]
-        public async Task<IActionResult> GetAddress([FromQuery] int id)
-        {
-            var address = await _mediator.Send(new GetAddressQuery { IdAddress = id });
-            if (address == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(address);
         }
 
         [HttpPost, Authorize(Roles = "Basic")]

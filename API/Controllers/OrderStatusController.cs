@@ -2,11 +2,9 @@
 using Application.Functions.OrderStatus.Commands.DeleteOrderStatusCommand;
 using Application.Functions.OrderStatus.Commands.UpdateOrderStatusCommand;
 using Application.Functions.OrderStatus.Queries.GetOrderStatusListQuery;
-using Application.Functions.OrderStatus.Queries.GetOrderStatusQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var orderStatuses = await _mediator.Send(new GetOrderStatusListQuery());
             return Ok(orderStatuses);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getOrderStatus")]
-        public async Task<IActionResult> GetOrderStatus([FromQuery] int id)
-        {
-            var orderStatus = await _mediator.Send(new GetOrderStatusQuery { IdOrderStatus = id });
-            if (orderStatus == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(orderStatus);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

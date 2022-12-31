@@ -2,11 +2,9 @@
 using Application.Functions.DeliveryType.Commands.DeleteDeliveryTypeCommand;
 using Application.Functions.DeliveryType.Commands.UpdateDeliveryTypeCommand;
 using Application.Functions.DeliveryType.Queries.GetDeliveryTypeListQuery;
-using Application.Functions.DeliveryType.Queries.GetDeliveryTypeQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var deliveryTypes = await _mediator.Send(new GetDeliveryTypeListQuery());
             return Ok(deliveryTypes);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getDeliveryType")]
-        public async Task<IActionResult> GetDeliveryType([FromQuery] int id)
-        {
-            var deliveryType = await _mediator.Send(new GetDeliveryTypeQuery { IdDeliveryType = id });
-            if (deliveryType == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(deliveryType);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

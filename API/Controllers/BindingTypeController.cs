@@ -2,11 +2,9 @@
 using Application.Functions.BindingType.Commands.DeleteBindingTypeCommand;
 using Application.Functions.BindingType.Commands.UpdateBindingTypeCommand;
 using Application.Functions.BindingType.Queries.GetBindingTypeListQuery;
-using Application.Functions.BindingType.Queries.GetBindingTypeQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var bindingTypes = await _mediator.Send(new GetBindingTypeListQuery());
             return Ok(bindingTypes);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getBindingType")]
-        public async Task<IActionResult> GetBindingType([FromQuery] int id)
-        {
-            var bindingType = await _mediator.Send(new GetBindingTypeQuery { IdBindingType = id });
-            if (bindingType == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(bindingType);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

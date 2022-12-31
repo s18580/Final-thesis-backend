@@ -1,5 +1,4 @@
-﻿using Application.Functions.Supplier.Commands.CreateSupplierCommand;
-using Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand;
+﻿using Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand;
 using Application.Functions.Supplier.Commands.UpdateSupplierCommand;
 using Application.Functions.Supplier.Queries.GetSearchSupplierQuery;
 using Application.Functions.Supplier.Queries.GetSupplierListQuery;
@@ -7,7 +6,6 @@ using Application.Functions.Supplier.Queries.GetSupplierQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -51,26 +49,6 @@ namespace API.Controllers
             }
 
             return Ok(supplier);
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createSupplier")]
-        public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok(response.Id);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
         }
 
         [HttpPost, Authorize(Roles = "Basic")]

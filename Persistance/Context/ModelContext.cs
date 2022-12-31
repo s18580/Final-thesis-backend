@@ -18,9 +18,6 @@ namespace Persistance.Context
         public DbSet<Representative> Representatives { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
-        public DbSet<Domain.Models.File> Files { get; set; }
-        public DbSet<FileType> FileTypes { get; set; }
-        public DbSet<FileStatus> FileStatuses { get; set; }
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Color> Colors { get; set; }
@@ -280,11 +277,6 @@ namespace Persistance.Context
                    .WithOne(p => p.Order)
                    .HasForeignKey(p => p.IdOrder)
                    .OnDelete(DeleteBehavior.ClientCascade);
-
-                opt.HasMany(p => p.Files)
-                   .WithOne(p => p.Order)
-                   .HasForeignKey(p => p.IdOrder)
-                   .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<OrderStatus>(opt =>
@@ -298,45 +290,6 @@ namespace Persistance.Context
 
                 opt.Property(p => p.ChipColor)
                    .HasMaxLength(8)
-                   .IsRequired();
-            });
-
-            modelBuilder.Entity<Domain.Models.File>(opt =>
-            {
-                opt.HasKey(p => p.FileKey);
-                opt.Property(p => p.FileKey)
-                   .HasMaxLength(200)
-                   .IsRequired();
-
-                opt.HasOne(p => p.FileStatus)
-                   .WithMany(p => p.Files)
-                   .HasForeignKey(p => p.IdFileStatus)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-                opt.HasOne(p => p.FileType)
-                   .WithMany(p => p.Files)
-                   .HasForeignKey(p => p.IdFileType)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-            });
-
-            modelBuilder.Entity<FileType>(opt =>
-            {
-                opt.HasKey(p => p.IdFileType);
-                opt.Property(p => p.IdFileType).ValueGeneratedOnAdd();
-
-                opt.Property(p => p.Name)
-                   .HasMaxLength(30)
-                   .IsRequired();
-            });
-
-            modelBuilder.Entity<FileStatus>(opt =>
-            {
-                opt.HasKey(p => p.IdFileStatus);
-                opt.Property(p => p.IdFileStatus).ValueGeneratedOnAdd();
-
-                opt.Property(p => p.Name)
-                   .HasMaxLength(30)
                    .IsRequired();
             });
 
@@ -513,11 +466,6 @@ namespace Persistance.Context
 
                 opt.Property(p => p.CoverSheetFormat)
                    .HasMaxLength(100);
-
-                opt.HasMany(p => p.Files)
-                   .WithOne(p => p.Valuation)
-                   .HasForeignKey(p => p.IdValuation)
-                   .OnDelete(DeleteBehavior.ClientCascade);
 
                 opt.HasOne(p => p.BindingType)
                    .WithMany(p => p.Valuations)

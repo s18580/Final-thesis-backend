@@ -27,17 +27,7 @@ namespace Application.Functions.OrderItem.Commands.DeleteOrderItemCommand
                                             .Include(p => p.Papers)
                                             .Include(p => p.Services)
                                             .Include(p => p.PriceListPrices)
-                                            .Include(p => p.Files)
                                             .Where(p => p.IdOrderItem == request.IdOrderItem).ToListAsync();
-
-                foreach(var valuation in valuations)
-                {
-                    foreach (var file in valuation.Files)
-                    {
-                        _context.Files.Remove(file);
-                        await _context.SaveChangesAsync();
-                    }
-                }
 
                 _context.Valuations.RemoveRange(valuations);
                 await _context.SaveChangesAsync();

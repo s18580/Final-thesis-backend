@@ -2,12 +2,10 @@
 using Application.Functions.OrderItem.Commands.DeleteOrderItemCommand;
 using Application.Functions.OrderItem.Commands.UpdateOrderItemCommand;
 using Application.Functions.OrderItem.Queries.GetOrderItemListByOrderIdQuery;
-using Application.Functions.OrderItem.Queries.GetOrderItemListQuery;
 using Application.Functions.OrderItem.Queries.GetOrderItemQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -45,14 +43,6 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getOrderItems")]
-        public async Task<IActionResult> GetOrderItems()
-        {
-            var orderItems = await _mediator.Send(new GetOrderItemListQuery());
-            return Ok(orderItems);
         }
 
         [HttpGet, Authorize(Roles = "Basic")]

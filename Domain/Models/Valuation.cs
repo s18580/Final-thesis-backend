@@ -32,7 +32,6 @@ namespace Domain.Models
         public Worker Author { get; set; }
         public OrderItem? OrderItem { get; set; }
         public BindingType? BindingType { get; set; }
-        public ICollection<File> Files { get; set; }
         public ICollection<Color> Colors { get; set; }
         public ICollection<Paper> Papers { get; set; }
         public ICollection<Service> Services { get; set; }

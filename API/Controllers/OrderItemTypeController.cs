@@ -2,11 +2,9 @@
 using Application.Functions.OrderItemType.Commands.DeleteOrderItemTypeCommand;
 using Application.Functions.OrderItemType.Commands.UpdateOrderItemTypeCommand;
 using Application.Functions.OrderItemType.Queries.GetOrderItemTypeListQuery;
-using Application.Functions.OrderItemType.Queries.GetOrderItemTypeQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var orderItemsType = await _mediator.Send(new GetOrderItemTypeListQuery());
             return Ok(orderItemsType);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getOrderItemsType")]
-        public async Task<IActionResult> GetOrderItemsType([FromQuery] int id)
-        {
-            var orderItemType = await _mediator.Send(new GetOrderItemTypeQuery { IdOrderItemType = id });
-            if (orderItemType == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(orderItemType);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

@@ -12,8 +12,8 @@ using Persistance.Context;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(ModelContext))]
-    [Migration("20221230211650_addOrderItemValuationRelation")]
-    partial class addOrderItemValuationRelation
+    [Migration("20221231012734_RebaseDatabase_v8")]
+    partial class RebaseDatabase_v8
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,42 +241,6 @@ namespace Persistance.Migrations
                     b.ToTable("DeliveryTypes");
                 });
 
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileStatus", b =>
-                {
-                    b.Property<int>("IdFileStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFileStatus"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("IdFileStatus");
-
-                    b.ToTable("FileStatuses");
-                });
-
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileType", b =>
-                {
-                    b.Property<int>("IdFileType")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFileType"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("IdFileType");
-
-                    b.ToTable("FileTypes");
-                });
-
             modelBuilder.Entity("Domain.Models.DictionaryModels.OrderItemType", b =>
                 {
                     b.Property<int>("IdOrderItemType")
@@ -418,37 +382,6 @@ namespace Persistance.Migrations
                     b.HasKey("IdWorksite");
 
                     b.ToTable("Worksites");
-                });
-
-            modelBuilder.Entity("Domain.Models.File", b =>
-                {
-                    b.Property<string>("FileKey")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("IdFileStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdFileType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdValuation")
-                        .HasColumnType("int");
-
-                    b.HasKey("FileKey");
-
-                    b.HasIndex("IdFileStatus");
-
-                    b.HasIndex("IdFileType");
-
-                    b.HasIndex("IdOrder");
-
-                    b.HasIndex("IdValuation");
-
-                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Domain.Models.Order", b =>
@@ -1074,38 +1007,6 @@ namespace Persistance.Migrations
                     b.Navigation("Supply");
                 });
 
-            modelBuilder.Entity("Domain.Models.File", b =>
-                {
-                    b.HasOne("Domain.Models.DictionaryModels.FileStatus", "FileStatus")
-                        .WithMany("Files")
-                        .HasForeignKey("IdFileStatus")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Models.DictionaryModels.FileType", "FileType")
-                        .WithMany("Files")
-                        .HasForeignKey("IdFileType")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Order", "Order")
-                        .WithMany("Files")
-                        .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Models.Valuation", "Valuation")
-                        .WithMany("Files")
-                        .HasForeignKey("IdValuation")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.Navigation("FileStatus");
-
-                    b.Navigation("FileType");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Valuation");
-                });
-
             modelBuilder.Entity("Domain.Models.Order", b =>
                 {
                     b.HasOne("Domain.Models.Representative", "Representative")
@@ -1342,16 +1243,6 @@ namespace Persistance.Migrations
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileStatus", b =>
-                {
-                    b.Navigation("Files");
-                });
-
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileType", b =>
-                {
-                    b.Navigation("Files");
-                });
-
             modelBuilder.Entity("Domain.Models.DictionaryModels.OrderItemType", b =>
                 {
                     b.Navigation("OrderItems");
@@ -1393,8 +1284,6 @@ namespace Persistance.Migrations
 
                     b.Navigation("DeliveriesAddresses");
 
-                    b.Navigation("Files");
-
                     b.Navigation("OrderItems");
                 });
 
@@ -1433,8 +1322,6 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Models.Valuation", b =>
                 {
                     b.Navigation("Colors");
-
-                    b.Navigation("Files");
 
                     b.Navigation("Papers");
 

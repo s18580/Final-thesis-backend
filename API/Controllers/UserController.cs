@@ -1,12 +1,10 @@
 ﻿using Application.Functions.User;
 using Application.Functions.User.Commands.RefreshTokenCommand;
-using Application.Functions.User.Commands.RegisterUserCommand;
 using Application.Functions.User.Commands.RegisterUserWithRolesCommand;
 using Application.Functions.User.Queries.LoginUserQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -21,25 +19,6 @@ namespace API.Controllers
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpPost, Authorize(Roles = "Admin")]
-        [Route("register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok(response.Id);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
         }
 
         [HttpPost, Authorize(Roles = "Admin")]
