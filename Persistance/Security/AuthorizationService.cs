@@ -35,7 +35,7 @@ namespace Persistance.Security
 
             var token = new JwtSecurityToken(
                 claims: userClaims,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddHours(10),
                 signingCredentials: credentials);
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
