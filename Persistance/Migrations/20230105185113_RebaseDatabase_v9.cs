@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class RebaseDatabase_v8 : Migration
+    public partial class RebaseDatabase_v9 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -111,7 +111,7 @@ namespace Persistance.Migrations
                 {
                     IdSupplier = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
@@ -184,7 +184,7 @@ namespace Persistance.Migrations
                 {
                     IdCustomer = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     NIP = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Regon = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     CompanyPhoneNumber = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
@@ -230,10 +230,10 @@ namespace Persistance.Migrations
                 {
                     IdAddress = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Country = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    PostCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    PostCode = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     StreetName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     StreetNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     ApartmentNumber = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
@@ -351,12 +351,12 @@ namespace Persistance.Migrations
                     IdOrder = table.Column<int>(type: "int", nullable: false),
                     Circulation = table.Column<int>(type: "int", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Comments = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ExpectedCompletionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CompletionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    InsideFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CoverFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    InsideFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    CoverFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     IdDeliveryType = table.Column<int>(type: "int", nullable: false),
                     IdBindingType = table.Column<int>(type: "int", nullable: true),
                     IdOrderItemType = table.Column<int>(type: "int", nullable: false)
@@ -431,16 +431,16 @@ namespace Persistance.Migrations
                 {
                     IdValuation = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Recipient = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OfferValidityDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     InsideCirculation = table.Column<int>(type: "int", nullable: true),
                     Capacity = table.Column<int>(type: "int", nullable: false),
-                    InsideFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CoverFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    InsideSheetFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CoverSheetFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    InsideFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    CoverFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    InsideSheetFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    CoverSheetFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     InsideSheetNumber = table.Column<int>(type: "int", nullable: false),
                     CoverSheetNumber = table.Column<int>(type: "int", nullable: true),
                     InsideOther = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -514,7 +514,7 @@ namespace Persistance.Migrations
                 {
                     IdColor = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IsForCover = table.Column<bool>(type: "bit", nullable: false),
                     IdValuation = table.Column<int>(type: "int", nullable: true),
                     IdOrderItem = table.Column<int>(type: "int", nullable: true)
@@ -540,9 +540,9 @@ namespace Persistance.Migrations
                 {
                     IdPaper = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Kind = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SheetFormat = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Kind = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    SheetFormat = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     FiberDirection = table.Column<int>(type: "int", nullable: false),
                     Opacity = table.Column<int>(type: "int", nullable: false),
                     IsForCover = table.Column<bool>(type: "bit", nullable: false),
