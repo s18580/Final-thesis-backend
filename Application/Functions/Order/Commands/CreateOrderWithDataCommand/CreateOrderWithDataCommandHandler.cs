@@ -21,6 +21,7 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
             var addressValidator = new DeliveriesAddressesDTOValidator(_context);
             var orderItemValidator = new OrderItemDTOValidator(_context);
             var workerAssignmentValidator = new WorkerAssignmentDTOValidator(_context);
+            var colorValidator = new ColorDTOValidator();
             var paperValidator = new PaperDTOValidator(_context);
             var serviceValidator = new ServiceDTOValidator(_context);
 
@@ -38,6 +39,12 @@ namespace Application.Functions.Order.Commands.CreateOrderWithDataCommand
             {
                 var orderItemValidatorResult = await orderItemValidator.ValidateAsync(orderItem);
                 if (!orderItemValidatorResult.IsValid) return new CreateOrderWithDataResponse(orderItemValidatorResult, Responses.ResponseStatus.ValidationError);
+
+                foreach (var color in orderItem.Colors)
+                {
+                    var colorValidatorResult = await colorValidator.ValidateAsync(color);
+                    if (!colorValidatorResult.IsValid) return new CreateOrderWithDataResponse(colorValidatorResult, Responses.ResponseStatus.ValidationError);
+                }
 
                 foreach (var paper in orderItem.Papers)
                 {

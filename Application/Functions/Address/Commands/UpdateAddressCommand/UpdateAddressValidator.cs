@@ -17,8 +17,8 @@ namespace Application.Functions.Address.Commands.UpdateAddressCommand
                    .WithMessage("Address name is required.")
                    .NotEmpty()
                    .WithMessage("Address name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Address name length can't be longer then 255 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Address name length can't be longer then 100 characters.");
 
             RuleFor(p => p.Country)
                    .NotNull()
@@ -39,8 +39,8 @@ namespace Application.Functions.Address.Commands.UpdateAddressCommand
             RuleFor(p => p.PostCode)
                    .NotNull()
                    .WithMessage("Post code can't be null.")
-                   .MaximumLength(10)
-                   .WithMessage("Post code length can't be longer then 10 characters.");
+                   .MaximumLength(11)
+                   .WithMessage("Post code length can't be longer then 11 characters.");
 
             RuleFor(p => p.StreetName)
                    .NotNull()

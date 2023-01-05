@@ -1,6 +1,5 @@
 ﻿using Application.Functions.DTOs.DTOsValidators;
 using Application.Services;
-using AutoMapper;
 using Domain.Enumerators;
 using MediatR;
 
@@ -9,24 +8,29 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
     public class CreateValuationCommandHandler : IRequestHandler<CreateValuationCommand, CreateValuationResponse>
     {
         private readonly IApplicationContext _context;
-        private readonly IMapper _mapper;
 
-        public CreateValuationCommandHandler(IApplicationContext context, IMapper mapper)
+        public CreateValuationCommandHandler(IApplicationContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<CreateValuationResponse> Handle(CreateValuationCommand request, CancellationToken cancellationToken)
         {
             // create validators
             var validator = new CreateValuationValidator(_context);
+            var colorValidator = new ColorDTOValidator();
             var paperValidator = new PaperDTOValidator(_context);
             var serviceValidator = new ServiceDTOValidator(_context);
 
             // validate data
             var validatorResult = await validator.ValidateAsync(request);
             if (!validatorResult.IsValid) return new CreateValuationResponse(validatorResult, Responses.ResponseStatus.ValidationError);
+
+            foreach (var color in request.Colors)
+            {
+                var colorValidatorResult = await colorValidator.ValidateAsync(color);
+                if (!colorValidatorResult.IsValid) return new CreateValuationResponse(colorValidatorResult, Responses.ResponseStatus.ValidationError);
+            }
 
             foreach (var paper in request.Papers)
             {

@@ -118,7 +118,7 @@ namespace Persistance.Context
                 opt.Property(p => p.IdCustomer).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.CompanyName)
-                   .HasMaxLength(255)
+                   .HasMaxLength(100)
                    .IsRequired();
 
                 opt.Property(p => p.NIP)
@@ -147,7 +147,7 @@ namespace Persistance.Context
                 opt.Property(p => p.IdSupplier).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(255)
+                   .HasMaxLength(100)
                    .IsRequired();
 
                 opt.Property(p => p.Description)
@@ -171,7 +171,7 @@ namespace Persistance.Context
                 opt.Property(p => p.IdAddress).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(255)
+                   .HasMaxLength(100)
                    .IsRequired();
 
                 opt.Property(p => p.Country)
@@ -191,7 +191,7 @@ namespace Persistance.Context
                    .IsRequired();
 
                 opt.Property(p => p.PostCode)
-                   .HasMaxLength(10);
+                   .HasMaxLength(11);
 
                 opt.Property(p => p.ApartmentNumber)
                    .HasMaxLength(10);
@@ -344,17 +344,17 @@ namespace Persistance.Context
                 opt.Property(p => p.IdOrderItem).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(255)
+                   .HasMaxLength(100)
                    .IsRequired();
 
                 opt.Property(p => p.Comments)
                    .HasMaxLength(255);
 
                 opt.Property(p => p.CoverFormat)
-                   .HasMaxLength(100);
+                   .HasMaxLength(20);
 
                 opt.Property(p => p.InsideFormat)
-                   .HasMaxLength(100)
+                   .HasMaxLength(20)
                    .IsRequired();
 
                 opt.HasOne(p => p.OrderItemType)
@@ -399,7 +399,7 @@ namespace Persistance.Context
                 opt.Property(p => p.IdColor).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(20)
+                   .HasMaxLength(10)
                    .IsRequired();
 
                 opt.HasOne(p => p.Valuation)
@@ -439,7 +439,7 @@ namespace Persistance.Context
                 opt.Property(p => p.IdValuation).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(255)
+                   .HasMaxLength(100)
                    .IsRequired();
 
                 opt.Property(p => p.Recipient)
@@ -454,18 +454,18 @@ namespace Persistance.Context
                    .HasMaxLength(255);
 
                 opt.Property(p => p.InsideFormat)
-                   .HasMaxLength(100)
+                   .HasMaxLength(20)
                    .IsRequired();
 
                 opt.Property(p => p.InsideSheetFormat)
-                   .HasMaxLength(100)
+                   .HasMaxLength(20)
                    .IsRequired();
 
                 opt.Property(p => p.CoverFormat)
-                   .HasMaxLength(100);
+                   .HasMaxLength(20);
 
                 opt.Property(p => p.CoverSheetFormat)
-                   .HasMaxLength(100);
+                   .HasMaxLength(20);
 
                 opt.HasOne(p => p.BindingType)
                    .WithMany(p => p.Valuations)
@@ -489,14 +489,14 @@ namespace Persistance.Context
                 opt.Property(p => p.IdPaper).ValueGeneratedOnAdd();
 
                 opt.Property(p => p.Name)
-                   .HasMaxLength(255)
+                   .HasMaxLength(100)
                    .IsRequired();
 
                 opt.Property(p => p.Kind)
-                   .HasMaxLength(50);
+                   .HasMaxLength(100);
 
                 opt.Property(p => p.SheetFormat)
-                   .HasMaxLength(100)
+                   .HasMaxLength(20)
                    .IsRequired();
 
                 opt.HasOne(p => p.OrderItem)

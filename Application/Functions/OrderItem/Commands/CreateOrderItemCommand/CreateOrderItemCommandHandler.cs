@@ -20,6 +20,7 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
         public async Task<CreateOrderItemResponse> Handle(CreateOrderItemCommand request, CancellationToken cancellationToken)
         {
             // create validators
+            var colorValidator = new ColorDTOValidator();
             var paperValidator = new PaperDTOValidator(_context);
             var serviceValidator = new ServiceDTOValidator(_context);
             var orderItemValidator = new CreateOrderItemValidator(_context);
@@ -27,6 +28,12 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
             // validate data
             var validatorResult = await orderItemValidator.ValidateAsync(request);
             if (!validatorResult.IsValid) return new CreateOrderItemResponse(validatorResult, Responses.ResponseStatus.ValidationError);
+
+            foreach (var color in request.Colors)
+            {
+                var colorValidatorResult = await colorValidator.ValidateAsync(color);
+                if (!colorValidatorResult.IsValid) return new CreateOrderItemResponse(colorValidatorResult, Responses.ResponseStatus.ValidationError);
+            }
 
             foreach (var paper in request.Papers)
             {

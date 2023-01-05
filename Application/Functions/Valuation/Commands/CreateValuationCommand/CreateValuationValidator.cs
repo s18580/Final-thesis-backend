@@ -17,35 +17,35 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
                    .WithMessage("Valuation name is required.")
                    .NotEmpty()
                    .WithMessage("Valuation name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Valuation name length can't be longer then 255 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Valuation name length can't be longer then 100 characters.");
 
             RuleFor(p => p.InsideFormat)
                    .NotNull()
                    .WithMessage("Inside format is required.")
                    .NotEmpty()
                    .WithMessage("Inside format is required.")
-                   .MaximumLength(100)
-                   .WithMessage("Inside format length can't be longer then 100 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("Inside format length can't be longer then 20 characters.");
 
             RuleFor(p => p.CoverFormat)
-                   .MaximumLength(100)
-                   .WithMessage("Cover format length can't be longer then 100 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("Cover format length can't be longer then 20 characters.");
 
             RuleFor(p => p.InsideSheetFormat)
                    .NotNull()
                    .WithMessage("Inside sheet format is required.")
                    .NotEmpty()
                    .WithMessage("Inside sheet format is required.")
-                   .MaximumLength(100)
-                   .WithMessage("Inside sheet format length can't be longer then 100 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("Inside sheet format length can't be longer then 20 characters.");
 
             RuleFor(p => p.Capacity)
                 .GreaterThanOrEqualTo(1);
 
             RuleFor(p => p.CoverSheetFormat)
-                   .MaximumLength(100)
-                   .WithMessage("Cover sheet format length can't be longer then 100 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("Cover sheet format length can't be longer then 20 characters.");
 
             RuleFor(p => p).
                 MustAsync(DoesBindingTypeExists)
