@@ -17,9 +17,30 @@ namespace Application.Functions.OrderItem.Commands.UpdateOrderItemCommand
         public async Task<UpdateOrderItemResponse> Handle(UpdateOrderItemCommand request, CancellationToken cancellationToken)
         {
             var validator = new UpdateOrderItemValidator(_context);
+            var colorValidator = new ColorUpdateDTOValidator();
+            var paperValidator = new PaperUpdateDTOValidator();
+            var serviceValidator = new ServiceUpdateDTOValidator(_context);
             var validatorResult = await validator.ValidateAsync(request);
 
             if (!validatorResult.IsValid) return new UpdateOrderItemResponse(validatorResult, Responses.ResponseStatus.ValidationError);
+
+            foreach (var color in request.Colors)
+            {
+                var colorValidatorResult = await colorValidator.ValidateAsync(color);
+                if (!colorValidatorResult.IsValid) return new UpdateOrderItemResponse(colorValidatorResult, Responses.ResponseStatus.ValidationError);
+            }
+
+            foreach (var paper in request.Papers)
+            {
+                var paperValidatorResult = await paperValidator.ValidateAsync(paper);
+                if (!paperValidatorResult.IsValid) return new UpdateOrderItemResponse(paperValidatorResult, Responses.ResponseStatus.ValidationError);
+            }
+
+            foreach (var service in request.Services)
+            {
+                var serviceValidatorResult = await serviceValidator.ValidateAsync(service);
+                if (!serviceValidatorResult.IsValid) return new UpdateOrderItemResponse(serviceValidatorResult, Responses.ResponseStatus.ValidationError);
+            }
 
             var selectedOrderItem = await _context.OrderItems
                                                   .Include(p => p.Colors)
