@@ -58,7 +58,7 @@ namespace API.Controllers
             return Ok(orderItem);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createOrderItem")]
         public async Task<IActionResult> CreateOrderItem([FromBody] CreateOrderItemCommand command)
         {
@@ -78,7 +78,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateOrderItem")]
         public async Task<IActionResult> UpdateOrderItem([FromBody] UpdateOrderItemCommand command)
         {
@@ -101,7 +101,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Basic")]
+        [HttpDelete, Authorize(Roles = "Office")]
         [Route("deleteOrderItem")]
         public async Task<IActionResult> DeleteOrderItem([FromBody] DeleteOrderItemCommand command)
         {

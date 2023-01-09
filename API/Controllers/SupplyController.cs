@@ -43,7 +43,7 @@ namespace API.Controllers
             return Ok(supply);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createSupplyWithAddresses")]
         public async Task<IActionResult> CreateSupplyWithAddresses([FromBody] CreateSupplyWithAddressesCommand command)
         {
@@ -86,7 +86,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Basic")]
+        [HttpDelete, Authorize(Roles = "Office")]
         [Route("deleteSupply")]
         public async Task<IActionResult> DeleteSupply([FromBody] DeleteSupplyCommand command)
         {

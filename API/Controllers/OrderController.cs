@@ -89,7 +89,7 @@ namespace API.Controllers
             return Ok(orders);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createOrderWithData")]
         public async Task<IActionResult> CreateOrderWithData([FromBody] CreateOrderWithDataCommand command)
         {
@@ -108,7 +108,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateOrder")]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
         {

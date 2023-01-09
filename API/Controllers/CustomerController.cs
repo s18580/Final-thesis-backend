@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(customer);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createCompanyCustomerWithData")]
         public async Task<IActionResult> CreateCompanyCustomerWithData([FromBody] CreateCompanyCustomerWithDataCommand command)
         {
@@ -73,7 +73,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createPersonCustomerWithData")]
         public async Task<IActionResult> CreatePersonCustomerWithData([FromBody] CreatePersonCustomerWithDataCommand command)
         {
@@ -93,7 +93,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateCompanyCustomer")]
         public async Task<IActionResult> UpdateCompanyCustomer([FromBody] UpdateCompanyCustomerCommand command)
         {
@@ -116,7 +116,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updatePersonCustomer")]
         public async Task<IActionResult> UpdatePersonCustomer([FromBody] UpdatePersonCustomerCommand command)
         {

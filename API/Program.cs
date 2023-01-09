@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Warning()
-    .WriteTo.Seq("http://localhost:8081")
+    .WriteTo.Seq("http://20.55.97.173:8081")
     .CreateLogger();
 
 builder.Services.AddCors();

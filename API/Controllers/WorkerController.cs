@@ -42,7 +42,7 @@ namespace API.Controllers
             return Ok(workers);
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Manager")]
         [Route("getSearchWorkers")]
         public async Task<IActionResult> GetSearchWorkers([FromQuery] string name, string lastName, string worksite)
         {

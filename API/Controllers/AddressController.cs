@@ -68,7 +68,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createAddress")]
         public async Task<IActionResult> CreateAddress([FromBody] CreateAddressCommand command)
         {
@@ -88,7 +88,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateAddress")]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressCommand command)
         {
@@ -111,7 +111,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("disableAddress")]
         public async Task<IActionResult> DisableAddress([FromBody] DisableAddressCommand command)
         {

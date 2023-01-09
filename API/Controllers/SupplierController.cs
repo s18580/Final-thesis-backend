@@ -51,7 +51,7 @@ namespace API.Controllers
             return Ok(supplier);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createSupplierWithData")]
         public async Task<IActionResult> CreateSupplierWithData([FromBody] CreateSupplierWithDataCommand command)
         {
@@ -71,7 +71,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateSupplier")]
         public async Task<IActionResult> UpdateSupplier([FromBody] UpdateSupplierCommand command)
         {

@@ -128,7 +128,7 @@ namespace API.Controllers
             return Ok(representative);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createRepresentative")]
         public async Task<IActionResult> CreateRepresentative([FromBody] CreateRepresentativeCommand command)
         {
@@ -147,7 +147,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateRepresentative")]
         public async Task<IActionResult> UpdateRepresentative([FromBody] UpdateRepresentativeCommand command)
         {
@@ -170,7 +170,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("disableRepresentative")]
         public async Task<IActionResult> DisableRepresentative([FromBody] DisableRepresentativeCommand command)
         {

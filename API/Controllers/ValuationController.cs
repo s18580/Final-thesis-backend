@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(valuations);
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Office")]
         [Route("getValuation")]
         public async Task<IActionResult> GetValuation([FromQuery] int id)
         {
@@ -66,7 +66,7 @@ namespace API.Controllers
             return Ok(valuation);
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Office")]
         [Route("getSearchValuations")]
         public async Task<IActionResult> GetSearchValuations(string valuationName, string author, string paper, string color, string serviceName, string bindingType, string orderName, string orderItemType, string orderItem, string creationDate)
         {

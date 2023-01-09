@@ -22,9 +22,10 @@ namespace Application.Functions.Order.Queries.GetOrderListByWorkerQuery
             if (!validatorResult.IsValid) return new GetOrderListByWorkerResponse(validatorResult, Responses.ResponseStatus.ValidationError);
 
             var rawOrders = await _context.Orders
-                                          .Include(b => b.Assignments.Where(p => p.IdWorker == request.IdWorker).Where(p => p.OrderLeader == true))
+                                          .Include(b => b.Assignments)
                                           .Include(b => b.OrderItems)
                                           .Include(b => b.Status)
+                                          .Where(p => p.Assignments.Where(p => p.IdWorker == request.IdWorker).Where(p => p.OrderLeader == true).ToList().Count > 0)
                                           .ToListAsync();
 
             var orders = new List<TableOrderListDTO>();
