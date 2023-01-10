@@ -1,6 +1,6 @@
-﻿using Application.Functions.Workers.Commands.DeleteWorker;
-using Application.Functions.Workers.Commands.DisableWorker;
+﻿using Application.Functions.Workers.Commands.DisableWorker;
 using Application.Functions.Workers.Commands.UpdateWorker;
+using Application.Functions.Workers.Queries.GetActiveWorkerList;
 using Application.Functions.Workers.Queries.GetAWSCreds;
 using Application.Functions.Workers.Queries.GetSearchWorkers;
 using Application.Functions.Workers.Queries.GetWorker;
@@ -8,7 +8,6 @@ using Application.Functions.Workers.Queries.GetWorkersList;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -36,6 +35,14 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getActiveWorkers")]
+        public async Task<IActionResult> GetActiveWorkers()
+        {
+            var workers = await _mediator.Send(new GetActiveWorkersListQuery());
+            return Ok(workers);
+        }
+
+        [HttpGet, Authorize(Roles = "Manager")]
         [Route("getSearchWorkers")]
         public async Task<IActionResult> GetSearchWorkers([FromQuery] string name, string lastName, string worksite)
         {
@@ -74,29 +81,6 @@ namespace API.Controllers
         [HttpPost, Authorize(Roles = "Admin")]
         [Route("updateWorker")]
         public async Task<IActionResult> UpdateWorker([FromBody] UpdateWorkerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Admin")]
-        [Route("deleteWorker")]
-        public async Task<IActionResult> DeleteWorker([FromBody] DeleteWorkerCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

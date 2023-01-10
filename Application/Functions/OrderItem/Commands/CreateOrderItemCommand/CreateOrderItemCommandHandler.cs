@@ -20,6 +20,7 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
         public async Task<CreateOrderItemResponse> Handle(CreateOrderItemCommand request, CancellationToken cancellationToken)
         {
             // create validators
+            var colorValidator = new ColorDTOValidator();
             var paperValidator = new PaperDTOValidator(_context);
             var serviceValidator = new ServiceDTOValidator(_context);
             var orderItemValidator = new CreateOrderItemValidator(_context);
@@ -27,6 +28,12 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
             // validate data
             var validatorResult = await orderItemValidator.ValidateAsync(request);
             if (!validatorResult.IsValid) return new CreateOrderItemResponse(validatorResult, Responses.ResponseStatus.ValidationError);
+
+            foreach (var color in request.Colors)
+            {
+                var colorValidatorResult = await colorValidator.ValidateAsync(color);
+                if (!colorValidatorResult.IsValid) return new CreateOrderItemResponse(colorValidatorResult, Responses.ResponseStatus.ValidationError);
+            }
 
             foreach (var paper in request.Papers)
             {
@@ -54,7 +61,6 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
                     CompletionDate = request.CompletionDate,
                     InsideFormat = request.InsideFormat,
                     CoverFormat = request.CoverFormat,
-                    IdSelectedValuation = null,
                     IdDeliveryType = request.IdDeliveryType,
                     IdBindingType = request.IdBindingType,
                     IdOrderItemType = request.IdOrderItemType,
@@ -79,16 +85,6 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
 
                 foreach (var paper in request.Papers)
                 {
-                    FiberDirection fiberD;
-                    if (paper.FiberDirection == FiberDirection.Poziomy.ToString())
-                    {
-                        fiberD = FiberDirection.Poziomy;
-                    }
-                    else
-                    {
-                        fiberD = FiberDirection.Pionowy;
-                    }
-
                     var newPaper = new Domain.Models.Paper
                     {
                         Name = paper.Name,
@@ -96,7 +92,7 @@ namespace Application.Functions.OrderItem.Commands.CreateOrderItemCommand
                         SheetFormat = paper.SheetFormat,
                         IsForCover = paper.IsForCover,
                         Opacity = paper.Opacity,
-                        FiberDirection = fiberD,
+                        FiberDirection = (FiberDirection)paper.FiberDirection,
                         PricePerKilogram = paper.PricePerKilogram,
                         Quantity = paper.Quantity,
                         IdOrderItem = newOrderItem.IdOrderItem,

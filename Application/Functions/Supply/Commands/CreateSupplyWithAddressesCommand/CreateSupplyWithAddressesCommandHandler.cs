@@ -29,6 +29,8 @@ namespace Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand
                 if (!addressValidatorResult.IsValid) return new CreateSupplyWithAddressesResponse(addressValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -47,6 +49,8 @@ namespace Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand
                 await _context.Supplies.AddAsync(newSupply);
                 await _context.SaveChangesAsync();
 
+                newId = newSupply.IdSupply;
+
                 foreach (var address in request.DeliveriesAddresses)
                 {
                     var newAddress = new Domain.Models.DeliveriesAddresses
@@ -63,7 +67,7 @@ namespace Application.Functions.Supply.Commands.CreateSupplyWithAddressesCommand
                 dbContextTransaction.Commit();
             }
 
-            return new CreateSupplyWithAddressesResponse();
+            return new CreateSupplyWithAddressesResponse(newId);
         }
     }
 }

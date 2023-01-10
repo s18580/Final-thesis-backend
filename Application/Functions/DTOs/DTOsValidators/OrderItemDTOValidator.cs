@@ -14,27 +14,27 @@ namespace Application.Functions.DTOs.DTOsValidators
 
             RuleFor(p => p.Name)
                    .NotNull()
-                   .WithMessage("Delivery type name is required.")
+                   .WithMessage("OrderItem name is required.")
                    .NotEmpty()
-                   .WithMessage("Delivery typename is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Delivery type name length can't be longer then 255 characters.");
+                   .WithMessage("OrderItem name is required.")
+                   .MaximumLength(100)
+                   .WithMessage("OrderItem name length can't be longer then 255 characters.");
 
             RuleFor(p => p.Comments)
                    .MaximumLength(255)
-                   .WithMessage("Delivery type name length can't be longer then 255 characters.");
+                   .WithMessage("OrderItem comments length can't be longer then 255 characters.");
 
             RuleFor(p => p.CoverFormat)
-                   .MaximumLength(100)
-                   .WithMessage("Delivery type name length can't be longer then 100 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("OrderItem cover format length can't be longer then 100 characters.");
 
             RuleFor(p => p.InsideFormat)
                    .NotNull()
-                   .WithMessage("Delivery type name is required.")
+                   .WithMessage("OrderItem inside format is required.")
                    .NotEmpty()
-                   .WithMessage("Delivery typename is required.")
-                   .MaximumLength(100)
-                   .WithMessage("Delivery type name length can't be longer then 100 characters.");
+                   .WithMessage("OrderItem inside format is required.")
+                   .MaximumLength(20)
+                   .WithMessage("OrderItem inside format length can't be longer then 100 characters.");
 
             RuleFor(p => p.Circulation)
                 .GreaterThanOrEqualTo(1);

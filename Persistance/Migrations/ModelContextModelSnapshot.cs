@@ -17,7 +17,7 @@ namespace Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -51,14 +51,18 @@ namespace Persistance.Migrations
                     b.Property<int?>("IdSupplier")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PostCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("StreetName")
                         .IsRequired()
@@ -86,9 +90,6 @@ namespace Persistance.Migrations
 
                     b.Property<int>("IdOrder")
                         .HasColumnType("int");
-
-                    b.Property<double?>("HoursWorked")
-                        .HasColumnType("float");
 
                     b.Property<bool>("OrderLeader")
                         .HasColumnType("bit");
@@ -146,24 +147,26 @@ namespace Persistance.Migrations
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CompanyPhoneNumber")
                         .IsRequired()
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<int?>("IdWorker")
+                    b.Property<int>("IdWorker")
                         .HasColumnType("int");
 
                     b.Property<string>("NIP")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Regon")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
 
                     b.HasKey("IdCustomer");
 
@@ -234,42 +237,6 @@ namespace Persistance.Migrations
                     b.HasKey("IdDeliveryType");
 
                     b.ToTable("DeliveryTypes");
-                });
-
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileStatus", b =>
-                {
-                    b.Property<int>("IdFileStatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFileStatus"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("IdFileStatus");
-
-                    b.ToTable("FileStatuses");
-                });
-
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileType", b =>
-                {
-                    b.Property<int>("IdFileType")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFileType"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.HasKey("IdFileType");
-
-                    b.ToTable("FileTypes");
                 });
 
             modelBuilder.Entity("Domain.Models.DictionaryModels.OrderItemType", b =>
@@ -415,52 +382,6 @@ namespace Persistance.Migrations
                     b.ToTable("Worksites");
                 });
 
-            modelBuilder.Entity("Domain.Models.File", b =>
-                {
-                    b.Property<int>("IdFile")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFile"), 1L, 1);
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("IdFileStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdFileType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdOrderItem")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdValuation")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("IdFile");
-
-                    b.HasIndex("IdFileStatus");
-
-                    b.HasIndex("IdFileType");
-
-                    b.HasIndex("IdOrder");
-
-                    b.HasIndex("IdOrderItem");
-
-                    b.HasIndex("IdValuation");
-
-                    b.ToTable("Files");
-                });
-
             modelBuilder.Entity("Domain.Models.Order", b =>
                 {
                     b.Property<int>("IdOrder")
@@ -538,8 +459,8 @@ namespace Persistance.Migrations
 
                     b.Property<string>("CoverFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("ExpectedCompletionDate")
                         .HasColumnType("datetime2");
@@ -556,18 +477,15 @@ namespace Persistance.Migrations
                     b.Property<int>("IdOrderItemType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdSelectedValuation")
-                        .HasColumnType("int");
-
                     b.Property<string>("InsideFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("IdOrderItem");
 
@@ -599,15 +517,18 @@ namespace Persistance.Migrations
                     b.Property<int?>("IdValuation")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsForCover")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Kind")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Opacity")
                         .HasColumnType("int");
@@ -620,8 +541,8 @@ namespace Persistance.Migrations
 
                     b.Property<string>("SheetFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("IdPaper");
 
@@ -650,6 +571,9 @@ namespace Persistance.Migrations
 
                     b.Property<int?>("IdSupplier")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -701,11 +625,14 @@ namespace Persistance.Migrations
                     b.Property<int?>("IdOrderItem")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdServiceName")
+                    b.Property<int>("IdServiceName")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdValuation")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsForCover")
+                        .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -741,8 +668,8 @@ namespace Persistance.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -782,8 +709,8 @@ namespace Persistance.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("float");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("SupplyDate")
                         .HasColumnType("datetime2");
@@ -815,8 +742,8 @@ namespace Persistance.Migrations
 
                     b.Property<string>("CoverFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("CoverOther")
                         .IsRequired()
@@ -828,8 +755,8 @@ namespace Persistance.Migrations
 
                     b.Property<string>("CoverSheetFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("CoverSheetNumber")
                         .HasColumnType("int");
@@ -854,8 +781,8 @@ namespace Persistance.Migrations
 
                     b.Property<string>("InsideFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("InsideOther")
                         .IsRequired()
@@ -867,25 +794,25 @@ namespace Persistance.Migrations
 
                     b.Property<string>("InsideSheetFormat")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("InsideSheetNumber")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsSelectedValuation")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MainCirculation")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("OfferValidityDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("OrderItemIdOrderItem")
-                        .HasColumnType("int");
 
                     b.Property<string>("Recipient")
                         .IsRequired()
@@ -898,7 +825,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("IdBindingType");
 
-                    b.HasIndex("OrderItemIdOrderItem");
+                    b.HasIndex("IdOrderItem");
 
                     b.ToTable("Valuations");
                 });
@@ -910,6 +837,9 @@ namespace Persistance.Migrations
 
                     b.Property<int>("IdPriceList")
                         .HasColumnType("int");
+
+                    b.Property<double>("UsedPrice")
+                        .HasColumnType("float");
 
                     b.HasKey("IdValuation", "IdPriceList");
 
@@ -991,12 +921,12 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.Customer", "Customer")
                         .WithMany("Addresses")
                         .HasForeignKey("IdCustomer")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Domain.Models.Supplier", "Supplier")
                         .WithMany("Addresses")
                         .HasForeignKey("IdSupplier")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Customer");
 
@@ -1008,7 +938,7 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.Order", "Order")
                         .WithMany("Assignments")
                         .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Worker", "Worker")
@@ -1027,12 +957,12 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Colors")
                         .HasForeignKey("IdOrderItem")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Colors")
                         .HasForeignKey("IdValuation")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("OrderItem");
 
@@ -1044,7 +974,8 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.Worker", "Worker")
                         .WithMany("Customers")
                         .HasForeignKey("IdWorker")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Worker");
                 });
@@ -1054,18 +985,18 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.Address", "Address")
                         .WithMany("DeliveriesAddresses")
                         .HasForeignKey("IdAddress")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Order", "Order")
                         .WithMany("DeliveriesAddresses")
                         .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Domain.Models.Supply", "Supply")
                         .WithMany("DeliveriesAddresses")
                         .HasForeignKey("IdSupply")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Address");
 
@@ -1074,51 +1005,12 @@ namespace Persistance.Migrations
                     b.Navigation("Supply");
                 });
 
-            modelBuilder.Entity("Domain.Models.File", b =>
-                {
-                    b.HasOne("Domain.Models.DictionaryModels.FileStatus", "FileStatus")
-                        .WithMany("Files")
-                        .HasForeignKey("IdFileStatus")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Models.DictionaryModels.FileType", "FileType")
-                        .WithMany("Files")
-                        .HasForeignKey("IdFileType")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Order", "Order")
-                        .WithMany("Files")
-                        .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Models.OrderItem", "OrderItem")
-                        .WithMany("Files")
-                        .HasForeignKey("IdOrderItem")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Models.Valuation", "Valuation")
-                        .WithMany("Files")
-                        .HasForeignKey("IdValuation")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("FileStatus");
-
-                    b.Navigation("FileType");
-
-                    b.Navigation("Order");
-
-                    b.Navigation("OrderItem");
-
-                    b.Navigation("Valuation");
-                });
-
             modelBuilder.Entity("Domain.Models.Order", b =>
                 {
                     b.HasOne("Domain.Models.Representative", "Representative")
                         .WithMany("Orders")
                         .HasForeignKey("IdRepresentative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.DictionaryModels.OrderStatus", "Status")
@@ -1148,7 +1040,7 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.DictionaryModels.OrderItemType", "OrderItemType")
@@ -1171,12 +1063,12 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Papers")
                         .HasForeignKey("IdOrderItem")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Papers")
                         .HasForeignKey("IdValuation")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("OrderItem");
 
@@ -1188,12 +1080,12 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.Customer", "Customer")
                         .WithMany("Representatives")
                         .HasForeignKey("IdCustomer")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Domain.Models.Supplier", "Supplier")
                         .WithMany("Representatives")
                         .HasForeignKey("IdSupplier")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Customer");
 
@@ -1205,13 +1097,13 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.DictionaryModels.Role", "Role")
                         .WithMany("RoleAssignments")
                         .HasForeignKey("IdRole")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Worker", "Worker")
                         .WithMany("RoleAssignments")
                         .HasForeignKey("IdWorker")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -1224,17 +1116,18 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Services")
                         .HasForeignKey("IdOrderItem")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("Domain.Models.DictionaryModels.ServiceName", "ServiceName")
                         .WithMany("Services")
                         .HasForeignKey("IdServiceName")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("Services")
                         .HasForeignKey("IdValuation")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("OrderItem");
 
@@ -1248,13 +1141,13 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Supplies")
                         .HasForeignKey("IdOrderItem")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Representative", "Representative")
                         .WithMany("Supplies")
                         .HasForeignKey("IdRepresentative")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.DictionaryModels.SupplyItemType", "SupplyItemType")
@@ -1285,7 +1178,7 @@ namespace Persistance.Migrations
 
                     b.HasOne("Domain.Models.OrderItem", "OrderItem")
                         .WithMany("Valuations")
-                        .HasForeignKey("OrderItemIdOrderItem")
+                        .HasForeignKey("IdOrderItem")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Author");
@@ -1300,13 +1193,13 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Models.DictionaryModels.PriceList", "PriceList")
                         .WithMany("ValuationPriceLists")
                         .HasForeignKey("IdPriceList")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Valuation", "Valuation")
                         .WithMany("PriceListPrices")
-                        .HasForeignKey("IdPriceList")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("IdValuation")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("PriceList");
@@ -1346,16 +1239,6 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Models.DictionaryModels.DeliveryType", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileStatus", b =>
-                {
-                    b.Navigation("Files");
-                });
-
-            modelBuilder.Entity("Domain.Models.DictionaryModels.FileType", b =>
-                {
-                    b.Navigation("Files");
                 });
 
             modelBuilder.Entity("Domain.Models.DictionaryModels.OrderItemType", b =>
@@ -1399,16 +1282,12 @@ namespace Persistance.Migrations
 
                     b.Navigation("DeliveriesAddresses");
 
-                    b.Navigation("Files");
-
                     b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Domain.Models.OrderItem", b =>
                 {
                     b.Navigation("Colors");
-
-                    b.Navigation("Files");
 
                     b.Navigation("Papers");
 
@@ -1441,8 +1320,6 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Models.Valuation", b =>
                 {
                     b.Navigation("Colors");
-
-                    b.Navigation("Files");
 
                     b.Navigation("Papers");
 

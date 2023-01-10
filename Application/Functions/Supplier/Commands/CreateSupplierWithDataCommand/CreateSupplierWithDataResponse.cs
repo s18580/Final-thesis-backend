@@ -5,9 +5,9 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
 {
     public class CreateSupplierWithDataResponse : BaseResponse
     {
-
-        public CreateSupplierWithDataResponse() : base()
-        { }
+        public int Id { get; set; }
+        public CreateSupplierWithDataResponse(int id) : base()
+        { Id = id; }
 
         public CreateSupplierWithDataResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

@@ -15,6 +15,10 @@ namespace Application.Functions.DeliveryType.Commands.DeleteDeliveryTypeCommand
             RuleFor(p => p).
                 MustAsync(DoesDeliveryTypeExists)
                 .WithMessage("Delivery type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesOrderItemsExists)
+                .WithMessage("Delivery type is still related with some order items.");
         }
 
         private async Task<bool> DoesDeliveryTypeExists(DeleteDeliveryTypeCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.DeliveryType.Commands.DeleteDeliveryTypeCommand
                                      .SingleOrDefaultAsync();
 
             return deliveryType != null;
+        }
+
+        private async Task<bool> DoesOrderItemsExists(DeleteDeliveryTypeCommand command, CancellationToken cancellationToken)
+        {
+            var orders = await _context.OrderItems
+                                     .Where(p => p.IdDeliveryType == command.IdDeliveryType)
+                                     .ToListAsync();
+
+            return orders.Count == 0;
         }
     }
 }

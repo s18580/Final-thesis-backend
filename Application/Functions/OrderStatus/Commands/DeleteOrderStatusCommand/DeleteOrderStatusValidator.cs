@@ -15,6 +15,10 @@ namespace Application.Functions.OrderStatus.Commands.DeleteOrderStatusCommand
             RuleFor(p => p).
                 MustAsync(DoesOrderStatusExists)
                 .WithMessage("Order status with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesOrdersExists)
+                .WithMessage("Order status is still related with some orders.");
         }
 
         private async Task<bool> DoesOrderStatusExists(DeleteOrderStatusCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.OrderStatus.Commands.DeleteOrderStatusCommand
                                      .SingleOrDefaultAsync();
 
             return orderStatus != null;
+        }
+
+        private async Task<bool> DoesOrdersExists(DeleteOrderStatusCommand command, CancellationToken cancellationToken)
+        {
+            var orders = await _context.Orders
+                                       .Where(p => p.IdStatus == command.IdOrderStatus)
+                                       .ToListAsync();
+
+            return orders.Count == 0;
         }
     }
 }

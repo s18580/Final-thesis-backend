@@ -17,10 +17,10 @@ namespace Application.Functions.Supply.Queries.GetSupplyQuery
         public async Task<Domain.Models.Supply> Handle(GetSupplyQuery request, CancellationToken cancellationToken)
         {
             var supply = await _context.Supplies
-                                       .Include(p => p.SupplyItemType.Name)
+                                       .Include(p => p.SupplyItemType)
                                        .Include(p => p.OrderItem)
-                                       .ThenInclude(p => p.Order.Name)
-                                       .Include(p => p.Representative.IdSupplier)
+                                       .ThenInclude(p => p.Order)
+                                       .Include(p => p.Representative)
                                        .Where(p => p.IdSupply == request.IdSupply)
                                        .SingleOrDefaultAsync();
 

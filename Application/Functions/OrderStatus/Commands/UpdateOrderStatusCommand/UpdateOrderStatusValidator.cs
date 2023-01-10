@@ -25,8 +25,8 @@ namespace Application.Functions.OrderStatus.Commands.UpdateOrderStatusCommand
                    .WithMessage("Order status name is required.")
                    .NotEmpty()
                    .WithMessage("Order status name is required.")
-                   .MaximumLength(8)
-                   .WithMessage("Order status name length can't be longer then 8 characters.");
+                   .MaximumLength(7)
+                   .WithMessage("Order status name length can't be longer then 7 characters.");
 
             RuleFor(p => p).
                 MustAsync(IsOrderStatusNameUnique)

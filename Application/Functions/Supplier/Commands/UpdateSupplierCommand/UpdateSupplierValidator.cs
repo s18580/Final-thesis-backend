@@ -17,8 +17,8 @@ namespace Application.Functions.Supplier.Commands.UpdateSupplierCommand
                    .WithMessage("Supplier name is required.")
                    .NotEmpty()
                    .WithMessage("Supplier name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Supplier name length can't be longer then 255 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Supplier name length can't be longer then 100 characters.");
 
             RuleFor(p => p.EmailAddress)
                    .NotNull()

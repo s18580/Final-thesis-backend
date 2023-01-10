@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Functions.DTOs;
+using MediatR;
 
 namespace Application.Functions.Valuation.Commands.CreateValuationCommand
 {
@@ -25,5 +26,9 @@ namespace Application.Functions.Valuation.Commands.CreateValuationCommand
         public int IdAuthor { get; set; }
         public int? IdOrderItem { get; set; }
         public int? IdBindingType { get; set; }
+        public ICollection<ColorDTO> Colors { get; set; }
+        public ICollection<PaperDTO> Papers { get; set; }
+        public ICollection<ServiceDTO> Services { get; set; }
+        public ICollection<ValuationPriceListDTO> ValuationPriceLists { get; set; }
     }
 }

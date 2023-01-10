@@ -17,9 +17,6 @@ namespace Application.Services
         DbSet<Representative> Representatives { get; set; }
         DbSet<Assignment> Assignments { get; set; }
         DbSet<OrderStatus> OrderStatuses { get; set; }
-        DbSet<Domain.Models.File> Files { get; set; }
-        DbSet<FileType> FileTypes { get; set; }
-        DbSet<FileStatus> FileStatuses { get; set; }
         DbSet<Supply> Supplies { get; set; }
         DbSet<OrderItem> OrderItems { get; set; }
         DbSet<Color> Colors { get; set; }

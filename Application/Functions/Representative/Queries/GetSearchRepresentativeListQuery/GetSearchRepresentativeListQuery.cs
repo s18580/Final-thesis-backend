@@ -11,5 +11,6 @@ namespace Application.Functions.Representative.Queries.GetSearchRepresentativeLi
         public string Phone { get; set; }
         public string Customer { get; set; }
         public string Supplier { get; set; }
+        public bool IsDisabled { get; set; }
     }
 }

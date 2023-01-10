@@ -37,6 +37,8 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                 if (!representativeValidatorResult.IsValid) return new CreateCompanyCustomerWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -53,6 +55,8 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                 await _context.Customers.AddAsync(newCustomer);
                 await _context.SaveChangesAsync();
 
+                newId = newCustomer.IdCustomer;
+
                 foreach (var address in request.Addresses)
                 {
                     var newAddress = new Domain.Models.Address
@@ -64,6 +68,7 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                         StreetName = address.StreetName,
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };
@@ -80,6 +85,7 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };
@@ -91,7 +97,7 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                 dbContextTransaction.Commit();
             }
 
-            return new CreateCompanyCustomerWithDataResponse();
+            return new CreateCompanyCustomerWithDataResponse(newId);
         }
     }
 }

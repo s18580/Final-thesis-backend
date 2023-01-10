@@ -19,7 +19,7 @@ namespace Domain.Models
         public string AccessKeyAWS { get; set; }
         public string SecretKeyAWS { get; set; }
 
-        public Worksite Worksite { get; set; }
+        public Worksite? Worksite { get; set; }
         public ICollection<RoleAssignment> RoleAssignments { get; set; }
         public ICollection<Customer> Customers { get; set; }
         public ICollection<Valuation> Valuations { get; set; }

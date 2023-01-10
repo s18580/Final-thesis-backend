@@ -15,6 +15,10 @@ namespace Application.Functions.SupplyItemType.Commands.DeleteSupplyItemTypeComm
             RuleFor(p => p).
                 MustAsync(DoesSupplyItemTypeExists)
                 .WithMessage("Supply item type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesSupplyExists)
+                .WithMessage("Supply item type is still related with some supplies.");
         }
 
         private async Task<bool> DoesSupplyItemTypeExists(DeleteSupplyItemTypeCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.SupplyItemType.Commands.DeleteSupplyItemTypeComm
                                      .SingleOrDefaultAsync();
 
             return supplyItemType != null;
+        }
+
+        private async Task<bool> DoesSupplyExists(DeleteSupplyItemTypeCommand command, CancellationToken cancellationToken)
+        {
+            var supplies = await _context.Supplies
+                                         .Where(p => p.IdSupplyItemType == command.IdSupplyItemType)
+                                         .ToListAsync();
+
+            return supplies.Count == 0;
         }
     }
 }

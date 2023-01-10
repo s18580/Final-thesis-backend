@@ -1,18 +1,14 @@
-﻿using Application.Functions.Order.Commands.CreateOrderCommand;
-using Application.Functions.Order.Commands.CreateOrderWithDataCommand;
-using Application.Functions.Order.Commands.DeleteOrderCommand;
+﻿using Application.Functions.Order.Commands.CreateOrderWithDataCommand;
 using Application.Functions.Order.Commands.UpdateOrderCommand;
 using Application.Functions.Order.Queries.GetOnGoingOrdersListQuery;
 using Application.Functions.Order.Queries.GetOrderListByDeliveryDateQuery;
 using Application.Functions.Order.Queries.GetOrderListByWorkerQuery;
 using Application.Functions.Order.Queries.GetOrderListQuery;
 using Application.Functions.Order.Queries.GetOrderQuery;
-using Application.Functions.Order.Queries.GetOrdersListByRepresentativeQuery;
 using Application.Functions.Order.Queries.GetSearchOrderListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -78,14 +74,6 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getOrdersByRepresentative")]
-        public async Task<IActionResult> GetOrdersByRepresentative([FromQuery] int id)
-        {
-            var orders = await _mediator.Send(new GetOrdersListByRepresentativeQuery() { Id = id });
-            return Ok(orders);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrdersByDeliveryDate")]
         public async Task<IActionResult> GetOrdersByDeliveryDate()
         {
@@ -101,9 +89,9 @@ namespace API.Controllers
             return Ok(orders);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createOrder")]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+        [HttpPost, Authorize(Roles = "Office")]
+        [Route("createOrderWithData")]
+        public async Task<IActionResult> CreateOrderWithData([FromBody] CreateOrderWithDataCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -120,51 +108,9 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createOrderWithData")]
-        public async Task<IActionResult> CreateOrderWithData([FromBody] CreateOrderWithDataCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateOrder")]
         public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteOrder")]
-        public async Task<IActionResult> DeleteOrder([FromBody] DeleteOrderCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

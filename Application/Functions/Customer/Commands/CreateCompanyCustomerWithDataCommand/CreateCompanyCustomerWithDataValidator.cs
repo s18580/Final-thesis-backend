@@ -17,8 +17,8 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
                    .WithMessage("Company name is required.")
                    .NotEmpty()
                    .WithMessage("Company name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Company name length can't be longer then 255 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Company name length can't be longer then 100 characters.");
 
             RuleFor(p => p.NIP)
                    .NotNull()

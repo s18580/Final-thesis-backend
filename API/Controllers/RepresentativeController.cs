@@ -1,17 +1,18 @@
 ﻿using Application.Functions.Representative.Commands.CreateRepresentativeCommand;
-using Application.Functions.Representative.Commands.DeleteRepresentativeCommand;
+using Application.Functions.Representative.Commands.DisableRepresentativeCommand;
 using Application.Functions.Representative.Commands.UpdateRepresentativeCommand;
+using Application.Functions.Representative.Queries.GetCustomerActiveRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetCustomerRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListByCustomerQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListBySupplierQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeListQuery;
 using Application.Functions.Representative.Queries.GetRepresentativeQuery;
 using Application.Functions.Representative.Queries.GetSearchRepresentativeListQuery;
+using Application.Functions.Representative.Queries.GetSupplierActiveRepresentativesListQuery;
 using Application.Functions.Representative.Queries.GetSupplierRepresentativesListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -38,9 +39,9 @@ namespace API.Controllers
 
         [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSearchRepresentatives")]
-        public async Task<IActionResult> GetSearchRepresentatives([FromQuery] string name, string lastName, string email, string phone, string customer, string supplier)
+        public async Task<IActionResult> GetSearchRepresentatives([FromQuery] string name, string lastName, string email, string phone, string customer, string supplier, bool isDisabled)
         {
-            var representatives = await _mediator.Send(new GetSearchRepresentativeListQuery() { Name = name, LastName = lastName, Email = email, Phone = phone, Customer = customer, Supplier = supplier});
+            var representatives = await _mediator.Send(new GetSearchRepresentativeListQuery() { Name = name, LastName = lastName, Email = email, Phone = phone, Customer = customer, Supplier = supplier, IsDisabled = isDisabled });
             return Ok(representatives);
         }
 
@@ -53,10 +54,26 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getCustomerActiveRepresentatives")]
+        public async Task<IActionResult> GetCustomerActiveRepresentatives(int id)
+        {
+            var representatives = await _mediator.Send(new GetCustomerActiveRepresentativesListQuery { Id = id });
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getSupplierRepresentatives")]
         public async Task<IActionResult> GetSupplierRepresentatives()
         {
             var representatives = await _mediator.Send(new GetSupplierRepresentativesListQuery());
+            return Ok(representatives);
+        }
+
+        [HttpGet, Authorize(Roles = "Basic")]
+        [Route("getSupplierActiveRepresentatives")]
+        public async Task<IActionResult> GetSupplierActiveRepresentatives(int id)
+        {
+            var representatives = await _mediator.Send(new GetSupplierActiveRepresentativesListQuery { Id = id });
             return Ok(representatives);
         }
 
@@ -111,7 +128,7 @@ namespace API.Controllers
             return Ok(representative);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createRepresentative")]
         public async Task<IActionResult> CreateRepresentative([FromBody] CreateRepresentativeCommand command)
         {
@@ -130,7 +147,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateRepresentative")]
         public async Task<IActionResult> UpdateRepresentative([FromBody] UpdateRepresentativeCommand command)
         {
@@ -153,9 +170,9 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteRepresentative")]
-        public async Task<IActionResult> DeleteRepresentative([FromBody] DeleteRepresentativeCommand command)
+        [HttpPost, Authorize(Roles = "Office")]
+        [Route("disableRepresentative")]
+        public async Task<IActionResult> DisableRepresentative([FromBody] DisableRepresentativeCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

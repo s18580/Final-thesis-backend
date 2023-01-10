@@ -15,6 +15,10 @@ namespace Application.Functions.OrderItemType.Commands.DeleteOrderItemTypeComman
             RuleFor(p => p).
                 MustAsync(DoesOrderItemTypeExists)
                 .WithMessage("Order item type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesOrderItemsExists)
+                .WithMessage("Order item type is still related with some order items.");
         }
 
         private async Task<bool> DoesOrderItemTypeExists(DeleteOrderItemTypeCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.OrderItemType.Commands.DeleteOrderItemTypeComman
                                      .SingleOrDefaultAsync();
 
             return orderItemType != null;
+        }
+
+        private async Task<bool> DoesOrderItemsExists(DeleteOrderItemTypeCommand command, CancellationToken cancellationToken)
+        {
+            var orderItems = await _context.OrderItems
+                                     .Where(p => p.IdOrderItemType == command.IdOrderItemType)
+                                     .ToListAsync();
+
+            return orderItems.Count == 0;
         }
     }
 }

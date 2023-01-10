@@ -1,8 +1,5 @@
-﻿using Application.Functions.Customer.Commands.CreateCompanyCustomerCommand;
-using Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand;
-using Application.Functions.Customer.Commands.CreatePersonCustomerCommand;
+﻿using Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataCommand;
 using Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCommand;
-using Application.Functions.Customer.Commands.DeleteCustomerCommand;
 using Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand;
 using Application.Functions.Customer.Commands.UpdatePersonCustomerCommand;
 using Application.Functions.Customer.Queries.GetCustomerListQuery;
@@ -11,7 +8,6 @@ using Application.Functions.Customer.Queries.GetSearchCustomerListQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -57,9 +53,9 @@ namespace API.Controllers
             return Ok(customer);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createCompanyCustomer")]
-        public async Task<IActionResult> CreateCompanyCustomer([FromBody] CreateCompanyCustomerCommand command)
+        [HttpPost, Authorize(Roles = "Office")]
+        [Route("createCompanyCustomerWithData")]
+        public async Task<IActionResult> CreateCompanyCustomerWithData([FromBody] CreateCompanyCustomerWithDataCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -77,54 +73,14 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createPersonCustomer")]
-        public async Task<IActionResult> CreatePersonCustomer([FromBody] CreatePersonCustomerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createCompanyCustomerWithData")]
-        public async Task<IActionResult> CreateCompanyCustomerWithData([FromBody] CreateCompanyCustomerWithDataCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createPersonCustomerWithData")]
         public async Task<IActionResult> CreatePersonCustomerWithData([FromBody] CreatePersonCustomerWithDataCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
             {
-                return Ok();
+                return Ok(response.Id);
             }
             else if (response.Status == ResponseStatus.ValidationError)
             {
@@ -137,7 +93,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateCompanyCustomer")]
         public async Task<IActionResult> UpdateCompanyCustomer([FromBody] UpdateCompanyCustomerCommand command)
         {
@@ -160,32 +116,9 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updatePersonCustomer")]
         public async Task<IActionResult> UpdatePersonCustomer([FromBody] UpdatePersonCustomerCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteCustomer")]
-        public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

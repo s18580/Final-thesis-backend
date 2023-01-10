@@ -1,6 +1,4 @@
-﻿using Application.Functions.Supplier.Commands.CreateSupplierCommand;
-using Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand;
-using Application.Functions.Supplier.Commands.DeleteSupplierCommand;
+﻿using Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand;
 using Application.Functions.Supplier.Commands.UpdateSupplierCommand;
 using Application.Functions.Supplier.Queries.GetSearchSupplierQuery;
 using Application.Functions.Supplier.Queries.GetSupplierListQuery;
@@ -8,7 +6,6 @@ using Application.Functions.Supplier.Queries.GetSupplierQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -54,9 +51,9 @@ namespace API.Controllers
             return Ok(supplier);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createSupplier")]
-        public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierCommand command)
+        [HttpPost, Authorize(Roles = "Office")]
+        [Route("createSupplierWithData")]
+        public async Task<IActionResult> CreateSupplierWithData([FromBody] CreateSupplierWithDataCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)
@@ -74,52 +71,9 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
-        [Route("createSupplierWithData")]
-        public async Task<IActionResult> CreateSupplierWithData([FromBody] CreateSupplierWithDataCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
-
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateSupplier")]
         public async Task<IActionResult> UpdateSupplier([FromBody] UpdateSupplierCommand command)
-        {
-            var response = await _mediator.Send(command);
-            if (response.Success)
-            {
-                return Ok();
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpDelete, Authorize(Roles = "Basic")]
-        [Route("deleteSupplier")]
-        public async Task<IActionResult> DeleteSupplier([FromBody] DeleteSupplierCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Success)

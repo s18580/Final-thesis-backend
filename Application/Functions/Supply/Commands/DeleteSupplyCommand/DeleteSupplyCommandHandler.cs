@@ -22,14 +22,16 @@ namespace Application.Functions.Supply.Commands.DeleteSupplyCommand
 
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
+                /*
                 var deliveryAddresses = await _context.DeliveriesAddresses
                                                   .Where(p => p.IdSupply == request.IdSupply)
                                                   .ToListAsync();
 
                 _context.DeliveriesAddresses.RemoveRange(deliveryAddresses);
                 await _context.SaveChangesAsync();
-
+                */
                 var supplyDelete = await _context.Supplies
+                                                 .Include(p => p.DeliveriesAddresses)
                                                  .Where(p => p.IdSupply == request.IdSupply)
                                                  .SingleAsync();
 

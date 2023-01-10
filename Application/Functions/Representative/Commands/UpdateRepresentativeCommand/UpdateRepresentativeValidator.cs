@@ -29,6 +29,8 @@ namespace Application.Functions.Representative.Commands.UpdateRepresentativeComm
                   .WithMessage("Order status name length can't be longer then 64 characters.");
 
             RuleFor(p => p.PhoneNumber)
+                   .NotNull()
+                   .WithMessage("Phone number can't be null.")
                    .MaximumLength(32)
                    .WithMessage("Phone number length can't be longer then 32 characters.");
 

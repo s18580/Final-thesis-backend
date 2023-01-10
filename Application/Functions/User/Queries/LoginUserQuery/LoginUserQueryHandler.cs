@@ -10,14 +10,12 @@ namespace Application.Functions.User.Queries.LoginUserQuery
         private readonly IApplicationContext _context;
         private readonly IAuthenticationService _authentication;
         private readonly IAuthorizationService _authorization;
-        private readonly IMapper _mapper;
 
         public LoginUserQueryHandler(IApplicationContext context, IAuthenticationService authentication, IAuthorizationService authorization, IMapper mapper)
         {
             _context = context;
             _authentication = authentication;
             _authorization = authorization;
-            _mapper = mapper;
         }
 
         public async Task<LoginUserResponse> Handle(LoginUserQuery request, CancellationToken cancellationToken)
@@ -52,7 +50,14 @@ namespace Application.Functions.User.Queries.LoginUserQuery
 
             var token = _authorization.CreateUserToken(request.Email, userRoles);
             var refreshToken = _authorization.CreateRefreshToken();
+            /*
+            worker.RefreshToken = refreshToken.Token;
+            worker.TokenCreated = refreshToken.Created;
+            worker.TokenExpires = refreshToken.Expires;
 
+            await _context.SaveChangesAsync();
+
+            */
             return new LoginUserResponse(token, refreshToken, worker.Name + " " + worker.LastName, userRoles, worker.IdWorker);
         }
     }

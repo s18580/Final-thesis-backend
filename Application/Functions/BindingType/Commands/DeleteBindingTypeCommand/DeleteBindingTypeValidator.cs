@@ -15,6 +15,10 @@ namespace Application.Functions.BindingType.Commands.DeleteBindingTypeCommand
             RuleFor(p => p).
                 MustAsync(DoesBindingTypeExists)
                 .WithMessage("Binding type with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesRelationsExists)
+                .WithMessage("Binding type is still related with some order items.");
         }
 
         private async Task<bool> DoesBindingTypeExists(DeleteBindingTypeCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,19 @@ namespace Application.Functions.BindingType.Commands.DeleteBindingTypeCommand
                                             .SingleOrDefaultAsync();
 
             return bindingType != null;
+        }
+
+        private async Task<bool> DoesRelationsExists(DeleteBindingTypeCommand command, CancellationToken cancellationToken)
+        {
+            var orders = await _context.OrderItems
+                                     .Where(p => p.IdBindingType == command.IdBindingType)
+                                     .ToListAsync();
+
+            var valuations = await _context.Valuations
+                                     .Where(p => p.IdBindingType == command.IdBindingType)
+                                     .ToListAsync();
+
+            return (orders.Count == 0 && valuations.Count == 0);
         }
     }
 }

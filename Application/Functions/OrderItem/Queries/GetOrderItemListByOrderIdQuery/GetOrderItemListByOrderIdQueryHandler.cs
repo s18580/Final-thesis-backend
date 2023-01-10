@@ -29,7 +29,7 @@ namespace Application.Functions.OrderItem.Queries.GetOrderItemListByOrderIdQuery
                                            .ThenInclude(m => m.ServiceName)
                                            .Where(p => p.IdOrder == request.IdOrder)
                                            .ToListAsync();
-            
+
             return new GetOrderItemListByOrderIdResponse(orderItems);
         }
     }

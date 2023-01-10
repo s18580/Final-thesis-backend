@@ -1,9 +1,6 @@
-﻿using Application.Functions.Roles.Queries.GetRole;
-using Application.Functions.Roles.Queries.GetRolesList;
-using Application.Responses;
+﻿using Application.Functions.Role.Queries.GetRolesListQuery;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -26,19 +23,6 @@ namespace API.Controllers
         {
             var roles = await _mediator.Send(new GetRolesListQuery());
             return Ok(roles);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getRole")]
-        public async Task<IActionResult> GetRole([FromQuery] int id)
-        {
-            var role = await _mediator.Send(new GetRoleQuery { Id = id });
-            if (role == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(role);
         }
     }
 }

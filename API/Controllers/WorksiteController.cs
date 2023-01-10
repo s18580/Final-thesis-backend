@@ -1,12 +1,10 @@
 ﻿using Application.Functions.Worksites.Commands.CreateWorksite;
 using Application.Functions.Worksites.Commands.DeleteWorksite;
 using Application.Functions.Worksites.Commands.UpdateWorksite;
-using Application.Functions.Worksites.Queries.GetWorksite;
 using Application.Functions.Worksites.Queries.GetWorksitesList;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var worksites = await _mediator.Send(new GetWorksitesListQuery());
             return Ok(worksites);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getWorksite")]
-        public async Task<IActionResult> GetWorksite([FromQuery] int id)
-        {
-            var worksite = await _mediator.Send(new GetWorksiteQuery { Id = id });
-            if (worksite == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(worksite);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

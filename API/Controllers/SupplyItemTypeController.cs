@@ -2,11 +2,9 @@
 using Application.Functions.SupplyItemType.Commands.DeleteSupplyItemTypeCommand;
 using Application.Functions.SupplyItemType.Commands.UpdateSupplyItemTypeCommand;
 using Application.Functions.SupplyItemType.Queries.GetSupplyItemTypeListQuery;
-using Application.Functions.SupplyItemType.Queries.GetSupplyItemTypeQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var supplyItemsType = await _mediator.Send(new GetSupplyItemTypeListQuery());
             return Ok(supplyItemsType);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getSupplyItemsType")]
-        public async Task<IActionResult> GetSupplyItemsType([FromQuery] int id)
-        {
-            var supplyItemType = await _mediator.Send(new GetSupplyItemTypeQuery { IdSupplyItemType = id });
-            if (supplyItemType == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(supplyItemType);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

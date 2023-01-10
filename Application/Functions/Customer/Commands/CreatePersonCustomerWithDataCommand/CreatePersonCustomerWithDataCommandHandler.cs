@@ -36,6 +36,8 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                 if (!representativeValidatorResult.IsValid) return new CreatePersonCustomerWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -52,12 +54,15 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                 await _context.Customers.AddAsync(newCustomer);
                 await _context.SaveChangesAsync();
 
+                newId = newCustomer.IdCustomer;
+
                 var newCustomerRepresentative = new Domain.Models.Representative
                 {
                     Name = request.Name,
                     LastName = request.LastName,
                     PhoneNumber = request.CompanyPhoneNumber,
                     EmailAddress = request.CompanyEmailAddress,
+                    IsDisabled = false,
                     IdSupplier = null,
                     IdCustomer = newCustomer.IdCustomer
                 };
@@ -76,6 +81,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                         StreetName = address.StreetName,
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };
@@ -92,6 +98,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
+                        IsDisabled = false,
                         IdSupplier = null,
                         IdCustomer = newCustomer.IdCustomer,
                     };
@@ -103,7 +110,7 @@ namespace Application.Functions.Customer.Commands.CreatePersonCustomerWithDataCo
                 dbContextTransaction.Commit();
             }
 
-            return new CreatePersonCustomerWithDataResponse();
+            return new CreatePersonCustomerWithDataResponse(newId);
         }
     }
 }

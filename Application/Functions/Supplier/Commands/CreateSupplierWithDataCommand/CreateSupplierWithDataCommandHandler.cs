@@ -36,6 +36,8 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                 if (!representativeValidatorResult.IsValid) return new CreateSupplierWithDataResponse(representativeValidatorResult, Responses.ResponseStatus.ValidationError);
             }
 
+            var newId = 0;
+
             // create objects in transaction
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -50,6 +52,8 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                 await _context.Suppliers.AddAsync(newSupplier);
                 await _context.SaveChangesAsync();
 
+                newId = newSupplier.IdSupplier;
+
                 foreach (var address in request.Addresses)
                 {
                     var newAddress = new Domain.Models.Address
@@ -62,6 +66,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                         StreetNumber = address.StreetNumber,
                         ApartmentNumber = address.ApartmentNumber,
                         IdSupplier = newSupplier.IdSupplier,
+                        IsDisabled = false,
                         IdCustomer = null,
                     };
 
@@ -77,6 +82,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                         LastName = representative.LastName,
                         PhoneNumber = representative.PhoneNumber,
                         EmailAddress = representative.EmailAddress,
+                        IsDisabled = false,
                         IdSupplier = newSupplier.IdSupplier,
                         IdCustomer = null,
                     };
@@ -88,7 +94,7 @@ namespace Application.Functions.Supplier.Commands.CreateSupplierWithDataCommand
                 dbContextTransaction.Commit();
             }
 
-            return new CreateSupplierWithDataResponse();
+            return new CreateSupplierWithDataResponse(newId);
         }
     }
 }

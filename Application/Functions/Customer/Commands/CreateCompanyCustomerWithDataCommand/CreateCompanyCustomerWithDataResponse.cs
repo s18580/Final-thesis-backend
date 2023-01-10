@@ -5,8 +5,9 @@ namespace Application.Functions.Customer.Commands.CreateCompanyCustomerWithDataC
 {
     public class CreateCompanyCustomerWithDataResponse : BaseResponse
     {
-        public CreateCompanyCustomerWithDataResponse() : base()
-        { }
+        public int Id { get; set; }
+        public CreateCompanyCustomerWithDataResponse(int id) : base()
+        { Id = id; }
 
         public CreateCompanyCustomerWithDataResponse(ValidationResult validationResult, ResponseStatus status)
             : base(validationResult, status)

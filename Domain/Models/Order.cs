@@ -19,7 +19,6 @@ namespace Domain.Models
         public Representative Representative { get; set; }
         public OrderStatus Status { get; set; }
         public ICollection<Assignment> Assignments { get; set; }
-        public ICollection<File> Files { get; set; }
         public ICollection<DeliveriesAddresses> DeliveriesAddresses { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
     }

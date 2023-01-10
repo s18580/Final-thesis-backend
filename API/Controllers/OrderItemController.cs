@@ -2,12 +2,10 @@
 using Application.Functions.OrderItem.Commands.DeleteOrderItemCommand;
 using Application.Functions.OrderItem.Commands.UpdateOrderItemCommand;
 using Application.Functions.OrderItem.Queries.GetOrderItemListByOrderIdQuery;
-using Application.Functions.OrderItem.Queries.GetOrderItemListQuery;
 using Application.Functions.OrderItem.Queries.GetOrderItemQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -48,14 +46,6 @@ namespace API.Controllers
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getOrderItems")]
-        public async Task<IActionResult> GetOrderItems()
-        {
-            var orderItems = await _mediator.Send(new GetOrderItemListQuery());
-            return Ok(orderItems);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
         [Route("getOrderItem")]
         public async Task<IActionResult> GetOrderItem([FromQuery] int id)
         {
@@ -68,7 +58,7 @@ namespace API.Controllers
             return Ok(orderItem);
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("createOrderItem")]
         public async Task<IActionResult> CreateOrderItem([FromBody] CreateOrderItemCommand command)
         {
@@ -88,7 +78,7 @@ namespace API.Controllers
 
         }
 
-        [HttpPost, Authorize(Roles = "Basic")]
+        [HttpPost, Authorize(Roles = "Office")]
         [Route("updateOrderItem")]
         public async Task<IActionResult> UpdateOrderItem([FromBody] UpdateOrderItemCommand command)
         {
@@ -111,7 +101,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete, Authorize(Roles = "Basic")]
+        [HttpDelete, Authorize(Roles = "Office")]
         [Route("deleteOrderItem")]
         public async Task<IActionResult> DeleteOrderItem([FromBody] DeleteOrderItemCommand command)
         {

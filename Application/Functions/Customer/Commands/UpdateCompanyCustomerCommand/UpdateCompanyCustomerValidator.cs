@@ -17,8 +17,8 @@ namespace Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand
                    .WithMessage("Company name is required.")
                    .NotEmpty()
                    .WithMessage("Company name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Company name length can't be longer then 255 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Company name length can't be longer then 100 characters.");
 
             RuleFor(p => p.NIP)
                    .NotNull()
@@ -69,7 +69,18 @@ namespace Application.Functions.Customer.Commands.UpdateCompanyCustomerCommand
                                       .Where(x => x.CompanyEmailAddress == command.CompanyEmailAddress)
                                       .SingleOrDefaultAsync();
 
-                return email == null;
+                if (email == null)
+                {
+                    return true;
+                }
+                else if (email.IdCustomer == command.IdCustomer)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             return true;

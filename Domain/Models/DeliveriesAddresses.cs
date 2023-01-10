@@ -8,7 +8,7 @@
         public int? IdSupply { get; set; }
 
         public Address Address { get; set; }
-        public Order Order { get; set; }
-        public Supply Supply { get; set; }
+        public Order? Order { get; set; }
+        public Supply? Supply { get; set; }
     }
 }

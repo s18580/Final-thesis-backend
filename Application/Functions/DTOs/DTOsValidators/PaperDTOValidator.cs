@@ -1,7 +1,6 @@
 ﻿using Application.Services;
 using Domain.Enumerators;
 using FluentValidation;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Functions.DTOs.DTOsValidators
 {
@@ -18,24 +17,24 @@ namespace Application.Functions.DTOs.DTOsValidators
                    .WithMessage("Paper name is required.")
                    .NotEmpty()
                    .WithMessage("Paper name is required.")
-                   .MaximumLength(255)
-                   .WithMessage("Paper name length can't be longer then 255 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Paper name length can't be longer then 100 characters.");
 
             RuleFor(p => p.Kind)
                    .NotNull()
                    .WithMessage("Kind is required.")
                    .NotEmpty()
                    .WithMessage("Kind is required.")
-                   .MaximumLength(50)
-                   .WithMessage("Kind length can't be longer then 50 characters.");
+                   .MaximumLength(100)
+                   .WithMessage("Kind length can't be longer then 100 characters.");
 
             RuleFor(p => p.SheetFormat)
                    .NotNull()
                    .WithMessage("Sheet format is required.")
                    .NotEmpty()
                    .WithMessage("Sheet format is required.")
-                   .MaximumLength(100)
-                   .WithMessage("Sheet format length can't be longer then 100 characters.");
+                   .MaximumLength(20)
+                   .WithMessage("Sheet format length can't be longer then 20 characters.");
 
             RuleFor(p => p.Opacity)
                 .GreaterThanOrEqualTo(1);

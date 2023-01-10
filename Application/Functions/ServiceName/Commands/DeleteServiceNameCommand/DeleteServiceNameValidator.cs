@@ -15,6 +15,10 @@ namespace Application.Functions.ServiceName.Commands.DeleteServiceNameCommand
             RuleFor(p => p).
                 MustAsync(DoesServiceNameExists)
                 .WithMessage("Service name with given id does not exist.");
+
+            RuleFor(p => p).
+                MustAsync(DoesServicesExists)
+                .WithMessage("Service name is still related with some supplies.");
         }
 
         private async Task<bool> DoesServiceNameExists(DeleteServiceNameCommand command, CancellationToken cancellationToken)
@@ -24,6 +28,15 @@ namespace Application.Functions.ServiceName.Commands.DeleteServiceNameCommand
                                             .SingleOrDefaultAsync();
 
             return serviceName != null;
+        }
+
+        private async Task<bool> DoesServicesExists(DeleteServiceNameCommand command, CancellationToken cancellationToken)
+        {
+            var services = await _context.Services
+                                         .Where(p => p.IdServiceName == command.IdServiceName)
+                                         .ToListAsync();
+
+            return services.Count == 0;
         }
     }
 }

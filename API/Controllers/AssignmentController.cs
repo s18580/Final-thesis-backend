@@ -2,12 +2,9 @@
 using Application.Functions.Assignment.Commands.DeleteAssignmentCommand;
 using Application.Functions.Assignment.Commands.UpdateAssignmentCommand;
 using Application.Functions.Assignment.Queries.GetAssignmentListByOrderQuery;
-using Application.Functions.Assignment.Queries.GetAssignmentListByWorkerQuery;
-using Application.Functions.Assignment.Queries.GetAssignmentQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -22,29 +19,6 @@ namespace API.Controllers
         public AssignmentController(IMediator mediator)
         {
             _mediator = mediator;
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getAssignmentsByWorker")]
-        public async Task<IActionResult> GetAssignmentsByWorker([FromQuery] int workerId)
-        {
-            var response = await _mediator.Send(new GetAssignmentListByWorkerQuery { IdWorker = workerId });
-            if (response.Success)
-            {
-                return Ok(response.assignments);
-            }
-            else if (response.Status == ResponseStatus.ValidationError && response.Message.Contains("does not exist"))
-            {
-                return NotFound(response.Message);
-            }
-            else if (response.Status == ResponseStatus.ValidationError)
-            {
-                return UnprocessableEntity(response.Message);
-            }
-            else
-            {
-                return BadRequest();
-            }
         }
 
         [HttpGet, Authorize(Roles = "Basic")]
@@ -68,19 +42,6 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getAssignment")]
-        public async Task<IActionResult> GetAssignment([FromQuery] int orderId, int workerId)
-        {
-            var assignment = await _mediator.Send(new GetAssignmentQuery { IdOrder = orderId, IdWorker = workerId });
-            if (assignment == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(assignment);
         }
 
         [HttpPost, Authorize(Roles = "Basic")]

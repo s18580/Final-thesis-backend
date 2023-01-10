@@ -2,11 +2,9 @@
 using Application.Functions.ServiceName.Commands.DeleteServiceNameCommand;
 using Application.Functions.ServiceName.Commands.UpdateServiceNameCommand;
 using Application.Functions.ServiceName.Queries.GetServiceNameListQuery;
-using Application.Functions.ServiceName.Queries.GetServiceNameQuery;
 using Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,19 +27,6 @@ namespace API.Controllers
         {
             var serviceNames = await _mediator.Send(new GetServiceNameListQuery());
             return Ok(serviceNames);
-        }
-
-        [HttpGet, Authorize(Roles = "Basic")]
-        [Route("getServiceName")]
-        public async Task<IActionResult> GetServiceName([FromQuery] int id)
-        {
-            var serviceName = await _mediator.Send(new GetServiceNameQuery { IdServiceName = id });
-            if (serviceName == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(serviceName);
         }
 
         [HttpPost, Authorize(Roles = "Admin")]

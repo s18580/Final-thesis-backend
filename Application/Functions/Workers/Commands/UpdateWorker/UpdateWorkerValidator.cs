@@ -94,7 +94,7 @@ namespace Application.Functions.Workers.Commands.UpdateWorker
                                          .Where(x => x.IdWorksite == command.IdWorksite)
                                          .SingleOrDefaultAsync();
 
-            return worksite != null;
+            return worksite != null || command.IdWorksite == null;
         }
     }
 }

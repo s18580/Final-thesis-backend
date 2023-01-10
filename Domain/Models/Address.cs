@@ -12,9 +12,10 @@
         public string ApartmentNumber { get; set; }
         public int? IdSupplier { get; set; }
         public int? IdCustomer { get; set; }
+        public bool IsDisabled { get; set; }
 
-        public Customer Customer { get; set; }
-        public Supplier Supplier { get; set; }
+        public Customer? Customer { get; set; }
+        public Supplier? Supplier { get; set; }
         public ICollection<DeliveriesAddresses> DeliveriesAddresses { get; set; }
     }
 }
