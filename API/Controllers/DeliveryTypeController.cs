@@ -21,7 +21,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Basic,Admin")]
         [Route("getDeliveryTypes")]
         public async Task<IActionResult> GetDeliveryTypes()
         {

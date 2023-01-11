@@ -26,7 +26,7 @@ namespace API.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Basic,Admin")]
         [Route("getWorkers")]
         public async Task<IActionResult> GetWorkers()
         {
@@ -50,7 +50,7 @@ namespace API.Controllers
             return Ok(workers);
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Basic,Admin")]
         [Route("getWorker")]
         public async Task<IActionResult> GetWorker([FromQuery] int id)
         {
@@ -63,7 +63,7 @@ namespace API.Controllers
             return Ok(worker);
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Basic,Admin")]
         [Route("getAWS")]
         public async Task<IActionResult> GetAWSCreds([FromQuery] int id)
         {

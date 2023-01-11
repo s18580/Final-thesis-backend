@@ -22,7 +22,7 @@ namespace API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Basic,Admin")]
         [Route("getPriceLists")]
         public async Task<IActionResult> GetPriceLists()
         {
@@ -30,7 +30,7 @@ namespace API.Controllers
             return Ok(priceLists);
         }
 
-        [HttpGet, Authorize(Roles = "Basic")]
+        [HttpGet, Authorize(Roles = "Basic,Admin")]
         [Route("getPriceList")]
         public async Task<IActionResult> GetPriceList([FromQuery] int id)
         {
