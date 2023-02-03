@@ -12,9 +12,12 @@ namespace Application.Tests.Tests.Customer
     public class CompanyCustomerTests : TestMasterPage
     {
         [TestMethod, TestCategory("CompanyCustomer")]
-        public void AddCompanyCustomerWithAllData()
+        public void AddCompanyCustomer()
         {
             var userData = UsersTestData.GetAdminAccount();
+            var customer = CustomerTestData.GetCompanyCustomer();
+            var representative = RepresentativeTestData.GetRepresentative();
+            var address = AddressTestData.GetAddress();
 
             LoginActions.InitPage(_driver);
             LoginActions.Login(userData.Email, userData.Password);
@@ -24,16 +27,48 @@ namespace Application.Tests.Tests.Customer
 
             CustomerActions.InitPage(_driver);
             CustomerActions.SetCustomerTypeOnCompany();
-            CustomerActions.PopulateCompanyDetails("TestName", "2343234567", "2342233223", "TestEmail", "456456456");
+            CustomerActions.PopulateCompanyDetails(customer.CompanyName, customer.NIP, customer.Regon, customer.CompanyEmail, customer.CompanyPhone);
 
             CustomerActions.OpenRepresentativeModal();
             RepresentativeActions.InitPage(_driver);
-            RepresentativeActions.PopulateRepresentativeDetails("RepName", "RepLastName", "456456456", "RepEmail");
+            RepresentativeActions.PopulateRepresentativeDetails(representative.Name, representative.LastName, representative.Phone, representative.Email);
             RepresentativeActions.AddRepresentative();
 
             CustomerActions.OpenAddressModal();
             AddressActions.InitPage(_driver);
-            AddressActions.PopulateAddressDetails("TestAddress", "Polska", "Milanówek", "Polna", "11", "2A", "05-822");
+            AddressActions.PopulateAddressDetails(address.Name, address.Country, address.City, address.StreetName, address.StreetNumber, address.ApartmentNumber, address.PostCode);
+            AddressActions.AddAddress();
+
+            CustomerActions.AddCustomer();
+            Assert.IsTrue(NavBarActions.CheckToastMessage("Klient został dodany."));
+        }
+
+        [TestMethod, TestCategory("PrivateCustomer")]
+        public void AddPrivateCustomer()
+        {
+            var userData = UsersTestData.GetAdminAccount();
+            var customer = CustomerTestData.GetPrivateCustomer();
+            var representative = RepresentativeTestData.GetRepresentative();
+            var address = AddressTestData.GetAddress();
+
+            LoginActions.InitPage(_driver);
+            LoginActions.Login(userData.Email, userData.Password);
+
+            NavBarActions.InitPage(_driver);
+            NavBarActions.GoToAddCustomerPage();
+
+            CustomerActions.InitPage(_driver);
+            CustomerActions.SetCustomerTypeOnPerson();
+            CustomerActions.PopulatePersonDetails(customer.Name, customer.LastName, customer.CompanyEmail, customer.CompanyPhone);
+
+            CustomerActions.OpenRepresentativeModal();
+            RepresentativeActions.InitPage(_driver);
+            RepresentativeActions.PopulateRepresentativeDetails(representative.Name, representative.LastName, representative.Phone, representative.Email);
+            RepresentativeActions.AddRepresentative();
+
+            CustomerActions.OpenAddressModal();
+            AddressActions.InitPage(_driver);
+            AddressActions.PopulateAddressDetails(address.Name, address.Country, address.City, address.StreetName, address.StreetNumber, address.ApartmentNumber, address.PostCode);
             AddressActions.AddAddress();
 
             CustomerActions.AddCustomer();
