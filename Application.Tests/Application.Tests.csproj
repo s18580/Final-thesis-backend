@@ -37,7 +37,6 @@
     <Folder Include="Tests\Representative\" />
     <Folder Include="Tests\Worker\" />
     <Folder Include="Tests\Supply\" />
-    <Folder Include="Tests\Supplier\" />
   </ItemGroup>
 
 </Project>
