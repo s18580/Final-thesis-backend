@@ -25,6 +25,7 @@ namespace Application.Tests.Tests.Supply
             SupplyActions.PopulateSupplyDetails(supplyData.Price, supplyData.Quantity, supplyData.Description, supplyData.SupplyDate);
 
             SupplyActions.AddSupply();
+
             Assert.IsTrue(NavBarActions.CheckToastMessage("Dostawa została dodana."));
         }
     }

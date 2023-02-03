@@ -9,13 +9,10 @@
 
   <ItemGroup>
     <Compile Remove="Common\**" />
-    <Compile Remove="Mappings\UserMenu\**" />
     <Compile Remove="Tests\Valuation\**" />
     <EmbeddedResource Remove="Common\**" />
-    <EmbeddedResource Remove="Mappings\UserMenu\**" />
     <EmbeddedResource Remove="Tests\Valuation\**" />
     <None Remove="Common\**" />
-    <None Remove="Mappings\UserMenu\**" />
     <None Remove="Tests\Valuation\**" />
   </ItemGroup>
 

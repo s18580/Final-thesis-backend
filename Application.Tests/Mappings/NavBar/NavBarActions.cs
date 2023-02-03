@@ -14,7 +14,13 @@ namespace Application.Tests.Mappings.NavBar
 
         public static bool CheckToastMessage(string message)
         {
-            return NavBar.ToastMessage.Text == message;
+            try{
+                return NavBar.ToastMessage.Text == message;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
         public static void GoToHomePage()
         {

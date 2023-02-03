@@ -39,6 +39,7 @@ namespace Application.Tests.Tests.Supplier
             AddressActions.AddAddress();
 
             SupplierActions.AddSupplier();
+
             Assert.IsTrue(NavBarActions.CheckToastMessage("Dostawca został dodany."));
         }
     }

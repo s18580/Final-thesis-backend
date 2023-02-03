@@ -40,6 +40,7 @@ namespace Application.Tests.Tests.Customer
             AddressActions.AddAddress();
 
             CustomerActions.AddCustomer();
+
             Assert.IsTrue(NavBarActions.CheckToastMessage("Klient został dodany."));
         }
     }
