@@ -5,7 +5,6 @@ namespace Application.Tests.Mappings.SupplyForm
 {
     public class SupplyForm
     {
-        public IJavaScriptExecutor jsExecutor => (IJavaScriptExecutor)_driver;
         public IWebDriver _driver { get; }
         public IWebElement OrderDropdown => _driver.FindElement(By.XPath("//div[@id='orders']"));
         public IWebElement OrderItemDropdown => _driver.FindElement(By.XPath("//div[@id='orderItems']"));

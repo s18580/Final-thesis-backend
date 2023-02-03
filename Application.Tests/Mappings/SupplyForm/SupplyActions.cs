@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using Application.Tests.Helpers.CalendarDatePicker;
+using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -24,7 +26,7 @@ namespace Application.Tests.Mappings.SupplyForm
             Thread.Sleep(2000);
         }
 
-        public static void PopulateSupplyDetails(double price, int quantity, string description, string supplyDate)
+        public static void PopulateSupplyDetails(double price, int quantity, string description, DateTime supplyDate)
         {
             SupplyForm.OrderDropdown.Click();
             IReadOnlyList<IWebElement> orders = SupplyForm.DropdownElements;
@@ -40,12 +42,12 @@ namespace Application.Tests.Mappings.SupplyForm
                 orderItems[0].Click();
             }
 
+            SupplyForm.Price.Clear();
             SupplyForm.Price.SendKeys(price.ToString());
+            SupplyForm.Quantity.Clear();
             SupplyForm.Quantity.SendKeys(quantity.ToString());
             SupplyForm.Description.SendKeys(description);
-
-            SupplyForm.jsExecutor.ExecuteScript("document.querySelector(\"[aria-label='Data realizacji dostawy']\").removeAttribute(\"readonly\")");
-            SupplyForm.SupplyDate.SendKeys(supplyDate);
+            CalendarDatePickerActions.SetDate(SupplyForm._driver, SupplyForm.SupplyDate, supplyDate);
 
             SupplyForm.SupplyItemTypeDropdown.Click();
             IReadOnlyList<IWebElement> supplyItemTypes = SupplyForm.DropdownElements;

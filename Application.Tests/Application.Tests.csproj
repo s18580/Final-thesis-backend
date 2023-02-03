@@ -29,4 +29,8 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\OrderForm\" />
+  </ItemGroup>
+
 </Project>
