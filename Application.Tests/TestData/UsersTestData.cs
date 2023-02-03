@@ -2,9 +2,29 @@
 {
     public class UsersTestData
     {
+        public static UserData GetSuperUserAccount()
+        {
+            return new UserData("Super", "User", "superUser@gmail.com", "", "admin");
+        }
+
         public static UserData GetAdminAccount()
         {
             return new UserData("Main", "Admin", "admin@gmail.com", "", "admin");
+        }
+
+        public static UserData GetManagerAccount()
+        {
+            return new UserData("Main", "Manager", "manager@gmail.com", "", "admin");
+        }
+
+        public static UserData GetOfficeAccount()
+        {
+            return new UserData("Main", "Office", "office@gmail.com", "", "admin");
+        }
+
+        public static UserData GetAccountantAccount()
+        {
+            return new UserData("Main", "Accountant", "accountant@gmail.com", "", "admin");
         }
     }
 
