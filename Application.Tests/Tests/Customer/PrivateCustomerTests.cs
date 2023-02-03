@@ -9,13 +9,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Application.Tests.Tests.Customer
 {
     [TestClass]
-    public class CompanyCustomerTests : TestMasterPage
+    public class PrivateCustomerTests : TestMasterPage
     {
-        [TestMethod, TestCategory("CompanyCustomer")]
-        public void AddCompanyCustomer()
+        [TestMethod, TestCategory("PrivateCustomer")]
+        public void AddPrivateCustomer()
         {
             var userData = UsersTestData.GetAdminAccount();
-            var customer = CustomerTestData.GetCompanyCustomer();
+            var customer = CustomerTestData.GetPrivateCustomer();
             var representative = RepresentativeTestData.GetRepresentative();
             var address = AddressTestData.GetAddress();
 
@@ -26,8 +26,8 @@ namespace Application.Tests.Tests.Customer
             NavBarActions.GoToAddCustomerPage();
 
             CustomerActions.InitPage(_driver);
-            CustomerActions.SetCustomerTypeOnCompany();
-            CustomerActions.PopulateCompanyDetails(customer.CompanyName, customer.NIP, customer.Regon, customer.CompanyEmail, customer.CompanyPhone);
+            CustomerActions.SetCustomerTypeOnPerson();
+            CustomerActions.PopulatePersonDetails(customer.Name, customer.LastName, customer.CompanyEmail, customer.CompanyPhone);
 
             CustomerActions.OpenRepresentativeModal();
             RepresentativeActions.InitPage(_driver);
