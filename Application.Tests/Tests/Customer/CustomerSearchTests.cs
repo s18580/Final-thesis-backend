@@ -9,7 +9,7 @@ namespace Application.Tests.Tests.Customer
     [TestClass]
     public class CustomerSearchTests : TestMasterPage
     {
-        [TestMethod, TestCategory("CustomerSearch")]
+        [TestMethod, TestCategory("CustomerSearch"), TestCategory("Search")]
         public void SearchForAllCustomers()
         {
             var userData = UsersTestData.GetAdminAccount();

@@ -32,11 +32,4 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\Order\" />
-    <Folder Include="Tests\Representative\" />
-    <Folder Include="Tests\Worker\" />
-    <Folder Include="Tests\Supply\" />
-  </ItemGroup>
-
 </Project>
