@@ -9,11 +9,8 @@
 
   <ItemGroup>
     <Compile Remove="Common\**" />
-    <Compile Remove="Tests\Valuation\**" />
     <EmbeddedResource Remove="Common\**" />
-    <EmbeddedResource Remove="Tests\Valuation\**" />
     <None Remove="Common\**" />
-    <None Remove="Tests\Valuation\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +24,6 @@
     <PackageReference Include="Selenium.Support" Version="4.5.1" />
     <PackageReference Include="Selenium.WebDriver" Version="4.5.1" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Mappings\OrderForm\" />
   </ItemGroup>
 
 </Project>
