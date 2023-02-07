@@ -54,8 +54,8 @@ namespace Application.Tests.Mappings.CustomerForm
         {
             CustomerForm.CustomerName.SendKeys(name);
             CustomerForm.CustomerLastName.SendKeys(lastName);
-            CustomerForm.CustomerPhone.SendKeys(email);
-            CustomerForm.CustomerEmail.SendKeys(phone);
+            CustomerForm.CustomerPhone.SendKeys(phone);
+            CustomerForm.CustomerEmail.SendKeys(email);
         }
     }
 }

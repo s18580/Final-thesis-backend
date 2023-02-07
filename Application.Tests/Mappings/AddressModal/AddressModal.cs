@@ -12,7 +12,7 @@ namespace Application.Tests.Mappings.AddressModal
         public IWebElement Street => _driver.FindElement(By.Id("addressStreet"));
         public IWebElement StreetNumber => _driver.FindElement(By.Id("addressStreetNumber"));
         public IWebElement Apartment => _driver.FindElement(By.Id("addressApartment"));
-        public IWebElement AddAddress => _driver.FindElement(By.XPath("//button[@id='addAddress']"));
+        public IWebElement AddAddress => _driver.FindElement(By.XPath("//button[@id='addAdd']"));
 
         public AddressModal(IWebDriver driver)
         {

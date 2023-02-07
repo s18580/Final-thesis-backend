@@ -9,29 +9,8 @@
 
   <ItemGroup>
     <Compile Remove="Common\**" />
-    <Compile Remove="Mappings\UserMenu\**" />
-    <Compile Remove="Tests\Order\**" />
-    <Compile Remove="Tests\Representative\**" />
-    <Compile Remove="Tests\Supplier\**" />
-    <Compile Remove="Tests\Supply\**" />
-    <Compile Remove="Tests\Valuation\**" />
-    <Compile Remove="Tests\Worker\**" />
     <EmbeddedResource Remove="Common\**" />
-    <EmbeddedResource Remove="Mappings\UserMenu\**" />
-    <EmbeddedResource Remove="Tests\Order\**" />
-    <EmbeddedResource Remove="Tests\Representative\**" />
-    <EmbeddedResource Remove="Tests\Supplier\**" />
-    <EmbeddedResource Remove="Tests\Supply\**" />
-    <EmbeddedResource Remove="Tests\Valuation\**" />
-    <EmbeddedResource Remove="Tests\Worker\**" />
     <None Remove="Common\**" />
-    <None Remove="Mappings\UserMenu\**" />
-    <None Remove="Tests\Order\**" />
-    <None Remove="Tests\Representative\**" />
-    <None Remove="Tests\Supplier\**" />
-    <None Remove="Tests\Supply\**" />
-    <None Remove="Tests\Valuation\**" />
-    <None Remove="Tests\Worker\**" />
   </ItemGroup>
 
   <ItemGroup>
